@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Spotting AI Deepfakes – Guardian Shield</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --ink:#0f172a;
+      --muted:#64748b;
+      --line:#e5e7eb;
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --shadow:0 14px 30px rgba(15,23,42,.06);
+      --radius:18px;
+
+      --purple:#7c3aed;
+      --purple-100:#f3e8ff;
+      --green:#22c55e;
+      --green-100:#dcfce7;
+      --red:#ef4444;
+      --red-100:#fee2e2;
+      --amber:#f59e0b;
+      --amber-100:#fef3c7;
+      --tab:#f1f5f9;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+    }
+
+    .container{
+      width:min(980px, calc(100% - 56px));
+      margin:0 auto;
+      padding:44px 0 80px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:18px;
+    }
+    .back{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      color:#334155;
+      text-decoration:none;
+      font-weight:800;
+      font-size:13px;
+    }
+    .back:hover{ text-decoration:underline; }
+
+    .header{
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+      margin-bottom:12px;
+    }
+    .icon{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      background:var(--purple);
+      display:grid;
+      place-items:center;
+      color:white;
+      flex:0 0 auto;
+    }
+    .icon svg{ width:22px; height:22px; }
+
+    .titlewrap h1{
+      margin:0;
+      font-size:22px;
+      font-weight:950;
+      letter-spacing:-.02em;
+      line-height:1.15;
+    }
+    .titlewrap .sub{
+      margin-top:4px;
+      color:var(--muted);
+      font-weight:750;
+      font-size:13px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      border:1px solid rgba(15,23,42,.08);
+      background:#f1f5f9;
+      color:#0f172a;
+      white-space:nowrap;
+    }
+    .chip.pass{ background:var(--green-100); color:#166534; border-color:rgba(22,101,52,.15); }
+    .chip.fail{ background:var(--red-100); color:#991b1b; border-color:rgba(153,27,27,.18); }
+    .chip.warn{ background:var(--amber-100); color:#92400e; border-color:rgba(146,64,14,.18); }
+
+    .progress{ margin:14px 0 18px; }
+    .bar{
+      height:8px;
+      border-radius:999px;
+      overflow:hidden;
+      background:#e5e7eb;
+    }
+    .fill{
+      height:100%;
+      width:25%;
+      background:#0f172a;
+      transition: width .18s ease;
+    }
+
+    .tabs{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin:12px 0 18px;
+    }
+    .tab{
+      border:none;
+      background:var(--tab);
+      color:#334155;
+      font-weight:900;
+      font-size:13px;
+      padding:10px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition: filter .12s ease, transform .12s ease;
+    }
+    .tab:hover{ filter:brightness(.98); transform: translateY(-1px); }
+    .tab.active{ background:var(--purple); color:white; }
+    .tab.done{ background:var(--green-100); color:#166534; }
+
+    .check{
+      width:16px; height:16px;
+      display:inline-grid;
+      place-items:center;
+      border-radius:999px;
+      background:rgba(34,197,94,.18);
+    }
+    .tab:not(.done) .check{ display:none; }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:22px;
+    }
+    .card h2{
+      margin:0 0 10px;
+      font-size:20px;
+      font-weight:950;
+      letter-spacing:-.01em;
+    }
+    .card p{
+      margin:0 0 12px;
+      color:#334155;
+      font-weight:650;
+      line-height:1.75;
+      font-size:14px;
+    }
+    .card h3{
+      margin:18px 0 10px;
+      font-size:14px;
+      font-weight:950;
+      letter-spacing:-.01em;
+    }
+    .card ul{
+      margin:8px 0 0 18px;
+      padding:0;
+      color:#334155;
+      font-weight:650;
+      line-height:1.8;
+      font-size:14px;
+    }
+    .card li{ margin:8px 0; }
+    .example{
+      margin-top:14px;
+      color:#334155;
+      font-weight:650;
+      line-height:1.75;
+      font-size:14px;
+    }
+
+    /* quiz box */
+    .quiz{
+      margin-top:18px;
+      border:1px solid #dbeafe;
+      background:#eff6ff;
+      border-radius:16px;
+      padding:14px;
+    }
+    .quizHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+    .quizTitle{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:950;
+      color:#1e3a8a;
+      font-size:13px;
+    }
+    .quizTitle .dot{
+      width:28px; height:28px;
+      border-radius:10px;
+      background:#2563eb;
+      color:white;
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+      font-weight:950;
+    }
+    .quizNote{
+      font-size:12px;
+      font-weight:850;
+      color:#334155;
+      background:white;
+      border:1px solid #dbeafe;
+      padding:6px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+
+    .q{
+      border-top:1px solid rgba(30,58,138,.12);
+      padding-top:12px;
+      margin-top:12px;
+    }
+    .q:first-of-type{
+      border-top:none;
+      padding-top:0;
+      margin-top:0;
+    }
+    .qText{
+      font-weight:900;
+      color:#0f172a;
+      font-size:13px;
+      margin:0 0 10px;
+      line-height:1.5;
+    }
+    .opt{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:10px 10px;
+      border-radius:12px;
+      background:rgba(255,255,255,.75);
+      border:1px solid rgba(219,234,254,.9);
+      margin-bottom:10px;
+      cursor:pointer;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .opt:hover{ transform: translateY(-1px); filter:brightness(.99); }
+    .opt input{ margin-top:3px; }
+    .opt span{
+      font-size:13px;
+      font-weight:750;
+      color:#0f172a;
+      line-height:1.45;
+    }
+
+    .quizActions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+
+    .btn{
+      border:none;
+      cursor:pointer;
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:950;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .btn.primary{ background:#0f172a; color:white; }
+    .btn.secondary{ background:#f3f4f6; color:#0f172a; border:1px solid #e5e7eb; }
+    .btn:disabled{ opacity:.5; cursor:not-allowed; }
+
+    .result{
+      margin-top:12px;
+      background:white;
+      border:1px solid rgba(219,234,254,.9);
+      border-radius:12px;
+      padding:10px 12px;
+      font-weight:900;
+      font-size:13px;
+      display:none;
+    }
+    .result.ok{ border-color:rgba(22,101,52,.18); background:#f0fdf4; color:#166534; }
+    .result.bad{ border-color:rgba(153,27,27,.18); background:#fef2f2; color:#991b1b; }
+    .explain{
+      margin-top:10px;
+      display:none;
+      font-weight:650;
+      color:#334155;
+      font-size:13px;
+      line-height:1.65;
+    }
+    .explain ul{ margin:8px 0 0 18px; }
+    .explain li{ margin:6px 0; }
+
+    /* assistant box (non-functional) */
+    .assistant{
+      margin-top:16px;
+      border:1px solid #e9d5ff;
+      background:#faf5ff;
+      border-radius:16px;
+      padding:14px;
+    }
+    .assistantHead{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:950;
+      color:#4c1d95;
+      margin-bottom:10px;
+      font-size:13px;
+    }
+    .assistantHead .badge{
+      width:28px; height:28px;
+      border-radius:10px;
+      background:var(--purple);
+      color:white;
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+    }
+    .assistantBtn{
+      border:1px solid #e9d5ff;
+      background:white;
+      color:#6d28d9;
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:950;
+      font-size:13px;
+      cursor:not-allowed; /* intentionally non-functional */
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      opacity:.95;
+    }
+    .assistantBtn svg{ width:18px; height:18px; }
+
+    .navrow{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+    .navbtn{
+      border:none;
+      cursor:pointer;
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:950;
+      font-size:13px;
+      background:#0f172a;
+      color:white;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .navbtn.secondary{
+      background:#f3f4f6;
+      color:#0f172a;
+      border:1px solid #e5e7eb;
+    }
+    .navbtn:disabled{ opacity:.5; cursor:not-allowed; }
+
+    /* final exam modal */
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(15,23,42,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:9999;
+    }
+    .modal{
+      width:min(860px, 100%);
+      background:white;
+      border-radius:18px;
+      border:1px solid rgba(15,23,42,.10);
+      box-shadow:0 30px 70px rgba(15,23,42,.25);
+      overflow:hidden;
+    }
+    .modalHead{
+      padding:16px 18px;
+      border-bottom:1px solid #e5e7eb;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      background:#f8fafc;
+    }
+    .modalHead h2{
+      margin:0;
+      font-size:16px;
+      font-weight:950;
+      letter-spacing:-.01em;
+    }
+    .modalHead p{
+      margin:6px 0 0;
+      color:#64748b;
+      font-weight:700;
+      font-size:13px;
+      line-height:1.55;
+      max-width:640px;
+    }
+    .closeBtn{
+      border:none;
+      background:#eef2f7;
+      color:#0f172a;
+      border-radius:12px;
+      padding:10px 12px;
+      font-weight:950;
+      cursor:pointer;
+      flex:0 0 auto;
+    }
+    .closeBtn:hover{ filter:brightness(.98); }
+
+    .modalBody{
+      padding:16px 18px 18px;
+      max-height:min(70vh, 560px);
+      overflow:auto;
+    }
+    .scoreRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    .scorePill{
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:950;
+      border:1px solid rgba(15,23,42,.08);
+      background:#f1f5f9;
+      color:#0f172a;
+      white-space:nowrap;
+    }
+    .scorePill.pass{ background:var(--green-100); color:#166534; border-color:rgba(22,101,52,.15); }
+    .scorePill.fail{ background:var(--red-100); color:#991b1b; border-color:rgba(153,27,27,.18); }
+
+    .modalActions{
+      padding:14px 18px;
+      border-top:1px solid #e5e7eb;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      background:#fff;
+    }
+
+    @media (max-width: 560px){
+      .container{ width:calc(100% - 28px); padding-top:26px; }
+      .card{ padding:18px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="topbar">
+      <a class="back" href="courses.html">
+        <span aria-hidden="true">←</span>
+        <span>Back to Courses</span>
+      </a>
+    </div>
+
+    <div class="header">
+      <div class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M8 21c-2.2 0-4-1.8-4-4V9c0-2.2 1.8-4 4-4c.3-1.7 1.8-3 3.6-3C13.8 2 15.6 3.8 15.6 6c2 .2 3.6 1.9 3.6 4v7c0 2.2-1.8 4-4 4" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M8 9c.8 0 1.5.7 1.5 1.5S8.8 12 8 12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M16 9c-.8 0-1.5.7-1.5 1.5S15.2 12 16 12" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M10.5 6.5c0 1 .8 1.8 1.8 1.8" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <div class="titlewrap">
+        <h1>Spotting AI Deepfakes</h1>
+        <div class="sub">
+          <span id="lessonCounter">Lesson 1 of 4</span>
+          <span class="chip warn" id="courseStatus">Not completed</span>
+          <span class="chip" id="courseScore">Course score: —</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress">
+      <div class="bar"><div class="fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Lessons">
+      <button class="tab active" id="tab1" role="tab" aria-selected="true" data-lesson="1">Lesson 1</button>
+      <button class="tab" id="tab2" role="tab" aria-selected="false" data-lesson="2"><span class="check" aria-hidden="true">✓</span> Lesson 2</button>
+      <button class="tab" id="tab3" role="tab" aria-selected="false" data-lesson="3">Lesson 3</button>
+      <button class="tab" id="tab4" role="tab" aria-selected="false" data-lesson="4"><span class="check" aria-hidden="true">✓</span> Lesson 4</button>
+    </div>
+
+    <div class="card" id="lessonCard"></div>
+
+    <div class="navrow">
+      <button class="navbtn secondary" id="prevBtn" type="button">Previous</button>
+      <button class="navbtn" id="nextBtn" type="button">Next</button>
+    </div>
+  </div>
+
+  <!-- FINAL EXAM MODAL -->
+  <div class="overlay" id="examOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="examTitle">
+      <div class="modalHead">
+        <div>
+          <h2 id="examTitle">Final Course Exam (Pass ≥ 80%)</h2>
+          <p>
+            This is the full course assessment. You need at least <strong>80%</strong> to successfully complete this course.
+            You can retake the exam as many times as you want.
+          </p>
+        </div>
+        <button class="closeBtn" id="closeExamBtn" type="button">Close</button>
+      </div>
+
+      <div class="modalBody">
+        <div class="scoreRow">
+          <span class="scorePill" id="examScorePill">Score: —</span>
+          <span class="scorePill" id="examPassPill">Status: Not graded</span>
+        </div>
+
+        <div id="examQuestions"></div>
+
+        <div class="result" id="examResult"></div>
+        <div class="explain" id="examExplain"></div>
+      </div>
+
+      <div class="modalActions">
+        <button class="btn secondary" id="retakeExamBtn" type="button">Retake Exam</button>
+        <button class="btn primary" id="submitExamBtn" type="button">Submit Exam</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===================== DATA =====================
+    const lessons = [
+      {
+        title: "What is a Deepfake?",
+        body: `
+          <p>
+            A deepfake is a video, image, or audio recording that has been manipulated using artificial intelligence
+            to make it appear someone said or did something they never actually did.
+          </p>
+
+          <h3>Why This Matters to You:</h3>
+          <p>Scammers are now using deepfake technology to:</p>
+          <ul>
+            <li>Create fake video calls that look like your family members</li>
+            <li>Clone voices of your grandchildren to ask for money</li>
+            <li>Make fake videos of celebrities promoting scams</li>
+          </ul>
+
+          <h3>Real Example:</h3>
+          <p class="example">
+            A grandmother received a video call from what appeared to be her grandson saying he was in jail and needed bail money.
+            The video showed his face, his voice sounded right — but it was all fake. She almost sent $9,000 before calling another
+            family member to verify.
+          </p>
+        `,
+        quiz: {
+          minPercentToPass: 80,
+          questions: [
+            {
+              q: "Which definition best matches a deepfake?",
+              options: [
+                "A normal video edited for better lighting and sound",
+                "A video, image, or audio changed using AI to impersonate someone",
+                "A voicemail message that was recorded in a noisy place",
+                "A text message with misspellings"
+              ],
+              answerIndex: 1,
+              explain: "Deepfakes use AI to make media (video/image/audio) look or sound like a real person did something they did not."
+            },
+            {
+              q: "Which situation is a common deepfake scam targeting seniors?",
+              options: [
+                "A store coupon arriving by mail",
+                "A family video call that urgently asks for money and says 'don’t tell anyone'",
+                "A friend sending a holiday card",
+                "A bank statement that lists transactions"
+              ],
+              answerIndex: 1,
+              explain: "Family-emergency impersonation with urgency/secrecy is a very common deepfake scam pattern."
+            },
+            {
+              q: "What is the safest first move if you receive a suspicious call/video asking for money?",
+              options: [
+                "Send a small amount to see if it’s real",
+                "Stay on the line so they don’t get upset",
+                "Pause and call back using a saved/official number",
+                "Give them a verification code to prove your identity"
+              ],
+              answerIndex: 2,
+              explain: "Independent verification (call back using a trusted number you already have) is the safest first move."
+            }
+          ]
+        }
+      },
+      {
+        title: "How Scammers Use Deepfakes",
+        body: `
+          <p>
+            Deepfake scams usually follow a pattern: the scammer impersonates someone you trust, creates urgency, then asks for a risky action
+            (money, gift cards, bank transfers, or verification codes).
+          </p>
+
+          <h3>Most Common Deepfake Scenarios:</h3>
+          <ul>
+            <li><strong>Family emergency:</strong> “I’m in trouble — don’t tell mom/dad — send money now.”</li>
+            <li><strong>Bank fraud impersonation:</strong> “We detected fraud. Read me the code we just texted you.”</li>
+            <li><strong>Tech support:</strong> “Your computer is hacked. Install this so we can fix it.”</li>
+            <li><strong>Authority pressure:</strong> “Police/court/IRS needs immediate payment to avoid penalties.”</li>
+          </ul>
+
+          <h3>Red-Flag Language to Watch:</h3>
+          <ul>
+            <li>“Do it right now” / “This is urgent”</li>
+            <li>“Don’t tell anyone” (secrecy is a huge warning sign)</li>
+            <li>“Stay on the phone with me” (prevents you from verifying)</li>
+            <li>“Pay with gift cards/crypto/wire transfer”</li>
+          </ul>
+        `,
+        quiz: {
+          minPercentToPass: 80,
+          questions: [
+            {
+              q: "Which combination is the strongest scam warning sign?",
+              options: [
+                "Friendly tone + clear explanation + call-back allowed",
+                "Urgency + secrecy + refusal to let you verify",
+                "Long conversation + small talk + normal pacing",
+                "A caller asking you to take notes"
+              ],
+              answerIndex: 1,
+              explain: "Urgency + secrecy + blocking verification is a classic scam pattern."
+            },
+            {
+              q: "What should you NEVER share with a caller claiming to be your bank?",
+              options: [
+                "Your preferred branch location",
+                "A verification code that was texted to you",
+                "The last four digits of your phone number",
+                "The day of the week"
+              ],
+              answerIndex: 1,
+              explain: "Verification codes are for YOU to log in. Banks do not need you to read them aloud."
+            },
+            {
+              q: "Why do scammers say 'stay on the phone with me'?",
+              options: [
+                "To give you time to think carefully",
+                "To stop you from calling the real company/family to verify",
+                "To help you write down the details",
+                "To improve the call connection"
+              ],
+              answerIndex: 1,
+              explain: "Keeping you on the line prevents independent verification."
+            }
+          ]
+        }
+      },
+      {
+        title: "Spotting Red Flags (Voice + Video)",
+        body: `
+          <p>
+            Deepfakes can sound and look convincing. Instead of relying on “it sounds like them,” use a checklist of red flags.
+            You’re looking for pressure patterns and small inconsistencies.
+          </p>
+
+          <h3>Voice Deepfake Red Flags:</h3>
+          <ul>
+            <li>Unnatural pacing or rhythm (too fast, no natural pauses)</li>
+            <li>Emotion doesn’t match the situation (panic words, flat tone)</li>
+            <li>They repeat the request instead of answering questions</li>
+            <li>They refuse to let you call back or verify</li>
+          </ul>
+
+          <h3>Video Deepfake Red Flags:</h3>
+          <ul>
+            <li>Lip-sync mismatch (mouth movement doesn’t match words)</li>
+            <li>Odd blinking or “staring”</li>
+            <li>Weird lighting/shadows on the face</li>
+            <li>Edges around hair/ears look slightly unstable</li>
+          </ul>
+
+          <h3>Most Reliable Signal:</h3>
+          <p>
+            Even perfect audio/video can be fake. The most reliable signal is behavior:
+            <strong>urgency + secrecy + refusal to verify</strong>.
+          </p>
+        `,
+        quiz: {
+          minPercentToPass: 80,
+          questions: [
+            {
+              q: "Which is a voice deepfake red flag?",
+              options: [
+                "Natural pauses and calm tone",
+                "Unnatural pacing + repeating the request instead of answering questions",
+                "Letting you call back on a saved number",
+                "Saying 'take your time'"
+              ],
+              answerIndex: 1,
+              explain: "Unnatural pacing and avoiding questions are common deepfake/scam behaviors."
+            },
+            {
+              q: "Which is a video deepfake red flag?",
+              options: [
+                "Clear connection with normal blinking",
+                "Lip-sync mismatch between mouth movement and words",
+                "Stable lighting and consistent shadows",
+                "High-quality camera resolution"
+              ],
+              answerIndex: 1,
+              explain: "Lip-sync mismatch is a common sign that video has been manipulated."
+            },
+            {
+              q: "What is the MOST reliable signal even if the video looks real?",
+              options: [
+                "How familiar the voice sounds",
+                "How confident the caller seems",
+                "Urgency + secrecy + refusal to verify",
+                "The caller knowing your name"
+              ],
+              answerIndex: 2,
+              explain: "Behavioral patterns are more reliable than media quality."
+            }
+          ]
+        }
+      },
+      {
+        title: "What To Do (Verification Steps)",
+        body: `
+          <p>
+            Your best defense is a repeatable process: pause, verify independently, and never let urgency make the decision.
+          </p>
+
+          <h3>Step-by-Step Verification:</h3>
+          <ul>
+            <li><strong>Pause:</strong> Say “I’m going to call you back.”</li>
+            <li><strong>Call back independently:</strong> Use a saved contact or a number from an official source you type yourself.</li>
+            <li><strong>Use a family safe phrase:</strong> A private word/phrase only real family knows.</li>
+            <li><strong>Ask a custom question:</strong> Something only the real person would know (not on social media).</li>
+          </ul>
+
+          <h3>If You Already Responded:</h3>
+          <ul>
+            <li>Stop contact immediately</li>
+            <li>Call your bank/card using the number on the back of your card</li>
+            <li>Change passwords if you clicked a link or shared info</li>
+            <li>Never share verification codes — banks do not need them from you</li>
+          </ul>
+
+          <h3>Bottom Line Rule:</h3>
+          <p>
+            If anyone pressures you to act fast, keep it secret, or pay in unusual ways, treat it as a scam until proven otherwise.
+          </p>
+        `,
+        quiz: {
+          minPercentToPass: 80,
+          questions: [
+            {
+              q: "What is the correct call-back method?",
+              options: [
+                "Call the number the caller gives you",
+                "Call back using a saved contact or official number you find yourself",
+                "Text them first to confirm",
+                "Stay on the call while searching"
+              ],
+              answerIndex: 1,
+              explain: "Use a known-good number (saved contact or official site) instead of the number provided by the caller."
+            },
+            {
+              q: "If you accidentally shared personal info, what should you do first?",
+              options: [
+                "Wait a day to see if anything happens",
+                "Call your bank/card immediately using the number on your card",
+                "Post about it on social media",
+                "Send another message asking them to stop"
+              ],
+              answerIndex: 1,
+              explain: "Act immediately: contact the bank/card issuer using an official number."
+            },
+            {
+              q: "Which payment method is a major red flag in scams?",
+              options: [
+                "Paying at a store checkout",
+                "Paying by check to a known utility company",
+                "Paying with gift cards or crypto to 'fix' a problem",
+                "Paying a normal monthly bill"
+              ],
+              answerIndex: 2,
+              explain: "Gift cards/crypto are common scam payments because they’re hard to trace or reverse."
+            }
+          ]
+        }
+      }
+    ];
+
+    // FINAL EXAM (course-wide)
+    const finalExam = {
+      passPercent: 80,
+      questions: [
+        {
+          q: "A caller says they are your grandson and urgently needs money, but refuses to let you call back. Best response?",
+          options: [
+            "Send a small amount to help quickly",
+            "Stay on the phone and ask them to repeat the story",
+            "Pause and call back using a saved/official number + ask a verification question",
+            "Read them the verification code you received"
+          ],
+          answerIndex: 2,
+          explain: "Independent verification + a private question is the safest approach."
+        },
+        {
+          q: "Which trio is the strongest indicator of a scam (even if audio/video seems real)?",
+          options: [
+            "Polite tone + detailed explanations + calm pace",
+            "Urgency + secrecy + blocking verification",
+            "Caller knows your name + mentions a real place + uses correct grammar",
+            "High-quality video + clear sound + strong signal"
+          ],
+          answerIndex: 1,
+          explain: "Urgency/secrecy and preventing verification are classic manipulation patterns."
+        },
+        {
+          q: "What should you NEVER share during a 'bank fraud' call?",
+          options: [
+            "Your zip code",
+            "A verification code that was texted to you",
+            "The bank’s phone number",
+            "Your preferred branch hours"
+          ],
+          answerIndex: 1,
+          explain: "Verification codes are for you to log in; banks don’t need them from you."
+        },
+        {
+          q: "Which is a video deepfake red flag?",
+          options: [
+            "Lip-sync mismatch between mouth and words",
+            "Normal blinking and consistent lighting",
+            "Clear and stable image",
+            "Caller allows you to verify"
+          ],
+          answerIndex: 0,
+          explain: "Lip-sync mismatch is a common sign of manipulation."
+        },
+        {
+          q: "Which is the safest verification method?",
+          options: [
+            "Click the link they text you to confirm",
+            "Use the number they provide and ask to speak to a manager",
+            "Type the official website yourself and call the number listed (or use saved contact)",
+            "Keep chatting until you feel sure"
+          ],
+          answerIndex: 2,
+          explain: "Always verify through an independent channel you trust."
+        },
+        {
+          q: "A scammer asks for payment via gift cards to avoid 'legal trouble.' What should you do?",
+          options: [
+            "Buy gift cards but keep the receipts",
+            "Refuse, end contact, verify through official channels",
+            "Negotiate a smaller amount",
+            "Send crypto instead because it’s faster"
+          ],
+          answerIndex: 1,
+          explain: "Gift cards and crypto are major scam red flags. End contact and verify independently."
+        },
+        {
+          q: "Which sentence is a major red-flag phrase?",
+          options: [
+            "Take your time and call the official number",
+            "Don’t tell anyone and do it right now",
+            "Please verify using your bank’s official website",
+            "Feel free to hang up and call back"
+          ],
+          answerIndex: 1,
+          explain: "Secrecy + urgency is a top scam warning sign."
+        },
+        {
+          q: "If you already clicked a suspicious link, what is a good next step?",
+          options: [
+            "Ignore it and hope nothing happens",
+            "Change passwords and run a security scan",
+            "Send your password to the sender to confirm",
+            "Forward the link to friends to warn them"
+          ],
+          answerIndex: 1,
+          explain: "Change passwords and check your device/account security immediately."
+        },
+        {
+          q: "Why does caller ID spoofing matter?",
+          options: [
+            "It makes the audio sound clearer",
+            "It can make a scam call look like it’s from a real number",
+            "It prevents you from hanging up",
+            "It blocks your bank account"
+          ],
+          answerIndex: 1,
+          explain: "Spoofing can fake the displayed number, so you can’t trust caller ID alone."
+        },
+        {
+          q: "What is a family safe phrase used for?",
+          options: [
+            "To help you remember passwords",
+            "To verify a real family member during emergencies",
+            "To speed up payments",
+            "To improve Wi-Fi connection"
+          ],
+          answerIndex: 1,
+          explain: "A safe phrase is a private verification method only your real family should know."
+        }
+      ]
+    };
+
+    // ===================== STATE =====================
+    const KEY = "gs_deepfakes_course_v2";
+    const progressFill = document.getElementById("progressFill");
+    const lessonCounter = document.getElementById("lessonCounter");
+    const lessonCard = document.getElementById("lessonCard");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const tabs = [...document.querySelectorAll(".tab")];
+
+    const courseStatus = document.getElementById("courseStatus");
+    const courseScore = document.getElementById("courseScore");
+
+    const examOverlay = document.getElementById("examOverlay");
+    const closeExamBtn = document.getElementById("closeExamBtn");
+    const submitExamBtn = document.getElementById("submitExamBtn");
+    const retakeExamBtn = document.getElementById("retakeExamBtn");
+    const examQuestions = document.getElementById("examQuestions");
+    const examResult = document.getElementById("examResult");
+    const examExplain = document.getElementById("examExplain");
+    const examScorePill = document.getElementById("examScorePill");
+    const examPassPill = document.getElementById("examPassPill");
+
+    let state = {
+      current: 1,
+      doneLessons: [false,false,false,false],
+      quizPass: [false,false,false,false],
+      quizScores: [null,null,null,null],
+      finalExam: { attempts: 0, bestPercent: null, passed: false }
+    };
+
+    function loadState(){
+      try{
+        const saved = JSON.parse(localStorage.getItem(KEY));
+        if(saved) state = saved;
+      }catch(e){}
+      // normalize
+      state.current = clampNum(state.current, 1, 4);
+      state.doneLessons = normBoolArr(state.doneLessons, 4);
+      state.quizPass = normBoolArr(state.quizPass, 4);
+      state.quizScores = normScoreArr(state.quizScores, 4);
+      if(!state.finalExam) state.finalExam = { attempts: 0, bestPercent: null, passed: false };
+      if(typeof state.finalExam.attempts !== "number") state.finalExam.attempts = 0;
+      if(typeof state.finalExam.passed !== "boolean") state.finalExam.passed = false;
+    }
+    function saveState(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+
+    function clampNum(n, lo, hi){
+      n = Number(n);
+      if(Number.isNaN(n)) return lo;
+      return Math.max(lo, Math.min(hi, n));
+    }
+    function normBoolArr(arr, len){
+      if(!Array.isArray(arr) || arr.length !== len) return Array(len).fill(false);
+      return arr.map(Boolean);
+    }
+    function normScoreArr(arr, len){
+      if(!Array.isArray(arr) || arr.length !== len) return Array(len).fill(null);
+      return arr.map(v => (typeof v === "number" ? v : null));
+    }
+
+    // ===================== RENDER =====================
+    function renderTopStatus(){
+      if(state.finalExam.passed){
+        courseStatus.textContent = "Completed";
+        courseStatus.className = "chip pass";
+      }else{
+        // show warning if all lesson quizzes passed but final not passed
+        const allLessonQuizzesPassed = state.quizPass.every(Boolean);
+        courseStatus.textContent = allLessonQuizzesPassed ? "Ready for Final Exam" : "Not completed";
+        courseStatus.className = allLessonQuizzesPassed ? "chip warn" : "chip warn";
+      }
+
+      const best = state.finalExam.bestPercent;
+      courseScore.textContent = (typeof best === "number")
+        ? `Course score: ${best}%`
+        : "Course score: —";
+    }
+
+    function lessonPercentComplete(){
+      // purely visual progress (position-based)
+      return Math.round((state.current / 4) * 100);
+    }
+
+    function renderLesson(n){
+      const idx = n - 1;
+      const data = lessons[idx];
+
+      lessonCounter.textContent = `Lesson ${n} of 4`;
+      progressFill.style.width = lessonPercentComplete() + "%";
+
+      // tabs
+      tabs.forEach(t => {
+        const ln = Number(t.dataset.lesson);
+        t.classList.remove("active");
+        t.setAttribute("aria-selected", "false");
+
+        if(state.doneLessons[ln - 1] && state.quizPass[ln - 1]){
+          t.classList.add("done");
+        }else{
+          t.classList.remove("done");
+        }
+
+        if(ln === n){
+          t.classList.add("active");
+          t.setAttribute("aria-selected", "true");
+        }
+      });
+
+      // content + quiz + assistant
+      lessonCard.innerHTML = `
+        <h2>${data.title}</h2>
+        ${data.body}
+        ${renderLessonQuiz(n)}
+        ${renderAssistantBox()}
+      `;
+
+      // wire quiz events
+      attachLessonQuizHandlers(n);
+
+      // nav buttons
+      prevBtn.disabled = (n === 1);
+      nextBtn.textContent = (n === 4) ? "Finish Lesson 4" : "Next";
+
+      // IMPORTANT: block Next if quiz not passed
+      const passed = !!state.quizPass[idx];
+      nextBtn.disabled = !passed;
+
+      // if last lesson and quiz passed, next still enabled -> finish triggers final exam
+      renderTopStatus();
+    }
+
+    function renderAssistantBox(){
+      return `
+        <div class="assistant">
+          <div class="assistantHead">
+            <div class="badge" aria-hidden="true">✨</div>
+            <span>AI Learning Assistant</span>
+          </div>
+
+          <button class="assistantBtn" type="button" aria-disabled="true" title="Not functional in this build">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 6h16M4 12h16M4 18h10" stroke="#6d28d9" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Explain this in simpler terms
+          </button>
+        </div>
+      `;
+    }
+
+    function renderLessonQuiz(lessonNumber){
+      const idx = lessonNumber - 1;
+      const qz = lessons[idx].quiz;
+      const prevScore = state.quizScores[idx];
+      const passed = state.quizPass[idx];
+
+      const statusText = passed
+        ? `Passed (${prevScore}% ≥ ${qz.minPercentToPass}%)`
+        : (typeof prevScore === "number"
+            ? `Not passed (${prevScore}% — need ${qz.minPercentToPass}%)`
+            : `You must score at least ${qz.minPercentToPass}% to continue`);
+
+      const statusChipClass = passed ? "chip pass" : (typeof prevScore === "number" ? "chip fail" : "chip warn");
+
+      const qs = qz.questions.map((item, qi) => {
+        const name = `l${lessonNumber}_q${qi}`;
+        const opts = item.options.map((opt, oi) => {
+          const id = `${name}_opt${oi}`;
+          return `
+            <label class="opt" for="${id}">
+              <input type="radio" id="${id}" name="${name}" value="${oi}">
+              <span>${escapeHtml(opt)}</span>
+            </label>
+          `;
+        }).join("");
+
+        return `
+          <div class="q" data-qi="${qi}">
+            <div class="qText">${qi + 1}. ${escapeHtml(item.q)}</div>
+            ${opts}
+          </div>
+        `;
+      }).join("");
+
+      return `
+        <div class="quiz" id="lessonQuiz">
+          <div class="quizHead">
+            <div class="quizTitle">
+              <div class="dot">Q</div>
+              <span>Lesson ${lessonNumber} Checkpoint Quiz</span>
+            </div>
+            <span class="quizNote ${statusChipClass}" id="lessonQuizNote">${statusText}</span>
+          </div>
+
+          ${qs}
+
+          <div class="quizActions">
+            <button class="btn secondary" id="resetLessonQuizBtn" type="button">Reset</button>
+            <button class="btn primary" id="submitLessonQuizBtn" type="button">Submit Quiz</button>
+          </div>
+
+          <div class="result" id="lessonQuizResult"></div>
+          <div class="explain" id="lessonQuizExplain"></div>
+        </div>
+      `;
+    }
+
+    function attachLessonQuizHandlers(lessonNumber){
+      const idx = lessonNumber - 1;
+      const qz = lessons[idx].quiz;
+
+      const note = document.getElementById("lessonQuizNote");
+      const result = document.getElementById("lessonQuizResult");
+      const explain = document.getElementById("lessonQuizExplain");
+
+      const submitBtn = document.getElementById("submitLessonQuizBtn");
+      const resetBtn = document.getElementById("resetLessonQuizBtn");
+
+      resetBtn.addEventListener("click", () => {
+        // clear radios
+        qz.questions.forEach((_, qi) => {
+          const name = `l${lessonNumber}_q${qi}`;
+          document.querySelectorAll(`input[name="${name}"]`).forEach(r => r.checked = false);
+        });
+        result.style.display = "none";
+        explain.style.display = "none";
+      });
+
+      submitBtn.addEventListener("click", () => {
+        const { percent, correctCount, total, details } = gradeLessonQuiz(lessonNumber);
+
+        state.quizScores[idx] = percent;
+        const passed = percent >= qz.minPercentToPass;
+        state.quizPass[idx] = passed;
+
+        // doneLessons marks whether the lesson content has been "completed"
+        // we treat passing the quiz as completing the lesson.
+        state.doneLessons[idx] = passed;
+
+        saveState();
+
+        // UI feedback
+        result.style.display = "block";
+        result.className = "result " + (passed ? "ok" : "bad");
+        result.textContent = passed
+          ? `Passed! You scored ${percent}% (${correctCount}/${total}). You can continue.`
+          : `Not passed. You scored ${percent}% (${correctCount}/${total}). You need ${qz.minPercentToPass}% to continue.`;
+
+        // explanations
+        explain.style.display = "block";
+        explain.innerHTML = `
+          <div style="font-weight:950; color:#0f172a; margin-bottom:6px;">Answer Review</div>
+          <ul>
+            ${details.map(d => `
+              <li>
+                <strong>Q${d.qi+1}:</strong>
+                ${d.correct ? '<span style="color:#166534; font-weight:950;">Correct</span>' : '<span style="color:#991b1b; font-weight:950;">Incorrect</span>'}
+                — ${escapeHtml(d.explain)}
+              </li>
+            `).join("")}
+          </ul>
+        `;
+
+        // update note chip
+        note.textContent = passed
+          ? `Passed (${percent}% ≥ ${qz.minPercentToPass}%)`
+          : `Not passed (${percent}% — need ${qz.minPercentToPass}%)`;
+        note.className = "quizNote " + (passed ? "chip pass" : "chip fail");
+
+        // re-render tabs + next button state
+        renderLesson(state.current);
+      });
+
+      // if previously passed, keep next enabled (handled by renderLesson)
+    }
+
+    function gradeLessonQuiz(lessonNumber){
+      const idx = lessonNumber - 1;
+      const qz = lessons[idx].quiz;
+
+      let correctCount = 0;
+      const details = [];
+
+      qz.questions.forEach((item, qi) => {
+        const name = `l${lessonNumber}_q${qi}`;
+        const selected = document.querySelector(`input[name="${name}"]:checked`);
+        const val = selected ? Number(selected.value) : -1;
+        const correct = (val === item.answerIndex);
+        if(correct) correctCount++;
+
+        details.push({ qi, correct, explain: item.explain });
+      });
+
+      const total = qz.questions.length;
+      const percent = Math.round((correctCount / total) * 100);
+      return { percent, correctCount, total, details };
+    }
+
+    // ===================== NAV / LESSON CHANGE =====================
+    function goTo(n){
+      state.current = clampNum(n, 1, 4);
+      saveState();
+      renderLesson(state.current);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        const n = Number(tab.dataset.lesson);
+        goTo(n);
+      });
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if(state.current > 1) goTo(state.current - 1);
+    });
+
+    nextBtn.addEventListener("click", () => {
+      const idx = state.current - 1;
+      if(!state.quizPass[idx]) return; // safety
+
+      if(state.current < 4){
+        goTo(state.current + 1);
+        return;
+      }
+
+      // finishing lesson 4 -> open final exam modal
+      openExam();
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if(e.key === "ArrowLeft" && state.current > 1) goTo(state.current - 1);
+      if(e.key === "ArrowRight" && state.current < 4){
+        // only allow moving forward if quiz passed
+        const idx = state.current - 1;
+        if(state.quizPass[idx]) goTo(state.current + 1);
+      }
+    });
+
+    // ===================== FINAL EXAM =====================
+    function openExam(){
+      // Only allow if all lesson quizzes passed
+      const ready = state.quizPass.every(Boolean);
+      if(!ready){
+        alert("You must pass all lesson quizzes before taking the final exam.");
+        return;
+      }
+
+      renderExamQuestions();
+      examOverlay.style.display = "flex";
+      examOverlay.setAttribute("aria-hidden", "false");
+
+      // reset result UI
+      examResult.style.display = "none";
+      examExplain.style.display = "none";
+      updateExamPills(null, null);
+    }
+
+    function closeExam(){
+      examOverlay.style.display = "none";
+      examOverlay.setAttribute("aria-hidden", "true");
+      renderTopStatus();
+    }
+
+    closeExamBtn.addEventListener("click", closeExam);
+
+    // close modal on overlay click (but not when clicking inside modal)
+    examOverlay.addEventListener("click", (e) => {
+      if(e.target === examOverlay) closeExam();
+    });
+
+    function renderExamQuestions(){
+      examQuestions.innerHTML = finalExam.questions.map((item, qi) => {
+        const name = `exam_q${qi}`;
+        const opts = item.options.map((opt, oi) => {
+          const id = `${name}_opt${oi}`;
+          return `
+            <label class="opt" for="${id}">
+              <input type="radio" id="${id}" name="${name}" value="${oi}">
+              <span>${escapeHtml(opt)}</span>
+            </label>
+          `;
+        }).join("");
+
+        return `
+          <div class="q">
+            <div class="qText">${qi + 1}. ${escapeHtml(item.q)}</div>
+            ${opts}
+          </div>
+        `;
+      }).join("");
+    }
+
+    function resetExam(){
+      finalExam.questions.forEach((_, qi) => {
+        const name = `exam_q${qi}`;
+        document.querySelectorAll(`input[name="${name}"]`).forEach(r => r.checked = false);
+      });
+      examResult.style.display = "none";
+      examExplain.style.display = "none";
+      updateExamPills(null, null);
+    }
+
+    retakeExamBtn.addEventListener("click", () => {
+      resetExam();
+    });
+
+    submitExamBtn.addEventListener("click", () => {
+      const graded = gradeExam();
+      state.finalExam.attempts += 1;
+
+      // update best score
+      if(typeof state.finalExam.bestPercent !== "number" || graded.percent > state.finalExam.bestPercent){
+        state.finalExam.bestPercent = graded.percent;
+      }
+
+      const passed = graded.percent >= finalExam.passPercent;
+      state.finalExam.passed = passed;
+
+      saveState();
+
+      // UI feedback
+      examResult.style.display = "block";
+      examResult.className = "result " + (passed ? "ok" : "bad");
+      examResult.textContent = passed
+        ? `Passed! You scored ${graded.percent}% (${graded.correctCount}/${graded.total}). Course completed.`
+        : `Not passed. You scored ${graded.percent}% (${graded.correctCount}/${graded.total}). You need ${finalExam.passPercent}% to pass.`;
+
+      examExplain.style.display = "block";
+      examExplain.innerHTML = `
+        <div style="font-weight:950; color:#0f172a; margin-bottom:6px;">Answer Review</div>
+        <ul>
+          ${graded.details.map(d => `
+            <li>
+              <strong>Q${d.qi+1}:</strong>
+              ${d.correct ? '<span style="color:#166534; font-weight:950;">Correct</span>' : '<span style="color:#991b1b; font-weight:950;">Incorrect</span>'}
+              — ${escapeHtml(d.explain)}
+            </li>
+          `).join("")}
+        </ul>
+      `;
+
+      updateExamPills(graded.percent, passed);
+
+      // if passed, update top status and optionally return to courses
+      renderTopStatus();
+      if(passed){
+        // send them back to courses after a short scroll so they see result
+        setTimeout(() => { window.location.href = "courses.html"; }, 900);
+      }
+    });
+
+    function gradeExam(){
+      let correctCount = 0;
+      const details = [];
+
+      finalExam.questions.forEach((item, qi) => {
+        const name = `exam_q${qi}`;
+        const selected = document.querySelector(`input[name="${name}"]:checked`);
+        const val = selected ? Number(selected.value) : -1;
+        const correct = (val === item.answerIndex);
+        if(correct) correctCount++;
+        details.push({ qi, correct, explain: item.explain });
+      });
+
+      const total = finalExam.questions.length;
+      const percent = Math.round((correctCount / total) * 100);
+      return { percent, correctCount, total, details };
+    }
+
+    function updateExamPills(percent, passed){
+      if(typeof percent !== "number"){
+        examScorePill.textContent = "Score: —";
+        examScorePill.className = "scorePill";
+        examPassPill.textContent = "Status: Not graded";
+        examPassPill.className = "scorePill";
+        return;
+      }
+
+      examScorePill.textContent = `Score: ${percent}%`;
+      examScorePill.className = "scorePill " + (passed ? "pass" : "fail");
+      examPassPill.textContent = passed ? "Status: Passed" : `Status: Not passed (need ≥ ${finalExam.passPercent}%)`;
+      examPassPill.className = "scorePill " + (passed ? "pass" : "fail");
+    }
+
+    // ===================== HELPERS =====================
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    // ===================== INIT =====================
+    loadState();
+    renderTopStatus();
+    renderLesson(state.current);
+  </script>
+</body>
+</html>

@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Social Engineering Tactics – Guardian Shield</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --ink:#0f172a;
+      --muted:#64748b;
+      --line:#e5e7eb;
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --shadow:0 14px 30px rgba(15,23,42,.06);
+      --radius:18px;
+
+      --orange:#f97316;
+      --orange-100:#ffedd5;
+      --blue:#2563eb;
+      --blue-100:#eff6ff;
+      --amber:#f59e0b;
+      --amber-100:#fef3c7;
+      --red:#ef4444;
+      --red-100:#fee2e2;
+      --tab:#f1f5f9;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+    }
+
+    .container{
+      width:min(980px, calc(100% - 56px));
+      margin:0 auto;
+      padding:44px 0 80px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:18px;
+    }
+    .back{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      color:#334155;
+      text-decoration:none;
+      font-weight:800;
+      font-size:13px;
+    }
+    .back:hover{ text-decoration:underline; }
+
+    .header{
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+      margin-bottom:12px;
+    }
+    .icon{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      background:var(--orange);
+      display:grid;
+      place-items:center;
+      color:white;
+      flex:0 0 auto;
+    }
+    .icon svg{ width:22px; height:22px; }
+
+    .titlewrap h1{
+      margin:0;
+      font-size:22px;
+      font-weight:950;
+      letter-spacing:-.02em;
+      line-height:1.15;
+    }
+    .titlewrap .sub{
+      margin-top:4px;
+      color:var(--muted);
+      font-weight:750;
+      font-size:13px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      border:1px solid rgba(15,23,42,.08);
+      background:#f1f5f9;
+      color:#0f172a;
+      white-space:nowrap;
+    }
+    .chip.pass{ background:#dcfce7; color:#166534; border-color:rgba(22,101,52,.15); }
+    .chip.fail{ background:var(--red-100); color:#991b1b; border-color:rgba(153,27,27,.18); }
+    .chip.warn{ background:var(--amber-100); color:#92400e; border-color:rgba(146,64,14,.18); }
+    .chip.level{ background:var(--orange-100); color:#9a3412; border-color:rgba(154,52,18,.14); }
+
+    .progress{ margin:14px 0 18px; }
+    .bar{
+      height:8px;
+      border-radius:999px;
+      overflow:hidden;
+      background:#e5e7eb;
+    }
+    .fill{
+      height:100%;
+      width:25%;
+      background:#0f172a;
+      transition: width .18s ease;
+    }
+
+    .tabs{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin:12px 0 18px;
+    }
+    .tab{
+      border:none;
+      background:var(--tab);
+      color:#334155;
+      font-weight:900;
+      font-size:13px;
+      padding:10px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition: filter .12s ease, transform .12s ease;
+    }
+    .tab:hover{ filter:brightness(.98); transform: translateY(-1px); }
+    .tab.active{ background:var(--orange); color:white; }
+    .tab.done{ background:var(--orange-100); color:#9a3412; }
+
+    .check{
+      width:16px; height:16px;
+      display:inline-grid;
+      place-items:center;
+      border-radius:999px;
+      background:rgba(249,115,22,.20);
+      color:#9a3412;
+      font-weight:950;
+    }
+    .tab:not(.done) .check{ display:none; }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:22px;
+    }
+    .card h2{
+      margin:0 0 10px;
+      font-size:20px;
+      font-weight:950;
+      letter-spacing:-.01em;
+    }
+    .card p{
+      margin:0 0 12px;
+      color:#334155;
+      font-weight:650;
+      line-height:1.75;
+      font-size:14px;
+    }
+    .card h3{
+      margin:18px 0 10px;
+      font-size:14px;
+      font-weight:950;
+      letter-spacing:-.01em;
+    }
+    .card ul{
+      margin:8px 0 0 18px;
+      padding:0;
+      color:#334155;
+      font-weight:650;
+      line-height:1.8;
+      font-size:14px;
+    }
+    .card li{ margin:8px 0; }
+
+    .callout{
+      margin-top:14px;
+      border:1px solid #e2e8f0;
+      background:#f8fafc;
+      border-radius:16px;
+      padding:12px 14px;
+      font-size:13px;
+      color:#334155;
+      font-weight:750;
+      line-height:1.7;
+    }
+    .callout strong{ color:#0f172a; }
+
+    .grid2{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    .mini{
+      border:1px solid #e2e8f0;
+      background:white;
+      border-radius:16px;
+      padding:12px 14px;
+    }
+    .mini .hdr{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      font-size:12px;
+      font-weight:950;
+      color:#0f172a;
+      margin-bottom:6px;
+    }
+    .mini .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:950;
+      border:1px solid rgba(15,23,42,.08);
+      background:#f1f5f9;
+      color:#0f172a;
+      white-space:nowrap;
+    }
+    .mini .tag.bad{ background:var(--red-100); color:#991b1b; border-color:rgba(153,27,27,.18); }
+    .mini .tag.good{ background:#dcfce7; color:#166534; border-color:rgba(22,101,52,.15); }
+    .mini .body{
+      font-size:13px;
+      font-weight:650;
+      color:#334155;
+      line-height:1.65;
+    }
+
+    /* quiz */
+    .quiz{
+      margin-top:18px;
+      border:1px solid rgba(249,115,22,.22);
+      background:#fff7ed;
+      border-radius:16px;
+      padding:14px;
+    }
+    .quizHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+    .quizTitle{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:950;
+      color:#9a3412;
+      font-size:13px;
+    }
+    .quizTitle .dot{
+      width:28px; height:28px;
+      border-radius:10px;
+      background:var(--orange);
+      color:white;
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+      font-weight:950;
+    }
+    .quizNote{
+      font-size:12px;
+      font-weight:850;
+      color:#334155;
+      background:white;
+      border:1px solid rgba(249,115,22,.22);
+      padding:6px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+
+    .q{
+      border-top:1px solid rgba(249,115,22,.18);
+      padding-top:12px;
+      margin-top:12px;
+    }
+    .q:first-of-type{ border-top:none; padding-top:0; margin-top:0; }
+    .qText{
+      font-weight:900;
+      color:#0f172a;
+      font-size:13px;
+      margin:0 0 10px;
+      line-height:1.5;
+    }
+    .opt{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:10px 10px;
+      border-radius:12px;
+      background:rgba(255,255,255,.9);
+      border:1px solid rgba(249,115,22,.18);
+      margin-bottom:10px;
+      cursor:pointer;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .opt:hover{ transform: translateY(-1px); filter:brightness(.99); }
+    .opt input{ margin-top:3px; }
+    .opt span{
+      font-size:13px;
+      font-weight:750;
+      color:#0f172a;
+      line-height:1.45;
+    }
+
+    .quizActions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .btn{
+      border:none;
+      cursor:pointer;
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:950;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .btn.primary{ background:#0f172a; color:white; }
+    .btn.secondary{ background:#f3f4f6; color:#0f172a; border:1px solid #e5e7eb; }
+    .btn:disabled{ opacity:.5; cursor:not-allowed; }
+
+    .result{
+      margin-top:12px;
+      background:white;
+      border:1px solid rgba(249,115,22,.18);
+      border-radius:12px;
+      padding:10px 12px;
+      font-weight:900;
+      font-size:13px;
+      display:none;
+    }
+    .result.ok{ border-color:rgba(22,101,52,.18); background:#f0fdf4; color:#166534; }
+    .result.bad{ border-color:rgba(153,27,27,.18); background:#fef2f2; color:#991b1b; }
+
+    .explain{
+      margin-top:10px;
+      display:none;
+      font-weight:650;
+      color:#334155;
+      font-size:13px;
+      line-height:1.65;
+    }
+    .explain ul{ margin:8px 0 0 18px; }
+    .explain li{ margin:6px 0; }
+
+    /* assistant (non-functional) */
+    .assistant{
+      margin-top:16px;
+      border:1px solid rgba(249,115,22,.18);
+      background:#fff7ed;
+      border-radius:16px;
+      padding:14px;
+    }
+    .assistantHead{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:950;
+      color:#9a3412;
+      margin-bottom:10px;
+      font-size:13px;
+    }
+    .assistantHead .badge{
+      width:28px; height:28px;
+      border-radius:10px;
+      background:var(--orange);
+      color:white;
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+      font-weight:950;
+    }
+    .assistantBtn{
+      border:1px solid rgba(249,115,22,.20);
+      background:white;
+      color:#9a3412;
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:950;
+      font-size:13px;
+      cursor:not-allowed;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      opacity:.95;
+    }
+    .assistantBtn svg{ width:18px; height:18px; }
+
+    .navrow{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+    .navbtn{
+      border:none;
+      cursor:pointer;
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:950;
+      font-size:13px;
+      background:#0f172a;
+      color:white;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .navbtn.secondary{
+      background:#f3f4f6;
+      color:#0f172a;
+      border:1px solid #e5e7eb;
+    }
+    .navbtn:disabled{ opacity:.5; cursor:not-allowed; }
+
+    /* final exam modal */
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(15,23,42,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:9999;
+    }
+    .modal{
+      width:min(860px, 100%);
+      background:white;
+      border-radius:18px;
+      border:1px solid rgba(15,23,42,.10);
+      box-shadow:0 30px 70px rgba(15,23,42,.25);
+      overflow:hidden;
+    }
+    .modalHead{
+      padding:16px 18px;
+      border-bottom:1px solid #e5e7eb;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      background:#f8fafc;
+      flex-wrap:wrap;
+    }
+    .modalHead h2{
+      margin:0;
+      font-size:16px;
+      font-weight:950;
+      letter-spacing:-.01em;
+    }
+    .modalHead p{
+      margin:6px 0 0;
+      color:#64748b;
+      font-weight:700;
+      font-size:13px;
+      line-height:1.55;
+      max-width:640px;
+    }
+    .closeBtn{
+      border:none;
+      background:#eef2f7;
+      color:#0f172a;
+      border-radius:12px;
+      padding:10px 12px;
+      font-weight:950;
+      cursor:pointer;
+      flex:0 0 auto;
+    }
+    .closeBtn:hover{ filter:brightness(.98); }
+
+    .modalBody{
+      padding:16px 18px 18px;
+      max-height:min(70vh, 560px);
+      overflow:auto;
+    }
+    .scoreRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    .scorePill{
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:950;
+      border:1px solid rgba(15,23,42,.08);
+      background:#f1f5f9;
+      color:#0f172a;
+      white-space:nowrap;
+    }
+    .scorePill.pass{ background:#dcfce7; color:#166534; border-color:rgba(22,101,52,.15); }
+    .scorePill.fail{ background:var(--red-100); color:#991b1b; border-color:rgba(153,27,27,.18); }
+
+    .modalActions{
+      padding:14px 18px;
+      border-top:1px solid #e5e7eb;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      background:#fff;
+    }
+
+    @media (max-width: 740px){
+      .grid2{ grid-template-columns:1fr; }
+    }
+    @media (max-width: 560px){
+      .container{ width:calc(100% - 28px); padding-top:26px; }
+      .card{ padding:18px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="topbar">
+      <a class="back" href="courses.html">
+        <span aria-hidden="true">←</span>
+        <span>Back to Courses</span>
+      </a>
+    </div>
+
+    <div class="header">
+      <div class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M8.5 12.2l2.2 2.2 4.8-5.2" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="titlewrap">
+        <h1>Social Engineering Tactics</h1>
+        <div class="sub">
+          <span id="lessonCounter">Lesson 1 of 4</span>
+          <span class="chip level">Advanced</span>
+          <span class="chip warn" id="courseStatus">Not completed</span>
+          <span class="chip" id="courseScore">Course score: —</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress">
+      <div class="bar"><div class="fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Lessons">
+      <button class="tab active" role="tab" aria-selected="true" data-lesson="1">Lesson 1</button>
+      <button class="tab" role="tab" aria-selected="false" data-lesson="2"><span class="check" aria-hidden="true">✓</span> Lesson 2</button>
+      <button class="tab" role="tab" aria-selected="false" data-lesson="3">Lesson 3</button>
+      <button class="tab" role="tab" aria-selected="false" data-lesson="4"><span class="check" aria-hidden="true">✓</span> Lesson 4</button>
+    </div>
+
+    <div class="card" id="lessonCard"></div>
+
+    <div class="navrow">
+      <button class="navbtn secondary" id="prevBtn" type="button">Previous</button>
+      <button class="navbtn" id="nextBtn" type="button">Next</button>
+    </div>
+  </div>
+
+  <!-- FINAL EXAM MODAL -->
+  <div class="overlay" id="examOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="examTitle">
+      <div class="modalHead">
+        <div>
+          <h2 id="examTitle">Final Course Exam (Pass ≥ 80%)</h2>
+          <p>
+            This is the full course assessment. You need at least <strong>80%</strong> to successfully complete this course.
+            You can retake the exam as many times as you want.
+          </p>
+        </div>
+        <button class="closeBtn" id="closeExamBtn" type="button">Close</button>
+      </div>
+
+      <div class="modalBody">
+        <div class="scoreRow">
+          <span class="scorePill" id="examScorePill">Score: —</span>
+          <span class="scorePill" id="examPassPill">Status: Not graded</span>
+        </div>
+
+        <div id="examQuestions"></div>
+
+        <div class="result" id="examResult"></div>
+        <div class="explain" id="examExplain"></div>
+      </div>
+
+      <div class="modalActions">
+        <button class="btn secondary" id="retakeExamBtn" type="button">Retake Exam</button>
+        <button class="btn primary" id="submitExamBtn" type="button">Submit Exam</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===================== LESSON DATA =====================
+    const lessons = [
+      {
+        title: "The Psychology of Social Engineering (Why It Works)",
+        body: `
+          <p>
+            Social engineering is when someone manipulates <strong>human behavior</strong> to get access, money, or information.
+            It works because it targets emotions and social rules (politeness, urgency, authority), not “technology.”
+          </p>
+
+          <h3>The 5 Core Levers Scammers Pull:</h3>
+          <ul>
+            <li><strong>Authority:</strong> “I’m from your bank / police / Medicare / IT.”</li>
+            <li><strong>Urgency:</strong> “Do it now or you’ll lose money.”</li>
+            <li><strong>Fear:</strong> “Your account is compromised. You’ll be arrested.”</li>
+            <li><strong>Scarcity:</strong> “This offer expires in 10 minutes.”</li>
+            <li><strong>Guilt / obligation:</strong> “You caused this—fix it immediately.”</li>
+          </ul>
+
+          <div class="grid2">
+            <div class="mini">
+              <div class="hdr">
+                <div>Manipulation pattern</div>
+                <span class="tag bad">Red flag</span>
+              </div>
+              <div class="body">
+                They push emotions to make you skip verification: “Don’t tell anyone,” “Act now,” “This is confidential.”
+              </div>
+            </div>
+            <div class="mini">
+              <div class="hdr">
+                <div>Defense</div>
+                <span class="tag good">Best move</span>
+              </div>
+              <div class="body">
+                Slow down. Verification is the goal. If they resist verification, treat it as a scam.
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <strong>Rule:</strong> The moment you feel rushed, scared, or guilty—pause. That emotional spike is part of the attack.
+          </div>
+        `,
+        quiz: {
+          minPercentToPass: 80,
+          questions: [
+            {
+              q: "What is social engineering?",
+              options: [
+                "A computer virus that deletes files",
+                "Manipulating human behavior to gain information, access, or money",
+                "A legal contract for banks",
+                "Only hacking using software"
+              ],
+              answerIndex: 1,
+              explain: "Social engineering targets people (emotions + social rules) instead of technical vulnerabilities."
+            },
+            {
+              q: "Which emotional lever is being used in: “Do this now or your account will be frozen”?",
+              options: ["Authority", "Urgency", "Scarcity", "Politeness"],
+              answerIndex: 1,
+              explain: "Threatening immediate consequences is urgency."
+            },
+            {
+              q: "A common social-engineering line is:",
+              options: [
+                "“Take your time and verify me independently.”",
+                "“Don’t tell anyone—this is confidential.”",
+                "“Please call the official number on your card.”",
+                "“I can wait while you confirm.”"
+              ],
+              answerIndex: 1,
+              explain: "Secrecy and confidentiality are used to isolate you from verification."
+            }
+          ]
+        }
+      },
+      {
+        title: "Common Scripts + Conversation Steering (How They Control You)",
+        body: `
+          <p>
+            Social engineers often use a “script.” The script has a goal: keep you talking, keep you emotional, and stop you from verifying.
+            They also <strong>steer the conversation</strong> away from facts and toward pressure.
+          </p>
+
+          <h3>High-Risk Script Patterns:</h3>
+          <ul>
+            <li><strong>“Keep it secret”</strong> — stops you from getting help.</li>
+            <li><strong>“I’m transferring you now”</strong> — keeps you in their control loop.</li>
+            <li><strong>“Read me the code”</strong> — steals your 2FA verification.</li>
+            <li><strong>“Install this app”</strong> — remote-access takeover.</li>
+            <li><strong>“Move your money to a safe account”</strong> — fake fraud department scam.</li>
+          </ul>
+
+          <h3>The Steering Moves:</h3>
+          <ul>
+            <li>If you ask for proof, they respond with more urgency instead of details.</li>
+            <li>They use long explanations to overwhelm you.</li>
+            <li>They threaten consequences to stop you from hanging up.</li>
+          </ul>
+
+          <div class="callout">
+            <strong>Rule:</strong> If they won’t give a verified callback path (official number, written notice), you end the call/message.
+          </div>
+        `,
+        quiz: {
+          minPercentToPass: 80,
+          questions: [
+            {
+              q: "Why do scammers say “keep this secret”?",
+              options: [
+                "To protect your privacy",
+                "To stop you from getting a second opinion and verifying",
+                "Because it’s required by law",
+                "To help your phone work faster"
+              ],
+              answerIndex: 1,
+              explain: "Secrecy isolates you and prevents verification."
+            },
+            {
+              q: "A request to “read me the verification code” is dangerous because:",
+              options: [
+                "It reveals your favorite website",
+                "It allows them to log into your account",
+                "It helps you reset your password safely",
+                "It improves caller ID"
+              ],
+              answerIndex: 1,
+              explain: "2FA codes are meant only for you—sharing them enables account takeover."
+            },
+            {
+              q: "Which is a conversation steering tactic?",
+              options: [
+                "Providing an official callback number and waiting",
+                "Threatening consequences when you ask for proof",
+                "Encouraging you to verify on the company website",
+                "Sending written documentation you can check"
+              ],
+              answerIndex: 1,
+              explain: "Escalating threats instead of providing verifiable details is steering."
+            }
+          ]
+        }
+      },
+      {
+        title: "The 4-Step Shield Method (Pause → Ask → Verify → Act)",
+        body: `
+          <p>
+            Here is a simple, repeatable defense you can use in <strong>any</strong> situation:
+            <strong>Pause → Ask → Verify → Act</strong>.
+          </p>
+
+          <h3>1) Pause (break the emotional pressure)</h3>
+          <ul>
+            <li>Take 10 seconds. Breathe. Tell yourself: “I don’t do urgency decisions.”</li>
+            <li>Say out loud: <strong>“I will call you back.”</strong></li>
+          </ul>
+
+          <h3>2) Ask (force concrete details)</h3>
+          <ul>
+            <li>Full name + department</li>
+            <li>Case/ticket number</li>
+            <li>Written notice option</li>
+            <li>Official callback path</li>
+          </ul>
+
+          <h3>3) Verify (independently)</h3>
+          <ul>
+            <li>Use official numbers from your card, statement, or official website.</li>
+            <li>Do not use numbers or links they provide in the message/call.</li>
+          </ul>
+
+          <h3>4) Act (only after verification)</h3>
+          <ul>
+            <li>If verified: continue safely.</li>
+            <li>If not verified: stop contact, block/report, and tell a trusted person.</li>
+          </ul>
+
+          <div class="grid2">
+            <div class="mini">
+              <div class="hdr">
+                <div>Good phrase</div>
+                <span class="tag good">Use this</span>
+              </div>
+              <div class="body">
+                “I don’t do urgent decisions. I’m going to call the official number and confirm.”
+              </div>
+            </div>
+            <div class="mini">
+              <div class="hdr">
+                <div>Bad phrase</div>
+                <span class="tag bad">Avoid</span>
+              </div>
+              <div class="body">
+                “Okay, tell me what to do right now. I’m scared.” (This gives them control.)
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <strong>Rule:</strong> Verification is the “win condition.” If verification is blocked, you exit.
+          </div>
+        `,
+        quiz: {
+          minPercentToPass: 80,
+          questions: [
+            {
+              q: "What is the correct order of the Shield Method?",
+              options: [
+                "Verify → Act → Pause → Ask",
+                "Pause → Ask → Verify → Act",
+                "Ask → Pause → Act → Verify",
+                "Act → Verify → Ask → Pause"
+              ],
+              answerIndex: 1,
+              explain: "Pause breaks pressure, Ask forces details, Verify independently, then Act."
+            },
+            {
+              q: "Which is the best verification approach?",
+              options: [
+                "Click the link they texted you",
+                "Call back using the number on your card/statement or official website",
+                "Keep them on the line while you log in",
+                "Read them your security code to prove identity"
+              ],
+              answerIndex: 1,
+              explain: "Independent verification prevents spoofed numbers/links from controlling you."
+            },
+            {
+              q: "If someone refuses verification and pushes urgency, you should:",
+              options: [
+                "Continue because they sound professional",
+                "End the conversation and verify independently later",
+                "Send money to fix it fast",
+                "Give them remote access"
+              ],
+              answerIndex: 1,
+              explain: "Refusal to allow verification is a core scam indicator."
+            }
+          ]
+        }
+      },
+      {
+        title: "Recovery + Reporting (If You Already Responded)",
+        body: `
+          <p>
+            Even careful people can be caught by social engineering. The best response is fast, calm action.
+            This lesson focuses on what to do if you clicked, shared info, installed something, or sent money.
+          </p>
+
+          <h3>If You Shared a Password or Code:</h3>
+          <ul>
+            <li>Change the password immediately (use a strong, unique password).</li>
+            <li>Turn on 2-factor authentication.</li>
+            <li>Check account logins and sign out of unknown devices.</li>
+          </ul>
+
+          <h3>If You Installed Remote Access Software:</h3>
+          <ul>
+            <li>Disconnect from the internet.</li>
+            <li>Uninstall the app (or get help from a trusted person/tech professional).</li>
+            <li>Run a security scan and change passwords from a different device.</li>
+          </ul>
+
+          <h3>If You Sent Money:</h3>
+          <ul>
+            <li>Contact your bank/credit card immediately using official numbers.</li>
+            <li>Explain it was a scam and ask about reversing/chargeback options.</li>
+            <li>Save evidence: screenshots, phone numbers, transaction IDs.</li>
+          </ul>
+
+          <div class="callout">
+            <strong>Rule:</strong> Shame helps scammers. Reporting helps you and protects others.
+          </div>
+        `,
+        quiz: {
+          minPercentToPass: 80,
+          questions: [
+            {
+              q: "If you gave a verification code to a scammer, the best next step is:",
+              options: [
+                "Wait to see what happens",
+                "Change your password and secure the account immediately",
+                "Send another code to fix it",
+                "Ignore it if it was only once"
+              ],
+              answerIndex: 1,
+              explain: "Codes enable account takeover—secure the account immediately."
+            },
+            {
+              q: "If you installed remote access software for “tech support,” you should first:",
+              options: [
+                "Keep it installed in case they call again",
+                "Disconnect from the internet and remove the software",
+                "Send them your banking app details",
+                "Restart and do nothing else"
+              ],
+              answerIndex: 1,
+              explain: "Remote access can allow continued control—disconnect and remove it promptly."
+            },
+            {
+              q: "Why is saving evidence important?",
+              options: [
+                "So you can post it online",
+                "It helps banks and reporting agencies investigate and possibly recover funds",
+                "It makes scams stop instantly",
+                "It proves you are at fault"
+              ],
+              answerIndex: 1,
+              explain: "Evidence supports recovery attempts and helps protect others."
+            }
+          ]
+        }
+      }
+    ];
+
+    // FINAL EXAM
+    const finalExam = {
+      passPercent: 80,
+      questions: [
+        {
+          q: "Social engineering is best defined as:",
+          options: [
+            "A virus that deletes your files",
+            "Manipulating human behavior to gain information, access, or money",
+            "A legal banking contract",
+            "Only hacking using software"
+          ],
+          answerIndex: 1,
+          explain: "Social engineering targets people (emotions + social rules), not just technology."
+        },
+        {
+          q: "“Do this now or your account will be frozen” is mainly using:",
+          options: ["Authority", "Urgency", "Kindness", "Randomness"],
+          answerIndex: 1,
+          explain: "Urgency pressures you to act before verifying."
+        },
+        {
+          q: "Why do scammers say “keep this secret”?",
+          options: [
+            "To protect your privacy",
+            "To isolate you from verification and second opinions",
+            "Because it’s required by law",
+            "To help your phone"
+          ],
+          answerIndex: 1,
+          explain: "Secrecy isolates you and blocks the safest step: verification."
+        },
+        {
+          q: "A request to read your 2FA code is dangerous because it can:",
+          options: [
+            "Improve caller ID accuracy",
+            "Enable account takeover",
+            "Fix your internet speed",
+            "Update your phone"
+          ],
+          answerIndex: 1,
+          explain: "2FA codes are for you only—sharing them allows login."
+        },
+        {
+          q: "Which is the correct order of the Shield Method?",
+          options: [
+            "Verify → Act → Pause → Ask",
+            "Pause → Ask → Verify → Act",
+            "Ask → Pause → Act → Verify",
+            "Act → Verify → Ask → Pause"
+          ],
+          answerIndex: 1,
+          explain: "Pause breaks pressure; Ask forces details; Verify independently; Act only after verification."
+        },
+        {
+          q: "The best verification approach is:",
+          options: [
+            "Click the link they send",
+            "Call back using official numbers from your card/statement/official site",
+            "Stay on the line and follow instructions",
+            "Share your security code"
+          ],
+          answerIndex: 1,
+          explain: "Independent verification prevents spoofed numbers/links from controlling you."
+        },
+        {
+          q: "If someone refuses verification and pushes urgency, you should:",
+          options: [
+            "Continue because they sound professional",
+            "End the conversation and verify independently later",
+            "Send money to fix it quickly",
+            "Give remote access to prove trust"
+          ],
+          answerIndex: 1,
+          explain: "Refusal to allow verification is a major scam indicator."
+        },
+        {
+          q: "If you gave a verification code to a scammer, you should:",
+          options: [
+            "Wait and see",
+            "Change passwords and secure the account immediately",
+            "Send another code to undo it",
+            "Ignore it if it was just once"
+          ],
+          answerIndex: 1,
+          explain: "Codes can enable account takeover—secure accounts immediately."
+        },
+        {
+          q: "If you installed remote-access software for “tech support,” you should first:",
+          options: [
+            "Keep it installed",
+            "Disconnect from internet and remove the software",
+            "Send them your banking details",
+            "Restart and do nothing else"
+          ],
+          answerIndex: 1,
+          explain: "Remote access can allow continued control—disconnect and remove it promptly."
+        },
+        {
+          q: "Saving evidence (screenshots, numbers, transaction IDs) helps because:",
+          options: [
+            "It makes scams stop instantly",
+            "It supports recovery and investigations",
+            "It proves you are at fault",
+            "It is required before you can hang up"
+          ],
+          answerIndex: 1,
+          explain: "Evidence supports recovery attempts and helps protect others."
+        }
+      ]
+    };
+
+    // ===================== STATE =====================
+    const KEY = "gs_social_course_v1";
+    const progressFill = document.getElementById("progressFill");
+    const lessonCounter = document.getElementById("lessonCounter");
+    const lessonCard = document.getElementById("lessonCard");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const tabs = [...document.querySelectorAll(".tab")];
+
+    const courseStatus = document.getElementById("courseStatus");
+    const courseScore = document.getElementById("courseScore");
+
+    const examOverlay = document.getElementById("examOverlay");
+    const closeExamBtn = document.getElementById("closeExamBtn");
+    const submitExamBtn = document.getElementById("submitExamBtn");
+    const retakeExamBtn = document.getElementById("retakeExamBtn");
+    const examQuestions = document.getElementById("examQuestions");
+    const examResult = document.getElementById("examResult");
+    const examExplain = document.getElementById("examExplain");
+    const examScorePill = document.getElementById("examScorePill");
+    const examPassPill = document.getElementById("examPassPill");
+
+    let state = {
+      current: 1,
+      doneLessons: [false,false,false,false],
+      quizPass: [false,false,false,false],
+      quizScores: [null,null,null,null],
+      finalExam: { attempts: 0, bestPercent: null, passed: false }
+    };
+
+    function loadState(){
+      try{
+        const saved = JSON.parse(localStorage.getItem(KEY));
+        if(saved) state = saved;
+      }catch(e){}
+      state.current = clampNum(state.current, 1, 4);
+      state.doneLessons = normBoolArr(state.doneLessons, 4);
+      state.quizPass = normBoolArr(state.quizPass, 4);
+      state.quizScores = normScoreArr(state.quizScores, 4);
+      if(!state.finalExam) state.finalExam = { attempts: 0, bestPercent: null, passed: false };
+      if(typeof state.finalExam.attempts !== "number") state.finalExam.attempts = 0;
+      if(typeof state.finalExam.passed !== "boolean") state.finalExam.passed = false;
+    }
+    function saveState(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+
+    function clampNum(n, lo, hi){
+      n = Number(n);
+      if(Number.isNaN(n)) return lo;
+      return Math.max(lo, Math.min(hi, n));
+    }
+    function normBoolArr(arr, len){
+      if(!Array.isArray(arr) || arr.length !== len) return Array(len).fill(false);
+      return arr.map(Boolean);
+    }
+    function normScoreArr(arr, len){
+      if(!Array.isArray(arr) || arr.length !== len) return Array(len).fill(null);
+      return arr.map(v => (typeof v === "number" ? v : null));
+    }
+
+    // ===================== RENDER =====================
+    function renderTopStatus(){
+      if(state.finalExam.passed){
+        courseStatus.textContent = "Completed";
+        courseStatus.className = "chip pass";
+      }else{
+        const allLessonQuizzesPassed = state.quizPass.every(Boolean);
+        courseStatus.textContent = allLessonQuizzesPassed ? "Ready for Final Exam" : "Not completed";
+        courseStatus.className = "chip warn";
+      }
+
+      const best = state.finalExam.bestPercent;
+      courseScore.textContent = (typeof best === "number")
+        ? `Course score: ${best}%`
+        : "Course score: —";
+    }
+
+    function lessonPercentComplete(){
+      return Math.round((state.current / 4) * 100);
+    }
+
+    function renderLesson(n){
+      const idx = n - 1;
+      const data = lessons[idx];
+
+      lessonCounter.textContent = `Lesson ${n} of 4`;
+      progressFill.style.width = lessonPercentComplete() + "%";
+
+      tabs.forEach(t => {
+        const ln = Number(t.dataset.lesson);
+        t.classList.remove("active");
+        t.setAttribute("aria-selected", "false");
+
+        if(state.doneLessons[ln - 1] && state.quizPass[ln - 1]){
+          t.classList.add("done");
+        }else{
+          t.classList.remove("done");
+        }
+
+        if(ln === n){
+          t.classList.add("active");
+          t.setAttribute("aria-selected", "true");
+        }
+      });
+
+      lessonCard.innerHTML = `
+        <h2>${data.title}</h2>
+        ${data.body}
+        ${renderLessonQuiz(n)}
+        ${renderAssistantBox()}
+      `;
+
+      attachLessonQuizHandlers(n);
+
+      prevBtn.disabled = (n === 1);
+      nextBtn.textContent = (n === 4) ? "Finish Lesson 4" : "Next";
+
+      const passed = !!state.quizPass[idx];
+      nextBtn.disabled = !passed;
+
+      renderTopStatus();
+    }
+
+    function renderAssistantBox(){
+      return `
+        <div class="assistant">
+          <div class="assistantHead">
+            <div class="badge" aria-hidden="true">✨</div>
+            <span>AI Learning Assistant</span>
+          </div>
+
+          <button class="assistantBtn" type="button" aria-disabled="true" title="Not functional in this build">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 6h16M4 12h16M4 18h10" stroke="#9a3412" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Explain this in simpler terms
+          </button>
+        </div>
+      `;
+    }
+
+    function renderLessonQuiz(lessonNumber){
+      const idx = lessonNumber - 1;
+      const qz = lessons[idx].quiz;
+      const prevScore = state.quizScores[idx];
+      const passed = state.quizPass[idx];
+
+      const statusText = passed
+        ? `Passed (${prevScore}% ≥ ${qz.minPercentToPass}%)`
+        : (typeof prevScore === "number"
+            ? `Not passed (${prevScore}% — need ${qz.minPercentToPass}%)`
+            : `You must score at least ${qz.minPercentToPass}% to continue`);
+
+      const statusClass = passed ? "chip pass" : (typeof prevScore === "number" ? "chip fail" : "chip warn");
+
+      const qs = qz.questions.map((item, qi) => {
+        const name = `l${lessonNumber}_q${qi}`;
+        const opts = item.options.map((opt, oi) => {
+          const id = `${name}_opt${oi}`;
+          return `
+            <label class="opt" for="${id}">
+              <input type="radio" id="${id}" name="${name}" value="${oi}">
+              <span>${escapeHtml(opt)}</span>
+            </label>
+          `;
+        }).join("");
+
+        return `
+          <div class="q" data-qi="${qi}">
+            <div class="qText">${qi + 1}. ${escapeHtml(item.q)}</div>
+            ${opts}
+          </div>
+        `;
+      }).join("");
+
+      return `
+        <div class="quiz" id="lessonQuiz">
+          <div class="quizHead">
+            <div class="quizTitle">
+              <div class="dot">Q</div>
+              <span>Lesson ${lessonNumber} Checkpoint Quiz</span>
+            </div>
+            <span class="quizNote ${statusClass}" id="lessonQuizNote">${statusText}</span>
+          </div>
+
+          ${qs}
+
+          <div class="quizActions">
+            <button class="btn secondary" id="resetLessonQuizBtn" type="button">Reset</button>
+            <button class="btn primary" id="submitLessonQuizBtn" type="button">Submit Quiz</button>
+          </div>
+
+          <div class="result" id="lessonQuizResult"></div>
+          <div class="explain" id="lessonQuizExplain"></div>
+        </div>
+      `;
+    }
+
+    function attachLessonQuizHandlers(lessonNumber){
+      const idx = lessonNumber - 1;
+      const qz = lessons[idx].quiz;
+
+      const note = document.getElementById("lessonQuizNote");
+      const result = document.getElementById("lessonQuizResult");
+      const explain = document.getElementById("lessonQuizExplain");
+
+      const submitBtn = document.getElementById("submitLessonQuizBtn");
+      const resetBtn = document.getElementById("resetLessonQuizBtn");
+
+      resetBtn.addEventListener("click", () => {
+        qz.questions.forEach((_, qi) => {
+          const name = `l${lessonNumber}_q${qi}`;
+          document.querySelectorAll(`input[name="${name}"]`).forEach(r => r.checked = false);
+        });
+        result.style.display = "none";
+        explain.style.display = "none";
+      });
+
+      submitBtn.addEventListener("click", () => {
+        const { percent, correctCount, total, details } = gradeLessonQuiz(lessonNumber);
+
+        state.quizScores[idx] = percent;
+        const passed = percent >= qz.minPercentToPass;
+        state.quizPass[idx] = passed;
+        state.doneLessons[idx] = passed;
+
+        saveState();
+
+        result.style.display = "block";
+        result.className = "result " + (passed ? "ok" : "bad");
+        result.textContent = passed
+          ? `Passed! You scored ${percent}% (${correctCount}/${total}). You can continue.`
+          : `Not passed. You scored ${percent}% (${correctCount}/${total}). You need ${qz.minPercentToPass}% to continue.`;
+
+        explain.style.display = "block";
+        explain.innerHTML = `
+          <div style="font-weight:950; color:#0f172a; margin-bottom:6px;">Answer Review</div>
+          <ul>
+            ${details.map(d => `
+              <li>
+                <strong>Q${d.qi+1}:</strong>
+                ${d.correct ? '<span style="color:#166534; font-weight:950;">Correct</span>' : '<span style="color:#991b1b; font-weight:950;">Incorrect</span>'}
+                — ${escapeHtml(d.explain)}
+              </li>
+            `).join("")}
+          </ul>
+        `;
+
+        note.textContent = passed
+          ? `Passed (${percent}% ≥ ${qz.minPercentToPass}%)`
+          : `Not passed (${percent}% — need ${qz.minPercentToPass}%)`;
+        note.className = "quizNote " + (passed ? "chip pass" : "chip fail");
+
+        renderLesson(state.current);
+      });
+    }
+
+    function gradeLessonQuiz(lessonNumber){
+      const idx = lessonNumber - 1;
+      const qz = lessons[idx].quiz;
+
+      let correctCount = 0;
+      const details = [];
+
+      qz.questions.forEach((item, qi) => {
+        const name = `l${lessonNumber}_q${qi}`;
+        const selected = document.querySelector(`input[name="${name}"]:checked`);
+        const val = selected ? Number(selected.value) : -1;
+        const correct = (val === item.answerIndex);
+        if(correct) correctCount++;
+        details.push({ qi, correct, explain: item.explain });
+      });
+
+      const total = qz.questions.length;
+      const percent = Math.round((correctCount / total) * 100);
+      return { percent, correctCount, total, details };
+    }
+
+    // ===================== NAV =====================
+    function goTo(n){
+      state.current = clampNum(n, 1, 4);
+      saveState();
+      renderLesson(state.current);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    tabs.forEach(tab => tab.addEventListener("click", () => goTo(Number(tab.dataset.lesson))));
+
+    prevBtn.addEventListener("click", () => {
+      if(state.current > 1) goTo(state.current - 1);
+    });
+
+    nextBtn.addEventListener("click", () => {
+      const idx = state.current - 1;
+      if(!state.quizPass[idx]) return;
+
+      if(state.current < 4){
+        goTo(state.current + 1);
+        return;
+      }
+      openExam();
+    });
+
+    // ===================== FINAL EXAM =====================
+    function openExam(){
+      const ready = state.quizPass.every(Boolean);
+      if(!ready){
+        alert("You must pass all lesson quizzes before taking the final exam.");
+        return;
+      }
+      renderExamQuestions();
+      examOverlay.style.display = "flex";
+      examOverlay.setAttribute("aria-hidden", "false");
+      examResult.style.display = "none";
+      examExplain.style.display = "none";
+      updateExamPills(null, null);
+    }
+
+    function closeExam(){
+      examOverlay.style.display = "none";
+      examOverlay.setAttribute("aria-hidden", "true");
+      renderTopStatus();
+    }
+
+    closeExamBtn.addEventListener("click", closeExam);
+    examOverlay.addEventListener("click", (e) => { if(e.target === examOverlay) closeExam(); });
+
+    function renderExamQuestions(){
+      examQuestions.innerHTML = finalExam.questions.map((item, qi) => {
+        const name = `exam_q${qi}`;
+        const opts = item.options.map((opt, oi) => {
+          const id = `${name}_opt${oi}`;
+          return `
+            <label class="opt" for="${id}">
+              <input type="radio" id="${id}" name="${name}" value="${oi}">
+              <span>${escapeHtml(opt)}</span>
+            </label>
+          `;
+        }).join("");
+
+        return `
+          <div class="q">
+            <div class="qText">${qi + 1}. ${escapeHtml(item.q)}</div>
+            ${opts}
+          </div>
+        `;
+      }).join("");
+    }
+
+    function resetExam(){
+      finalExam.questions.forEach((_, qi) => {
+        const name = `exam_q${qi}`;
+        document.querySelectorAll(`input[name="${name}"]`).forEach(r => r.checked = false);
+      });
+      examResult.style.display = "none";
+      examExplain.style.display = "none";
+      updateExamPills(null, null);
+    }
+
+    retakeExamBtn.addEventListener("click", resetExam);
+
+    submitExamBtn.addEventListener("click", () => {
+      const graded = gradeExam();
+      state.finalExam.attempts += 1;
+
+      if(typeof state.finalExam.bestPercent !== "number" || graded.percent > state.finalExam.bestPercent){
+        state.finalExam.bestPercent = graded.percent;
+      }
+
+      const passed = graded.percent >= finalExam.passPercent;
+      state.finalExam.passed = passed;
+
+      saveState();
+
+      examResult.style.display = "block";
+      examResult.className = "result " + (passed ? "ok" : "bad");
+      examResult.textContent = passed
+        ? `Passed! You scored ${graded.percent}% (${graded.correctCount}/${graded.total}). Course completed.`
+        : `Not passed. You scored ${graded.percent}% (${graded.correctCount}/${graded.total}). You need ${finalExam.passPercent}% to pass.`;
+
+      examExplain.style.display = "block";
+      examExplain.innerHTML = `
+        <div style="font-weight:950; color:#0f172a; margin-bottom:6px;">Answer Review</div>
+        <ul>
+          ${graded.details.map(d => `
+            <li>
+              <strong>Q${d.qi+1}:</strong>
+              ${d.correct ? '<span style="color:#166534; font-weight:950;">Correct</span>' : '<span style="color:#991b1b; font-weight:950;">Incorrect</span>'}
+              — ${escapeHtml(d.explain)}
+            </li>
+          `).join("")}
+        </ul>
+      `;
+
+      updateExamPills(graded.percent, passed);
+      renderTopStatus();
+
+      if(passed){
+        setTimeout(() => { window.location.href = "courses.html"; }, 900);
+      }
+    });
+
+    function gradeExam(){
+      let correctCount = 0;
+      const details = [];
+
+      finalExam.questions.forEach((item, qi) => {
+        const name = `exam_q${qi}`;
+        const selected = document.querySelector(`input[name="${name}"]:checked`);
+        const val = selected ? Number(selected.value) : -1;
+        const correct = (val === item.answerIndex);
+        if(correct) correctCount++;
+        details.push({ qi, correct, explain: item.explain });
+      });
+
+      const total = finalExam.questions.length;
+      const percent = Math.round((correctCount / total) * 100);
+      return { percent, correctCount, total, details };
+    }
+
+    function updateExamPills(percent, passed){
+      if(typeof percent !== "number"){
+        examScorePill.textContent = "Score: —";
+        examScorePill.className = "scorePill";
+        examPassPill.textContent = "Status: Not graded";
+        examPassPill.className = "scorePill";
+        return;
+      }
+
+      examScorePill.textContent = `Score: ${percent}%`;
+      examScorePill.className = "scorePill " + (passed ? "pass" : "fail");
+      examPassPill.textContent = passed ? "Status: Passed" : `Status: Not passed (need ≥ ${finalExam.passPercent}%)`;
+      examPassPill.className = "scorePill " + (passed ? "pass" : "fail");
+    }
+
+    // ===================== HELPERS =====================
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    // ===================== INIT =====================
+    loadState();
+    renderTopStatus();
+    renderLesson(state.current);
+  </script>
+</body>
+</html>

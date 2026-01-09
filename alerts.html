@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guardian Shield – Community Scam Alerts</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#64748b;
+      --line:#e5e7eb;
+
+      --urgent:#ef4444;
+      --urgent-bg:#fff1f2;
+
+      --warning:#f97316;
+      --warning-bg:#fff7ed;
+
+      --advisory:#3b82f6;
+      --advisory-bg:#eff6ff;
+
+      --verified:#16a34a;
+      --shadow: 0 18px 35px rgba(2,6,23,.08);
+      --shadow-soft: 0 10px 20px rgba(2,6,23,.06);
+
+      --radius:16px;
+    }
+
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Nunito", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:#fff;
+    }
+
+    /* ===== Mini switch bar (top-left) ===== */
+    .miniBar{
+      position:fixed;
+      top:10px;
+      left:10px;
+      z-index:9999;
+      transform: translateX(18px);
+
+      display:flex;
+      align-items:center;
+      gap:10px;
+      background:#fff;
+      border:1px solid #d1d5db;
+      border-radius:12px;
+      padding:8px;
+      box-shadow: 0 10px 22px rgba(2,6,23,.10);
+    }
+    .miniSelect{
+      appearance:none;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+      font-family:inherit;
+      font-weight:700;
+      font-size:14px;
+      padding:8px 36px 8px 12px;
+      border-radius:10px;
+      border:2px solid #111827;
+      outline:none;
+      background:
+        linear-gradient(180deg,#fff,#fff) padding-box,
+        linear-gradient(180deg,#111827,#111827) border-box;
+      position:relative;
+      min-width:165px;
+      cursor:pointer;
+    }
+    .miniWrap{ position:relative; }
+    .miniWrap:after{
+      content:"";
+      position:absolute;
+      right:12px;
+      top:50%;
+      width:10px;
+      height:10px;
+      transform:translateY(-50%) rotate(45deg);
+      border-right:2px solid #111827;
+      border-bottom:2px solid #111827;
+      pointer-events:none;
+    }
+    .miniIconBtn{
+      width:36px;
+      height:36px;
+      border-radius:10px;
+      border:2px solid #111827;
+      background:#fff;
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition:transform .08s ease, box-shadow .15s ease;
+    }
+    .miniIconBtn:hover{ box-shadow: 0 10px 18px rgba(2,6,23,.10); }
+    .miniIconBtn:active{ transform: translateY(1px); }
+    .miniIcon{
+      width:18px;height:18px;display:block;
+      stroke:#111827; fill:none; stroke-width:2;
+      stroke-linecap:round; stroke-linejoin:round;
+    }
+
+    /* ===== Page layout ===== */
+    .page{
+      min-height:100vh;
+      background:var(--bg);
+      padding:92px 24px 80px;
+    }
+    .container{
+      width:min(1040px, 100%);
+      margin:0 auto;
+    }
+
+    .topIcon{
+      width:52px;
+      height:52px;
+      margin:0 auto 10px;
+      border-radius:16px;
+      background:#fff3e6;
+      border:1px solid #f7d9b8;
+      display:grid;
+      place-items:center;
+      color:var(--warning);
+      box-shadow: var(--shadow-soft);
+    }
+    .title{
+      text-align:center;
+      font-size:40px;
+      margin:0;
+      font-weight:800;
+      letter-spacing:-.02em;
+    }
+    .subtitle{
+      text-align:center;
+      margin:10px auto 0;
+      max-width:640px;
+      color:var(--muted);
+      font-size:18px;
+      line-height:1.55;
+    }
+
+    /* stats */
+    .statsRow{
+      margin:34px auto 22px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:18px;
+      width:min(860px, 100%);
+    }
+    .statCard{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:14px;
+      box-shadow: var(--shadow-soft);
+      padding:18px 16px;
+      text-align:center;
+    }
+    .statNum{
+      font-size:30px;
+      font-weight:900;
+      margin:0;
+      line-height:1;
+    }
+    .statLabel{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      font-weight:700;
+    }
+    .urgentStat{ background: #fff1f2; border-color:#fecdd3; }
+    .warnStat{ background: #fff7ed; border-color:#fed7aa; }
+    .advStat{ background: #eff6ff; border-color:#bfdbfe; }
+
+    .urgentStat .statNum{ color:var(--urgent); }
+    .warnStat .statNum{ color:var(--warning); }
+    .advStat .statNum{ color:var(--advisory); }
+
+    /* search row */
+    .searchRow{
+      width:min(900px, 100%);
+      margin:18px auto 18px;
+      display:grid;
+      grid-template-columns: 1fr 210px;
+      gap:16px;
+      align-items:center;
+    }
+    .searchBox{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:14px 14px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      box-shadow: var(--shadow-soft);
+    }
+    .searchBox input{
+      border:none;
+      outline:none;
+      font-family:inherit;
+      width:100%;
+      font-size:15px;
+      color:var(--text);
+    }
+    .searchIcon{
+      width:18px;height:18px;
+      stroke:#9ca3af; fill:none; stroke-width:2;
+      stroke-linecap:round; stroke-linejoin:round;
+      flex:0 0 auto;
+    }
+
+    .btnOrange{
+      height:52px;
+      border-radius:12px;
+      border:none;
+      background: var(--warning);
+      color:#fff;
+      font-weight:800;
+      font-family:inherit;
+      font-size:15px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      cursor:pointer;
+      box-shadow: 0 16px 26px rgba(249,115,22,.22);
+      transition:transform .08s ease, filter .15s ease;
+    }
+    .btnOrange:active{ transform: translateY(1px); }
+    .btnOrange[disabled]{ opacity:.7; cursor:not-allowed; }
+    .spinner{
+      width:16px;height:16px;border-radius:999px;
+      border:2px solid rgba(255,255,255,.45);
+      border-top-color:#fff;
+      animation:spin .8s linear infinite;
+    }
+    @keyframes spin{ to{ transform:rotate(360deg);} }
+
+    /* blue resources bar */
+    .resourcesBar{
+      width:min(980px, 100%);
+      margin:16px auto 18px;
+      background: linear-gradient(90deg, #2563eb, #1d4ed8);
+      color:#fff;
+      border-radius:14px;
+      padding:18px 18px;
+      box-shadow: 0 18px 35px rgba(37,99,235,.22);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      border:1px solid rgba(255,255,255,.18);
+    }
+    .resourcesLeft h3{
+      margin:0;
+      font-weight:900;
+      letter-spacing:-.01em;
+    }
+    .resourcesLeft p{
+      margin:6px 0 0;
+      opacity:.9;
+      font-weight:600;
+      font-size:14px;
+    }
+    .resourcesRight{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .btnWhite{
+      background:#fff;
+      color:#1d4ed8;
+      border:none;
+      border-radius:10px;
+      padding:10px 14px;
+      font-family:inherit;
+      font-weight:900;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      box-shadow: 0 12px 22px rgba(2,6,23,.16);
+      white-space:nowrap;
+      transition:transform .08s ease;
+    }
+    .btnWhite:active{ transform: translateY(1px); }
+
+    /* filter tabs */
+    .tabsWrap{
+      width:min(980px, 100%);
+      margin:0 auto 16px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:8px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      box-shadow: var(--shadow-soft);
+      flex-wrap:wrap;
+    }
+    .tab{
+      border:none;
+      background:transparent;
+      color:#475569;
+      font-weight:900;
+      font-family:inherit;
+      padding:8px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      font-size:14px;
+    }
+    .tab.active{
+      background:#fff;
+      color:#111827;
+      outline:2px solid #111827;
+      outline-offset:-2px;
+    }
+
+    /* alerts list */
+    .list{
+      width:min(980px, 100%);
+      margin:0 auto;
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+    .alertCard{
+      position:relative;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:14px;
+      box-shadow: var(--shadow);
+      padding:18px 18px 16px;
+      overflow:hidden;
+    }
+    .alertCard:before{
+      content:"";
+      position:absolute;
+      left:0;
+      top:0;
+      bottom:0;
+      width:4px;
+      border-radius:14px 0 0 14px;
+      background: var(--urgent);
+    }
+    .alertCard.warning:before{ background: var(--warning); }
+    .alertCard.advisory:before{ background: var(--advisory); }
+
+    .alertTop{
+      display:grid;
+      grid-template-columns: 28px 1fr;
+      gap:12px;
+      align-items:flex-start;
+    }
+    .emoji{
+      font-size:22px;
+      line-height:1;
+      margin-top:2px;
+    }
+    .alertTitleRow{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .alertTitle{
+      margin:0;
+      font-size:18px;
+      font-weight:900;
+      letter-spacing:-.01em;
+    }
+
+    .pill{
+      font-size:12px;
+      font-weight:900;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid;
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      line-height:1;
+      white-space:nowrap;
+    }
+    .pill.urgent{ color:var(--urgent); border-color:#fecaca; background:var(--urgent-bg); }
+    .pill.warning{ color:var(--warning); border-color:#fed7aa; background:var(--warning-bg); }
+    .pill.advisory{ color:var(--advisory); border-color:#bfdbfe; background:var(--advisory-bg); }
+
+    .verified{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      color:var(--verified);
+      font-weight:900;
+      font-size:13px;
+      white-space:nowrap;
+    }
+    .check{
+      width:16px;height:16px;
+      border-radius:999px;
+      border:2px solid var(--verified);
+      display:grid;
+      place-items:center;
+    }
+    .check svg{ width:10px;height:10px; stroke:var(--verified); stroke-width:3; fill:none; }
+
+    .alertDesc{
+      margin:10px 0 0;
+      color:#334155;
+      font-weight:600;
+      line-height:1.6;
+      font-size:14.5px;
+    }
+
+    .cardActions{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .actionBtn{
+      border:1px solid #e5e7eb;
+      background:#fff;
+      color:#0f172a;
+      border-radius:10px;
+      padding:8px 12px;
+      font-weight:900;
+      font-family:inherit;
+      cursor:pointer;
+      box-shadow: 0 10px 18px rgba(2,6,23,.06);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-size:13px;
+    }
+    .actionBtn:active{ transform:translateY(1px); }
+    .actionBtn.primary{
+      background:#111827;
+      color:#fff;
+      border-color:#111827;
+    }
+
+    .meta{
+      margin-top:14px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      color:#64748b;
+      flex-wrap:wrap;
+      font-weight:700;
+      font-size:13px;
+    }
+    .metaItem{
+      display:flex;
+      align-items:center;
+      gap:7px;
+    }
+    .metaIcon{
+      width:16px;height:16px;
+      stroke:#94a3b8; fill:none; stroke-width:2;
+      stroke-linecap:round; stroke-linejoin:round;
+    }
+
+    .sourcePill{
+      padding:6px 10px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:12px;
+      background:#0f172a;
+      color:#fff;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+    }
+    .sourcePill.blue{ background:#dbeafe; color:#1d4ed8; }
+    .sourcePill.purple{ background:#f3e8ff; color:#7c3aed; }
+    .sourcePill.green{ background:#dcfce7; color:#166534; }
+
+    /* toast */
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:20px;
+      transform:translateX(-50%);
+      background:#111827;
+      color:#fff;
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:800;
+      box-shadow:0 16px 30px rgba(2,6,23,.20);
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .2s ease, transform .2s ease;
+      z-index:9999;
+      max-width:min(92vw, 520px);
+      text-align:center;
+    }
+    .toast.show{
+      opacity:1;
+      transform:translateX(-50%) translateY(-6px);
+    }
+
+    /* responsive */
+    @media (max-width: 860px){
+      .statsRow{ grid-template-columns: 1fr; }
+      .searchRow{ grid-template-columns: 1fr; }
+      .resourcesBar{ flex-direction:column; align-items:flex-start; }
+      .resourcesRight{ width:100%; justify-content:flex-start; flex-wrap:wrap; }
+      .miniBar{ transform: translateX(10px); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Mini bar -->
+  <div class="miniBar" aria-label="Page switcher bar">
+    <div class="miniWrap">
+      <select class="miniSelect" id="pageSelect" aria-label="Switch page">
+        <option value="index.html">Home</option>
+        <option value="scamanalyzer.html">ScamAnalyzer</option>
+        <option value="courses.html">Courses</option>
+        <option value="trustedContacts.html">TrustedContacts</option>
+        <option value="alerts.html">Alerts</option>
+        <option value="simulator.html">Simulator</option>
+        <option value="report.html">Report</option>
+      </select>
+    </div>
+
+    <button class="miniIconBtn" id="mobileBtn" title="Switch to mobile view" aria-label="Switch to mobile view">
+      <svg class="miniIcon" viewBox="0 0 24 24">
+        <rect x="7" y="2.8" width="10" height="18.4" rx="2.2"></rect>
+        <line x1="11" y1="18.5" x2="13" y2="18.5"></line>
+      </svg>
+    </button>
+
+    <button class="miniIconBtn" id="refreshBtn" title="Refresh" aria-label="Refresh">
+      <svg class="miniIcon" viewBox="0 0 24 24">
+        <path d="M20 12a8 8 0 1 1-2.3-5.7"></path>
+        <path d="M20 4v6h-6"></path>
+      </svg>
+    </button>
+  </div>
+
+  <main class="page">
+    <div class="container">
+      <div class="topIcon" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f97316" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 7h18s-3 0-3-7"></path>
+          <path d="M13.73 21a2 2 0 01-3.46 0"></path>
+        </svg>
+      </div>
+
+      <h1 class="title">Community Scam Alerts</h1>
+      <p class="subtitle">
+        Stay informed about the latest scams reported by federal agencies and your community.
+      </p>
+
+      <!-- Stats -->
+      <section class="statsRow" aria-label="Alert summary">
+        <div class="statCard urgentStat">
+          <p class="statNum" id="urgentCountTop">0</p>
+          <p class="statLabel">Urgent Alerts</p>
+        </div>
+        <div class="statCard warnStat">
+          <p class="statNum" id="warningCountTop">0</p>
+          <p class="statLabel">Warnings</p>
+        </div>
+        <div class="statCard advStat">
+          <p class="statNum" id="advisoryCountTop">0</p>
+          <p class="statLabel">Advisories</p>
+        </div>
+      </section>
+
+      <!-- Search + button -->
+      <section class="searchRow" aria-label="Search alerts">
+        <div class="searchBox">
+          <svg class="searchIcon" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="M20 20l-3.3-3.3"></path>
+          </svg>
+          <input id="searchInput" type="text" placeholder="Search alerts..." autocomplete="off" />
+        </div>
+
+        <button class="btnOrange" id="latestBtn" type="button">
+          <svg id="latestIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
+            <path d="M21 3v7h-7"></path>
+          </svg>
+          <span id="latestLabel">Get Latest Alerts</span>
+        </button>
+      </section>
+
+      <!-- Official resources -->
+      <section class="resourcesBar" aria-label="Official government resources">
+        <div class="resourcesLeft">
+          <h3>Official Government Resources</h3>
+          <p>Report scams and get help from federal agencies</p>
+        </div>
+        <div class="resourcesRight">
+          <button class="btnWhite" id="ftcBtn" type="button">
+            FTC Report
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 3h7v7"></path>
+              <path d="M10 14L21 3"></path>
+              <path d="M21 14v7h-7"></path>
+              <path d="M3 10v11h11"></path>
+            </svg>
+          </button>
+
+          <button class="btnWhite" id="ic3Btn" type="button">
+            FBI IC3
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 3h7v7"></path>
+              <path d="M10 14L21 3"></path>
+              <path d="M21 14v7h-7"></path>
+              <path d="M3 10v11h11"></path>
+            </svg>
+          </button>
+
+          <button class="btnWhite" id="resetBtn" type="button" title="Reset alerts back to default">
+            Reset
+          </button>
+        </div>
+      </section>
+
+      <!-- Filter tabs -->
+      <div class="tabsWrap" role="tablist" aria-label="Alert filters">
+        <button class="tab active" data-filter="all" role="tab" aria-selected="true" id="tabAll">All (0)</button>
+        <button class="tab" data-filter="urgent" role="tab" aria-selected="false" id="tabUrgent">Urgent (0)</button>
+        <button class="tab" data-filter="warning" role="tab" aria-selected="false" id="tabWarning">Warning (0)</button>
+        <button class="tab" data-filter="advisory" role="tab" aria-selected="false" id="tabAdvisory">Advisory (0)</button>
+      </div>
+
+      <!-- Alerts list (rendered by JS) -->
+      <section class="list" id="alertsList" aria-label="Alerts list"></section>
+    </div>
+  </main>
+
+  <div class="toast" id="toast">Saved</div>
+
+  <script>
+    /**********************
+     * 1) Fix the biggest issue:
+     *    You pasted TWO full HTML docs in one file.
+     *    This version is ONE document and renders alerts via JS.
+     **********************/
+
+    // ===== Mini bar behavior =====
+    const pageSelect = document.getElementById('pageSelect');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const mobileBtn  = document.getElementById('mobileBtn');
+
+    // Auto-select current page in dropdown
+    (function setCurrentPage(){
+      const current = (location.pathname.split("/").pop() || "alerts.html").toLowerCase();
+      [...pageSelect.options].forEach(o => {
+        if (o.value.toLowerCase() === current) o.selected = true;
+      });
+    })();
+
+    pageSelect.addEventListener('change', () => window.location.href = pageSelect.value);
+    refreshBtn.addEventListener('click', () => window.location.reload());
+
+    mobileBtn.addEventListener('click', () => {
+      document.body.classList.toggle('forceMobile');
+      if (document.body.classList.contains('forceMobile')) {
+        document.documentElement.style.maxWidth = "430px";
+        document.documentElement.style.margin = "0 auto";
+        document.body.style.background = "#111827";
+      } else {
+        document.documentElement.style.maxWidth = "";
+        document.documentElement.style.margin = "";
+        document.body.style.background = "";
+      }
+    });
+
+    // ===== Toast helper =====
+    const toast = document.getElementById('toast');
+    let toastTimer = null;
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=>toast.classList.remove('show'), 1500);
+    }
+
+    // ===== Alerts “database” (localStorage) =====
+    const LS_KEY = "guardian_alerts_v1";
+
+    // Default alerts (your originals, but cleaned: sources are real clickable buttons now)
+    const DEFAULT_ALERTS = [
+      {
+        id: "a1",
+        type: "urgent",
+        emoji: "🤖",
+        title: "Beware: Impersonation Scams Using AI-Generated Voices",
+        desc: "Scammers use AI-generated voices to impersonate trusted individuals to pressure victims into sending money or sharing personal info. Verify using a saved number + a family passphrase.",
+        sourceLabel: "FBI",
+        region: "United States",
+        reports: 405,
+        date: "2025-12-27",
+        verified: true,
+        sourceUrl: "https://www.ic3.gov/"
+      },
+      {
+        id: "a2",
+        type: "urgent",
+        emoji: "🤖",
+        title: "AI Deepfakes Impersonating Family Members",
+        desc: "Audio/video deepfakes can fake a grandchild or family member asking for urgent money. Always call back using the contact you already have saved.",
+        sourceLabel: "FBI",
+        region: "United States",
+        reports: 164,
+        date: "2025-12-27",
+        verified: true,
+        sourceUrl: "https://www.ic3.gov/"
+      },
+      {
+        id: "a3",
+        type: "urgent",
+        emoji: "📞",
+        title: "Tech Support Scams Targeting Seniors",
+        desc: "Scammers claim your device has a virus and ask for remote access + payment. Never call pop-up numbers. Close the tab and contact your provider using the official website.",
+        sourceLabel: "FBI",
+        region: "United States",
+        reports: 546,
+        date: "2025-12-27",
+        verified: true,
+        sourceUrl: "https://www.ic3.gov/"
+      },
+      {
+        id: "a4",
+        type: "urgent",
+        emoji: "📞",
+        title: "IRS Impersonation Calls Surge Nationwide",
+        desc: "Callers threaten arrest over “back taxes” and demand gift cards. The real IRS does not demand payment via gift cards or threaten immediate arrest by phone.",
+        sourceLabel: "Federal Trade Commission",
+        sourceTheme: "blue",
+        region: "Nationwide",
+        reports: 847,
+        date: "2025-12-27",
+        verified: true,
+        sourceUrl: "https://reportfraud.ftc.gov/"
+      },
+      {
+        id: "a5",
+        type: "urgent",
+        emoji: "🤖",
+        title: "AI Voice Cloning Used in Grandparent Scams",
+        desc: "Scammers clone voices from social media clips and claim an emergency. Use a code word and verify by calling the person on their known number.",
+        sourceLabel: "FBI",
+        region: "Nationwide",
+        reports: 523,
+        date: "2025-12-27",
+        verified: true,
+        sourceUrl: "https://www.ic3.gov/"
+      },
+      {
+        id: "w1",
+        type: "warning",
+        emoji: "👥",
+        title: "Fake Customer Service Accounts in Comments",
+        desc: "Scammers pretend to be airline/bank support and redirect victims to fake numbers or DMs. Only use contact info from the company’s official site/app.",
+        sourceLabel: "Federal Trade Commission",
+        sourceTheme: "blue",
+        region: "United States",
+        reports: 241,
+        date: "2025-12-27",
+        verified: true,
+        sourceUrl: "https://reportfraud.ftc.gov/"
+      },
+      {
+        id: "w2",
+        type: "warning",
+        emoji: "🌐",
+        title: "Fraudulent Money Recovery Services",
+        desc: "Scammers promise to recover money from earlier scams and request upfront fees. Legit agencies don’t charge fees to report fraud.",
+        sourceLabel: "Federal Trade Commission",
+        sourceTheme: "blue",
+        region: "United States",
+        reports: 401,
+        date: "2025-12-27",
+        verified: true,
+        sourceUrl: "https://reportfraud.ftc.gov/"
+      },
+      {
+        id: "w3",
+        type: "warning",
+        emoji: "📧",
+        title: "Medicare Enrollment Phishing Emails",
+        desc: "Emails claim you must verify Medicare info. Links lead to fake sites. Medicare won’t email asking for sensitive personal details.",
+        sourceLabel: "Federal Trade Commission",
+        sourceTheme: "blue",
+        region: "Nationwide",
+        reports: 312,
+        date: "2025-12-27",
+        verified: true,
+        sourceUrl: "https://reportfraud.ftc.gov/"
+      },
+      {
+        id: "w4",
+        type: "warning",
+        emoji: "🌐",
+        title: "Tech Support Pop-up Scams",
+        desc: "Fake “virus detected” popups include a phone number. Don’t call. Close the browser/tab and run a trusted security scan instead.",
+        sourceLabel: "Community Report",
+        sourceTheme: "purple",
+        region: "California, Florida, Texas",
+        reports: 189,
+        date: "2025-12-27",
+        verified: true,
+        sourceUrl: ""
+      },
+      {
+        id: "ad1",
+        type: "advisory",
+        emoji: "📞",
+        title: "Social Security Number 'Suspended' Scam",
+        desc: "Automated calls claim your SSN is suspended. SSA does not suspend numbers. Hang up and report to the FTC.",
+        sourceLabel: "State Attorney General",
+        sourceTheme: "green",
+        region: "Northeast US",
+        reports: 256,
+        date: "2025-12-27",
+        verified: true,
+        sourceUrl: ""
+      }
+    ];
+
+    function loadAlerts(){
+      try{
+        const raw = localStorage.getItem(LS_KEY);
+        if(!raw) return null;
+        const parsed = JSON.parse(raw);
+        if(!Array.isArray(parsed)) return null;
+        return parsed;
+      }catch(e){
+        return null;
+      }
+    }
+
+    function saveAlerts(alerts){
+      localStorage.setItem(LS_KEY, JSON.stringify(alerts));
+    }
+
+    // ===== Fake "latest alerts" feed (this simulates real fetching) =====
+    // Clicking "Get Latest Alerts" will add 1-2 new items (deduped).
+    const LATEST_FEED = [
+      {
+        id: "n1",
+        type: "warning",
+        emoji: "💳",
+        title: "Bank 'Fraud Department' Verification Codes Scam",
+        desc: "Scammers pose as your bank and ask for the one-time code sent to your phone. That code lets them take over your account. Never share verification codes.",
+        sourceLabel: "Federal Trade Commission",
+        sourceTheme: "blue",
+        region: "Nationwide",
+        reports: 318,
+        date: "2026-01-06",
+        verified: true,
+        sourceUrl: "https://reportfraud.ftc.gov/"
+      },
+      {
+        id: "n2",
+        type: "urgent",
+        emoji: "📦",
+        title: "Package Delivery Texts with Fake Payment Links",
+        desc: "Texts claim you must pay a small fee to release a package. Links steal card details. Track packages only through the official carrier website/app.",
+        sourceLabel: "Community Report",
+        sourceTheme: "purple",
+        region: "Multi-state",
+        reports: 211,
+        date: "2026-01-07",
+        verified: false,
+        sourceUrl: ""
+      }
+    ];
+
+    // ===== Render + filtering =====
+    const alertsList = document.getElementById('alertsList');
+    const tabs = Array.from(document.querySelectorAll('.tab'));
+    const searchInput = document.getElementById('searchInput');
+
+    const countsTop = {
+      urgent: document.getElementById('urgentCountTop'),
+      warning: document.getElementById('warningCountTop'),
+      advisory: document.getElementById('advisoryCountTop'),
+    };
+
+    const tabEls = {
+      all: document.getElementById('tabAll'),
+      urgent: document.getElementById('tabUrgent'),
+      warning: document.getElementById('tabWarning'),
+      advisory: document.getElementById('tabAdvisory'),
+    };
+
+    let currentFilter = 'all';
+
+    function escapeHTML(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    function formatDate(iso){
+      // iso like 2026-01-07 -> 01/07/2026
+      if(!iso || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso || "";
+      const [y,m,d] = iso.split("-");
+      return `${m}/${d}/${y}`;
+    }
+
+    function sourcePillHTML(a){
+      const theme = a.sourceTheme || "";
+      const cls = theme ? `sourcePill ${theme}` : "sourcePill";
+      return `<span class="${cls}">${escapeHTML(a.sourceLabel || "Source")}</span>`;
+    }
+
+    function pillHTML(type){
+      const t = type || "advisory";
+      const label = t.charAt(0).toUpperCase() + t.slice(1);
+      return `<span class="pill ${t}">${label}</span>`;
+    }
+
+    function verifiedHTML(isVerified){
+      if(!isVerified) return "";
+      return `
+        <span class="verified">
+          <span class="check">
+            <svg viewBox="0 0 24 24"><path d="M6 12l4 4 8-8"/></svg>
+          </span>
+          Verified
+        </span>
+      `;
+    }
+
+    function cardClass(type){
+      if(type === "warning") return "alertCard warning";
+      if(type === "advisory") return "alertCard advisory";
+      return "alertCard urgent";
+    }
+
+    function cardHTML(a){
+      const type = a.type || "advisory";
+      const viewSourceBtn = a.sourceUrl
+        ? `<button class="actionBtn" type="button" data-action="openSource" data-url="${escapeHTML(a.sourceUrl)}">View source</button>`
+        : `<button class="actionBtn" type="button" data-action="noSource">No source link</button>`;
+
+      return `
+        <article class="${cardClass(type)}" data-type="${escapeHTML(type)}" data-id="${escapeHTML(a.id)}">
+          <div class="alertTop">
+            <div class="emoji">${escapeHTML(a.emoji || "🔔")}</div>
+            <div>
+              <div class="alertTitleRow">
+                <h3 class="alertTitle">${escapeHTML(a.title || "")}</h3>
+                ${pillHTML(type)}
+                ${verifiedHTML(!!a.verified)}
+              </div>
+
+              <p class="alertDesc">${escapeHTML(a.desc || "")}</p>
+
+              <div class="cardActions">
+                <button class="actionBtn primary" type="button" data-action="copySummary">Copy summary</button>
+                ${viewSourceBtn}
+              </div>
+
+              <div class="meta">
+                ${sourcePillHTML(a)}
+                <span class="metaItem">
+                  <svg class="metaIcon" viewBox="0 0 24 24"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11z"></path><circle cx="12" cy="10" r="2.2"></circle></svg>
+                  ${escapeHTML(a.region || "")}
+                </span>
+                <span class="metaItem">
+                  <svg class="metaIcon" viewBox="0 0 24 24"><path d="M4 14l6-6 4 4 6-6"></path><path d="M20 20H4"></path></svg>
+                  ${escapeHTML(String(a.reports ?? ""))} reports
+                </span>
+                <span class="metaItem">
+                  <svg class="metaIcon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v6l3 2"></path></svg>
+                  ${escapeHTML(formatDate(a.date))}
+                </span>
+              </div>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function computeCounts(list){
+      const c = { urgent:0, warning:0, advisory:0, all: list.length };
+      list.forEach(a => {
+        if(c[a.type] !== undefined) c[a.type]++;
+      });
+      return c;
+    }
+
+    function updateCountLabels(counts){
+      countsTop.urgent.textContent = counts.urgent;
+      countsTop.warning.textContent = counts.warning;
+      countsTop.advisory.textContent = counts.advisory;
+
+      tabEls.all.textContent = `All (${counts.all})`;
+      tabEls.urgent.textContent = `Urgent (${counts.urgent})`;
+      tabEls.warning.textContent = `Warning (${counts.warning})`;
+      tabEls.advisory.textContent = `Advisory (${counts.advisory})`;
+    }
+
+    function render(alerts){
+      alertsList.innerHTML = alerts.map(cardHTML).join("");
+    }
+
+    function applyFilters(){
+      const q = searchInput.value.trim().toLowerCase();
+      const allCards = Array.from(document.querySelectorAll('.alertCard'));
+
+      // Show/hide cards
+      allCards.forEach(card => {
+        const type = card.getAttribute('data-type');
+        const text = card.innerText.toLowerCase();
+        const matchesFilter = (currentFilter === 'all') || (type === currentFilter);
+        const matchesSearch = !q || text.includes(q);
+        card.style.display = (matchesFilter && matchesSearch) ? "" : "none";
+      });
+
+      // Counts based on SEARCH only (like typical UI)
+      const searchMatchedIds = new Set();
+      allCards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+        if(!q || text.includes(q)) searchMatchedIds.add(card.getAttribute("data-id"));
+      });
+
+      const searchMatchedAlerts = state.alerts.filter(a => searchMatchedIds.has(a.id));
+      updateCountLabels(computeCounts(searchMatchedAlerts));
+    }
+
+    // ===== State init =====
+    const saved = loadAlerts();
+    const state = {
+      alerts: saved && saved.length ? saved : DEFAULT_ALERTS.slice()
+    };
+
+    // Save defaults on first load so it "actually works" persistently
+    if(!saved) saveAlerts(state.alerts);
+
+    // Initial render + counts
+    render(state.alerts);
+    updateCountLabels(computeCounts(state.alerts));
+    applyFilters();
+
+    // Tabs
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        applyFilters();
+      });
+    });
+
+    // Search
+    searchInput.addEventListener('input', applyFilters);
+
+    // Card actions (copy + open source)
+    alertsList.addEventListener("click", async (e) => {
+      const btn = e.target.closest("button[data-action]");
+      if(!btn) return;
+
+      const card = e.target.closest(".alertCard");
+      if(!card) return;
+
+      const id = card.getAttribute("data-id");
+      const alertObj = state.alerts.find(a => a.id === id);
+      if(!alertObj) return;
+
+      const action = btn.getAttribute("data-action");
+
+      if(action === "copySummary"){
+        const summary =
+`Guardian Shield Alert
+Type: ${alertObj.type?.toUpperCase()}
+Title: ${alertObj.title}
+Date: ${alertObj.date}
+Source: ${alertObj.sourceLabel}${alertObj.sourceUrl ? " ("+alertObj.sourceUrl+")" : ""}
+Summary: ${alertObj.desc}
+
+Suggested next step: Verify independently using a saved number, and report suspicious activity to the FTC or IC3.`;
+
+        try{
+          await navigator.clipboard.writeText(summary);
+          showToast("Copied to clipboard");
+        }catch(err){
+          // fallback
+          const ta = document.createElement("textarea");
+          ta.value = summary;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          ta.remove();
+          showToast("Copied");
+        }
+      }
+
+      if(action === "openSource"){
+        const url = btn.getAttribute("data-url");
+        if(url) window.open(url, "_blank");
+      }
+
+      if(action === "noSource"){
+        showToast("No source link for this alert");
+      }
+    });
+
+    // ===== "Get Latest Alerts" button now ACTUALLY DOES something =====
+    const latestBtn = document.getElementById("latestBtn");
+    const latestLabel = document.getElementById("latestLabel");
+    const latestIcon = document.getElementById("latestIcon");
+
+    function setLoading(isLoading){
+      if(isLoading){
+        latestBtn.disabled = true;
+        latestIcon.outerHTML = `<span class="spinner" id="latestIcon"></span>`;
+        latestLabel.textContent = "Fetching…";
+      }else{
+        latestBtn.disabled = false;
+        const spinner = document.getElementById("latestIcon");
+        if(spinner) spinner.outerHTML = `
+          <svg id="latestIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
+            <path d="M21 3v7h-7"></path>
+          </svg>
+        `;
+        latestLabel.textContent = "Get Latest Alerts";
+      }
+    }
+
+    function mergeLatest(){
+      const existing = new Set(state.alerts.map(a => a.id));
+      const newOnes = [];
+
+      // add 1-2 items randomly each click
+      const shuffled = LATEST_FEED.slice().sort(()=>Math.random()-0.5);
+      const take = Math.random() < 0.65 ? 1 : 2;
+
+      for(const item of shuffled.slice(0, take)){
+        if(!existing.has(item.id)){
+          newOnes.push(item);
+          existing.add(item.id);
+        }
+      }
+
+      if(newOnes.length){
+        // add to top
+        state.alerts = newOnes.concat(state.alerts);
+        saveAlerts(state.alerts);
+        render(state.alerts);
+        // keep filter + search state
+        applyFilters();
+      }
+
+      return newOnes.length;
+    }
+
+    latestBtn.addEventListener("click", () => {
+      setLoading(true);
+
+      // simulate network request
+      setTimeout(() => {
+        const added = mergeLatest();
+        setLoading(false);
+
+        if(added > 0){
+          showToast(`Added ${added} new alert${added>1?"s":""}`);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }else{
+          showToast("No new alerts right now");
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }, 850);
+    });
+
+    // ===== Resource buttons =====
+    document.getElementById('ftcBtn').addEventListener('click', () => {
+      window.open('https://reportfraud.ftc.gov/', '_blank');
+    });
+    document.getElementById('ic3Btn').addEventListener('click', () => {
+      window.open('https://www.ic3.gov/', '_blank');
+    });
+
+    // ===== Reset button =====
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      localStorage.removeItem(LS_KEY);
+      state.alerts = DEFAULT_ALERTS.slice();
+      saveAlerts(state.alerts);
+      render(state.alerts);
+      searchInput.value = "";
+      currentFilter = "all";
+      tabs.forEach(t => t.classList.remove("active"));
+      document.getElementById("tabAll").classList.add("active");
+      updateCountLabels(computeCounts(state.alerts));
+      applyFilters();
+      showToast("Reset to default alerts");
+    });
+  </script>
+</body>
+</html>

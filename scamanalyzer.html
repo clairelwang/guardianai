@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Guardian Shield — AI Scam Analyzer</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    .mini-bar {
+  position: fixed;
+  top: 14px;
+  left: 56px;          /* aligns with page text */
+  z-index: 9999;
+  display: flex;
+  gap: 8px;
+  background: #ffffff;
+  padding: 6px 8px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.mini-bar select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.mini-bar button {
+  border: none;
+  background: #f3f4f6;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.mini-bar button:hover {
+  background: #e5e7eb;
+}
+
+    :root{
+      --bg:#ffffff;
+      --ink:#0f172a;
+      --muted:#64748b;
+      --line:#e5e7eb;
+
+      --card:#ffffff;
+      --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+
+      --lavender-50:#f5f0ff;
+      --lavender-100:#efe6ff;
+      --lavender-200:#e3d3ff;
+      --lavender-500:#a855f7;
+      --btn:#c8a2ff;           /* button bar like screenshot */
+      --btn-text:#ffffff;
+
+      --radius:16px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+    }
+
+    /* page layout (lots of whitespace like screenshot) */
+    .page{
+      min-height:100%;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:64px 18px 90px;
+    }
+    .wrap{
+      width:min(980px, 100%);
+      text-align:center;
+    }
+
+    /* icon pill */
+    .top-icon{
+      width:56px;
+      height:56px;
+      margin:0 auto 18px;
+      border-radius:16px;
+      background:var(--lavender-50);
+      display:grid;
+      place-items:center;
+    }
+    .top-icon svg{
+      width:28px;height:28px;
+      stroke:var(--lavender-500);
+    }
+
+    h1{
+      margin:0 0 10px;
+      font-size:40px;
+      letter-spacing:-0.03em;
+      font-weight:800;
+      color:#0b1220;
+    }
+    .sub{
+      margin:0 auto 36px;
+      max-width:680px;
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.65;
+      font-weight:500;
+    }
+
+    /* main card */
+    .card{
+      width:min(820px, 100%);
+      margin:0 auto;
+      text-align:left;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      padding:26px 26px 22px;
+    }
+
+    .field{
+      margin-bottom:18px;
+    }
+    .label{
+      display:block;
+      font-size:13px;
+      font-weight:700;
+      color:#0f172a;
+      margin:0 0 10px;
+    }
+
+    .select-wrap{
+      position:relative;
+    }
+    select{
+      width:100%;
+      height:46px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      padding:0 44px 0 44px;
+      font-size:15px;
+      font-weight:600;
+      outline:none;
+      background:#fff;
+      color:#0f172a;
+      appearance:none;
+    }
+    select:focus{
+      border-color: #d7c3ff;
+      box-shadow: 0 0 0 4px rgba(168,85,247,.12);
+    }
+
+    /* left small icon in select */
+    .select-ico{
+      position:absolute;
+      left:14px;
+      top:50%;
+      transform:translateY(-50%);
+      width:18px;height:18px;
+      display:grid;
+      place-items:center;
+      color:#8b5cf6;
+      pointer-events:none;
+    }
+
+    /* down chevron */
+    .chev{
+      position:absolute;
+      right:14px;
+      top:50%;
+      transform:translateY(-50%);
+      width:18px;height:18px;
+      color:#94a3b8;
+      pointer-events:none;
+    }
+
+    textarea{
+      width:100%;
+      min-height:180px;
+      border:1px solid var(--line);
+      border-radius:8px;
+      padding:14px 14px;
+      font-size:14px;
+      font-weight:500;
+      outline:none;
+      resize:vertical;
+      color:#0f172a;
+    }
+    textarea::placeholder{
+      color:#9aa5b1;
+      font-weight:500;
+    }
+    textarea:focus{
+      border-color:#d7c3ff;
+      box-shadow: 0 0 0 4px rgba(168,85,247,.12);
+    }
+
+    .btn{
+      width:100%;
+      height:54px;
+      border:none;
+      border-radius:8px;
+      background:var(--btn);
+      color:var(--btn-text);
+      font-weight:800;
+      font-size:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      cursor:pointer;
+      box-shadow: 0 14px 30px rgba(168, 85, 247, 0.18);
+    }
+    .btn:active{ transform:translateY(1px); }
+    .btn .btn-ico{
+      width:18px;height:18px;
+      display:grid;
+      place-items:center;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.08));
+    }
+
+    /* match screenshot: huge spacing above card */
+    .card-spacer{ height:6px; }
+
+    /* optional result panel (hidden by default) */
+    .result{
+      margin-top:18px;
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:16px;
+      background:#fafafa;
+      display:none;
+    }
+    .result h3{
+      margin:0 0 8px;
+      font-size:14px;
+      font-weight:800;
+    }
+    .result p{
+      margin:0;
+      color:#334155;
+      line-height:1.6;
+      font-size:14px;
+    }
+
+    @media (max-width: 560px){
+      h1{ font-size:30px; }
+      .sub{ font-size:15px; }
+      .card{ padding:18px 16px 16px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Mini Page Switcher -->
+<div class="mini-bar">
+  <select id="pageSelect">
+    <option value="index.html">Home</option>
+    <option value="scamanalyzer.html">ScamAnalyzer</option>
+    <option value="courses.html">Courses</option>
+    <option value="trustedContacts.html">TrustedContacts</option>
+    <option value="alerts.html">Alerts</option>
+    <option value="simulator.html">Simulator</option>
+    <option value="report.html">Report</option>
+  </select>
+
+  <button onclick="toggleMobileView()" title="Mobile view">📱</button>
+  <button onclick="location.reload()" title="Refresh">⟳</button>
+</div>
+
+  <main class="page">
+    <div class="wrap">
+      <div class="top-icon" aria-hidden="true">
+        <!-- brain icon -->
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M9 4.2c-2 0-3.6 1.6-3.6 3.6 0 .5.1 1 .3 1.5C4.7 9.8 4 11 4 12.5c0 1.6.9 2.9 2.2 3.4v.2c0 2 1.6 3.6 3.6 3.6H10" stroke-width="2" stroke-linecap="round"/>
+          <path d="M15 4.2c2 0 3.6 1.6 3.6 3.6 0 .5-.1 1-.3 1.5 1 .5 1.7 1.7 1.7 3.2 0 1.6-.9 2.9-2.2 3.4v.2c0 2-1.6 3.6-3.6 3.6H14" stroke-width="2" stroke-linecap="round"/>
+          <path d="M12 4v16" stroke-width="2" stroke-linecap="round" opacity=".8"/>
+        </svg>
+      </div>
+
+      <h1>AI Scam Analyzer</h1>
+      <p class="sub">
+        Paste a suspicious message, email, or describe a phone call. Our AI will<br>
+        analyze it for scam patterns and explain any red flags.
+      </p>
+
+      <div class="card">
+        <div class="field">
+          <label class="label" for="type">Type of Communication</label>
+          <div class="select-wrap">
+            <span class="select-ico" aria-hidden="true">
+              <!-- small dot icon like screenshot -->
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <rect x="4.5" y="6.5" width="15" height="11" rx="2.5" stroke="#8b5cf6" stroke-width="2"/>
+                <circle cx="8" cy="12" r="2.2" fill="#8b5cf6"/>
+              </svg>
+            </span>
+
+            <select id="type" name="type">
+              <option selected>Email</option>
+              <option>Text Message</option>
+              <option>Phone Call</option>
+              <option>Social Media</option>
+              <option>Other</option>
+            </select>
+
+            <span class="chev" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                <path d="M6 9l6 6 6-6" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="content">Paste or describe the suspicious content</label>
+          <textarea id="content" placeholder="Paste the message here..."></textarea>
+        </div>
+
+        <button class="btn" type="button" id="analyzeBtn">
+          <span class="btn-ico" aria-hidden="true">
+            <!-- tiny brain icon -->
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+              <path d="M9 5c-1.6 0-3 1.3-3 3 0 .4.1.8.2 1.1-.9.5-1.4 1.4-1.4 2.5 0 1.2.7 2.2 1.8 2.6v.2c0 1.6 1.3 3 3 3H10" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+              <path d="M15 5c1.6 0 3 1.3 3 3 0 .4-.1.8-.2 1.1.9.5 1.4 1.4 1.4 2.5 0 1.2-.7 2.2-1.8 2.6v.2c0 1.6-1.3 3-3 3H14" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+              <path d="M12 5v14" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity=".85"/>
+            </svg>
+          </span>
+          Analyze for Scams
+        </button>
+
+        <!-- optional (keep hidden if you don't want functionality) -->
+        <div class="result" id="result">
+          <h3>Analysis</h3>
+          <p id="resultText"></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+  <script>
+    // Optional tiny demo interaction (remove if you want purely static)
+    const btn = document.getElementById('analyzeBtn');
+    const box = document.getElementById('content');
+    const result = document.getElementById('result');
+    const resultText = document.getElementById('resultText');
+
+    btn.addEventListener('click', () => {
+      const t = box.value.trim();
+      if (!t) {
+        result.style.display = 'block';
+        resultText.textContent = "Please paste or describe the suspicious content to analyze.";
+        return;
+      }
+      result.style.display = 'block';
+      resultText.textContent =
+        "This is a demo UI. Connect your AI backend here to return scam risk level, red flags, and recommended next steps.";
+    });
+  </script>
+  <script>
+  const pageSelect = document.getElementById("pageSelect");
+
+  const currentPage =
+    location.pathname.split("/").pop() || "index.html";
+
+  [...pageSelect.options].forEach(opt => {
+    if (opt.value === currentPage) opt.selected = true;
+  });
+
+  pageSelect.addEventListener("change", () => {
+    location.href = pageSelect.value;
+  });
+
+  function toggleMobileView() {
+    document.body.classList.toggle("mobile-preview");
+  }
+</script>
+
+</body>
+</html>

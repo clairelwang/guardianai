@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Romance & Relationship Scams – Guardian Shield</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --ink:#0f172a;
+      --muted:#64748b;
+      --line:#e5e7eb;
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --shadow:0 14px 30px rgba(15,23,42,.06);
+      --radius:18px;
+
+      --pink:#ec4899;
+      --pink-100:#fce7f3;
+      --blue:#2563eb;
+      --blue-100:#eff6ff;
+      --amber:#f59e0b;
+      --amber-100:#fef3c7;
+      --red:#ef4444;
+      --red-100:#fee2e2;
+      --tab:#f1f5f9;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+    }
+
+    .container{
+      width:min(980px, calc(100% - 56px));
+      margin:0 auto;
+      padding:44px 0 80px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      margin-bottom:18px;
+    }
+    .back{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      color:#334155;
+      text-decoration:none;
+      font-weight:800;
+      font-size:13px;
+    }
+    .back:hover{ text-decoration:underline; }
+
+    .header{
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+      margin-bottom:12px;
+    }
+    .icon{
+      width:44px;
+      height:44px;
+      border-radius:14px;
+      background:var(--pink);
+      display:grid;
+      place-items:center;
+      color:white;
+      flex:0 0 auto;
+    }
+    .icon svg{ width:22px; height:22px; }
+
+    .titlewrap h1{
+      margin:0;
+      font-size:22px;
+      font-weight:950;
+      letter-spacing:-.02em;
+      line-height:1.15;
+    }
+    .titlewrap .sub{
+      margin-top:4px;
+      color:var(--muted);
+      font-weight:750;
+      font-size:13px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:900;
+      border:1px solid rgba(15,23,42,.08);
+      background:#f1f5f9;
+      color:#0f172a;
+      white-space:nowrap;
+    }
+    .chip.pass{ background:#dcfce7; color:#166534; border-color:rgba(22,101,52,.15); }
+    .chip.fail{ background:var(--red-100); color:#991b1b; border-color:rgba(153,27,27,.18); }
+    .chip.warn{ background:var(--amber-100); color:#92400e; border-color:rgba(146,64,14,.18); }
+
+    .progress{ margin:14px 0 18px; }
+    .bar{
+      height:8px;
+      border-radius:999px;
+      overflow:hidden;
+      background:#e5e7eb;
+    }
+    .fill{
+      height:100%;
+      width:25%;
+      background:#0f172a;
+      transition: width .18s ease;
+    }
+
+    .tabs{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin:12px 0 18px;
+    }
+    .tab{
+      border:none;
+      background:var(--tab);
+      color:#334155;
+      font-weight:900;
+      font-size:13px;
+      padding:10px 14px;
+      border-radius:999px;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      transition: filter .12s ease, transform .12s ease;
+    }
+    .tab:hover{ filter:brightness(.98); transform: translateY(-1px); }
+    .tab.active{ background:var(--pink); color:white; }
+    .tab.done{ background:var(--pink-100); color:#9d174d; }
+
+    .check{
+      width:16px; height:16px;
+      display:inline-grid;
+      place-items:center;
+      border-radius:999px;
+      background:rgba(236,72,153,.18);
+      color:#9d174d;
+      font-weight:950;
+    }
+    .tab:not(.done) .check{ display:none; }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:22px;
+    }
+    .card h2{
+      margin:0 0 10px;
+      font-size:20px;
+      font-weight:950;
+      letter-spacing:-.01em;
+    }
+    .card p{
+      margin:0 0 12px;
+      color:#334155;
+      font-weight:650;
+      line-height:1.75;
+      font-size:14px;
+    }
+    .card h3{
+      margin:18px 0 10px;
+      font-size:14px;
+      font-weight:950;
+      letter-spacing:-.01em;
+    }
+    .card ul{
+      margin:8px 0 0 18px;
+      padding:0;
+      color:#334155;
+      font-weight:650;
+      line-height:1.8;
+      font-size:14px;
+    }
+    .card li{ margin:8px 0; }
+
+    .callout{
+      margin-top:14px;
+      border:1px solid #e2e8f0;
+      background:#f8fafc;
+      border-radius:16px;
+      padding:12px 14px;
+      font-size:13px;
+      color:#334155;
+      font-weight:750;
+      line-height:1.7;
+    }
+    .callout strong{ color:#0f172a; }
+
+    .grid2{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    .mini{
+      border:1px solid #e2e8f0;
+      background:white;
+      border-radius:16px;
+      padding:12px 14px;
+    }
+    .mini .hdr{
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+      font-size:12px;
+      font-weight:950;
+      color:#0f172a;
+      margin-bottom:6px;
+    }
+    .mini .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:950;
+      border:1px solid rgba(15,23,42,.08);
+      background:#f1f5f9;
+      color:#0f172a;
+      white-space:nowrap;
+    }
+    .mini .tag.bad{ background:var(--red-100); color:#991b1b; border-color:rgba(153,27,27,.18); }
+    .mini .tag.good{ background:#dcfce7; color:#166534; border-color:rgba(22,101,52,.15); }
+    .mini .body{
+      font-size:13px;
+      font-weight:650;
+      color:#334155;
+      line-height:1.65;
+    }
+
+    /* quiz */
+    .quiz{
+      margin-top:18px;
+      border:1px solid rgba(236,72,153,.22);
+      background:#fff1f2;
+      border-radius:16px;
+      padding:14px;
+    }
+    .quizHead{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+    .quizTitle{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:950;
+      color:#9d174d;
+      font-size:13px;
+    }
+    .quizTitle .dot{
+      width:28px; height:28px;
+      border-radius:10px;
+      background:var(--pink);
+      color:white;
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+      font-weight:950;
+    }
+    .quizNote{
+      font-size:12px;
+      font-weight:850;
+      color:#334155;
+      background:white;
+      border:1px solid rgba(236,72,153,.22);
+      padding:6px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+
+    .q{
+      border-top:1px solid rgba(236,72,153,.18);
+      padding-top:12px;
+      margin-top:12px;
+    }
+    .q:first-of-type{ border-top:none; padding-top:0; margin-top:0; }
+    .qText{
+      font-weight:900;
+      color:#0f172a;
+      font-size:13px;
+      margin:0 0 10px;
+      line-height:1.5;
+    }
+    .opt{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      padding:10px 10px;
+      border-radius:12px;
+      background:rgba(255,255,255,.9);
+      border:1px solid rgba(236,72,153,.18);
+      margin-bottom:10px;
+      cursor:pointer;
+      transition: transform .12s ease, filter .12s ease;
+    }
+    .opt:hover{ transform: translateY(-1px); filter:brightness(.99); }
+    .opt input{ margin-top:3px; }
+    .opt span{
+      font-size:13px;
+      font-weight:750;
+      color:#0f172a;
+      line-height:1.45;
+    }
+
+    .quizActions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .btn{
+      border:none;
+      cursor:pointer;
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:950;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .btn.primary{ background:#0f172a; color:white; }
+    .btn.secondary{ background:#f3f4f6; color:#0f172a; border:1px solid #e5e7eb; }
+    .btn:disabled{ opacity:.5; cursor:not-allowed; }
+
+    .result{
+      margin-top:12px;
+      background:white;
+      border:1px solid rgba(236,72,153,.18);
+      border-radius:12px;
+      padding:10px 12px;
+      font-weight:900;
+      font-size:13px;
+      display:none;
+    }
+    .result.ok{ border-color:rgba(22,101,52,.18); background:#f0fdf4; color:#166534; }
+    .result.bad{ border-color:rgba(153,27,27,.18); background:#fef2f2; color:#991b1b; }
+
+    .explain{
+      margin-top:10px;
+      display:none;
+      font-weight:650;
+      color:#334155;
+      font-size:13px;
+      line-height:1.65;
+    }
+    .explain ul{ margin:8px 0 0 18px; }
+    .explain li{ margin:6px 0; }
+
+    /* assistant (non-functional) */
+    .assistant{
+      margin-top:16px;
+      border:1px solid rgba(236,72,153,.18);
+      background:#fff1f2;
+      border-radius:16px;
+      padding:14px;
+    }
+    .assistantHead{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:950;
+      color:#9d174d;
+      margin-bottom:10px;
+      font-size:13px;
+    }
+    .assistantHead .badge{
+      width:28px; height:28px;
+      border-radius:10px;
+      background:var(--pink);
+      color:white;
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+      font-weight:950;
+    }
+    .assistantBtn{
+      border:1px solid rgba(236,72,153,.20);
+      background:white;
+      color:#9d174d;
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:950;
+      font-size:13px;
+      cursor:not-allowed;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      opacity:.95;
+    }
+    .assistantBtn svg{ width:18px; height:18px; }
+
+    .navrow{
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:16px;
+    }
+    .navbtn{
+      border:none;
+      cursor:pointer;
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:950;
+      font-size:13px;
+      background:#0f172a;
+      color:white;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .navbtn.secondary{
+      background:#f3f4f6;
+      color:#0f172a;
+      border:1px solid #e5e7eb;
+    }
+    .navbtn:disabled{ opacity:.5; cursor:not-allowed; }
+
+    /* final exam modal */
+    .overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(15,23,42,.55);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      z-index:9999;
+    }
+    .modal{
+      width:min(860px, 100%);
+      background:white;
+      border-radius:18px;
+      border:1px solid rgba(15,23,42,.10);
+      box-shadow:0 30px 70px rgba(15,23,42,.25);
+      overflow:hidden;
+    }
+    .modalHead{
+      padding:16px 18px;
+      border-bottom:1px solid #e5e7eb;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      background:#f8fafc;
+      flex-wrap:wrap;
+    }
+    .modalHead h2{
+      margin:0;
+      font-size:16px;
+      font-weight:950;
+      letter-spacing:-.01em;
+    }
+    .modalHead p{
+      margin:6px 0 0;
+      color:#64748b;
+      font-weight:700;
+      font-size:13px;
+      line-height:1.55;
+      max-width:640px;
+    }
+    .closeBtn{
+      border:none;
+      background:#eef2f7;
+      color:#0f172a;
+      border-radius:12px;
+      padding:10px 12px;
+      font-weight:950;
+      cursor:pointer;
+      flex:0 0 auto;
+    }
+    .closeBtn:hover{ filter:brightness(.98); }
+
+    .modalBody{
+      padding:16px 18px 18px;
+      max-height:min(70vh, 560px);
+      overflow:auto;
+    }
+    .scoreRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    .scorePill{
+      padding:8px 12px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:950;
+      border:1px solid rgba(15,23,42,.08);
+      background:#f1f5f9;
+      color:#0f172a;
+      white-space:nowrap;
+    }
+    .scorePill.pass{ background:#dcfce7; color:#166534; border-color:rgba(22,101,52,.15); }
+    .scorePill.fail{ background:var(--red-100); color:#991b1b; border-color:rgba(153,27,27,.18); }
+
+    .modalActions{
+      padding:14px 18px;
+      border-top:1px solid #e5e7eb;
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      background:#fff;
+    }
+
+    @media (max-width: 740px){
+      .grid2{ grid-template-columns:1fr; }
+    }
+    @media (max-width: 560px){
+      .container{ width:calc(100% - 28px); padding-top:26px; }
+      .card{ padding:18px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="topbar">
+      <a class="back" href="courses.html">
+        <span aria-hidden="true">←</span>
+        <span>Back to Courses</span>
+      </a>
+    </div>
+
+    <div class="header">
+      <div class="icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M12 21s-7-4.6-9.5-9.1C.4 8.6 2.3 5.5 5.6 5.1c1.9-.2 3.3.7 4.2 1.9.9-1.2 2.3-2.1 4.2-1.9 3.3.4 5.2 3.5 3.1 6.8C19 16.4 12 21 12 21Z" stroke="white" stroke-width="2" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <div class="titlewrap">
+        <h1>Romance & Relationship Scams</h1>
+        <div class="sub">
+          <span id="lessonCounter">Lesson 1 of 4</span>
+          <span class="chip warn" id="courseStatus">Not completed</span>
+          <span class="chip" id="courseScore">Course score: —</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="progress">
+      <div class="bar"><div class="fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Lessons">
+      <button class="tab active" role="tab" aria-selected="true" data-lesson="1">Lesson 1</button>
+      <button class="tab" role="tab" aria-selected="false" data-lesson="2"><span class="check" aria-hidden="true">✓</span> Lesson 2</button>
+      <button class="tab" role="tab" aria-selected="false" data-lesson="3">Lesson 3</button>
+      <button class="tab" role="tab" aria-selected="false" data-lesson="4"><span class="check" aria-hidden="true">✓</span> Lesson 4</button>
+    </div>
+
+    <div class="card" id="lessonCard"></div>
+
+    <div class="navrow">
+      <button class="navbtn secondary" id="prevBtn" type="button">Previous</button>
+      <button class="navbtn" id="nextBtn" type="button">Next</button>
+    </div>
+  </div>
+
+  <!-- FINAL EXAM MODAL -->
+  <div class="overlay" id="examOverlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="examTitle">
+      <div class="modalHead">
+        <div>
+          <h2 id="examTitle">Final Course Exam (Pass ≥ 80%)</h2>
+          <p>
+            This is the full course assessment. You need at least <strong>80%</strong> to successfully complete this course.
+            You can retake the exam as many times as you want.
+          </p>
+        </div>
+        <button class="closeBtn" id="closeExamBtn" type="button">Close</button>
+      </div>
+
+      <div class="modalBody">
+        <div class="scoreRow">
+          <span class="scorePill" id="examScorePill">Score: —</span>
+          <span class="scorePill" id="examPassPill">Status: Not graded</span>
+        </div>
+
+        <div id="examQuestions"></div>
+
+        <div class="result" id="examResult"></div>
+        <div class="explain" id="examExplain"></div>
+      </div>
+
+      <div class="modalActions">
+        <button class="btn secondary" id="retakeExamBtn" type="button">Retake Exam</button>
+        <button class="btn primary" id="submitExamBtn" type="button">Submit Exam</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===================== LESSON DATA =====================
+    const lessons = [
+      {
+        title: "How Romance Scams Start (Love-Bombing + Fast Trust)",
+        body: `
+          <p>
+            Romance scammers often begin with attention, compliments, and “instant closeness.”
+            This is called <strong>love-bombing</strong>: lots of messages, big promises, and making you feel special fast.
+          </p>
+
+          <h3>Common Early Patterns:</h3>
+          <ul>
+            <li><strong>Fast intensity:</strong> “I’ve never felt this connection before.”</li>
+            <li><strong>Constant messaging:</strong> they want you engaged all day.</li>
+            <li><strong>Moving platforms:</strong> “Let’s chat on WhatsApp/Telegram.”</li>
+            <li><strong>Future talk:</strong> marriage, moving in, joint plans quickly.</li>
+            <li><strong>Isolation:</strong> “Your family doesn’t understand us.”</li>
+          </ul>
+
+          <div class="grid2">
+            <div class="mini">
+              <div class="hdr">
+                <div>Example: “Fast commitment”</div>
+                <span class="tag bad">Red flag</span>
+              </div>
+              <div class="body">
+                “We should keep this private. People will be jealous. I love you after 3 days.”
+              </div>
+            </div>
+            <div class="mini">
+              <div class="hdr">
+                <div>Safe alternative</div>
+                <span class="tag good">Best move</span>
+              </div>
+              <div class="body">
+                Slow it down. Keep conversations on the platform. Talk to a trusted person before becoming emotionally invested.
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <strong>Rule:</strong> Healthy relationships allow time, space, and outside support. Scams rush, isolate, and pressure.
+          </div>
+        `,
+        quiz: {
+          minPercentToPass: 80,
+          questions: [
+            {
+              q: "What is love-bombing?",
+              options: [
+                "Giving someone space and time to decide",
+                "A scam tactic: intense attention and fast commitment to build trust",
+                "Only sending messages once a week",
+                "A normal step required before video calls"
+              ],
+              answerIndex: 1,
+              explain: "Love-bombing is intense attention/affection used to create fast trust."
+            },
+            {
+              q: "Which early behavior is a common romance-scam red flag?",
+              options: [
+                "They respect your boundaries and pace",
+                "They encourage you to talk to family/friends",
+                "They ask to move to a private messaging app quickly",
+                "They are willing to video call normally"
+              ],
+              answerIndex: 2,
+              explain: "Moving off-platform quickly is common because platforms can detect/report scammers."
+            },
+            {
+              q: "Why do scammers try to isolate you?",
+              options: [
+                "To reduce distractions",
+                "To prevent you from getting a second opinion that could stop the scam",
+                "To help you stay organized",
+                "To follow safety rules"
+              ],
+              answerIndex: 1,
+              explain: "Isolation stops you from checking with others and noticing red flags."
+            }
+          ]
+        }
+      },
+      {
+        title: "The “Can’t Video Call” Excuse + Identity Verification",
+        body: `
+          <p>
+            A very common pattern: the person avoids live video calls. They may claim the camera is broken, they are traveling,
+            or they are “in a dangerous job.” This keeps you from confirming their identity.
+          </p>
+
+          <h3>Common Excuses:</h3>
+          <ul>
+            <li>“My camera is broken.”</li>
+            <li>“I’m deployed / in a restricted area.”</li>
+            <li>“My internet is too weak.”</li>
+            <li>“I’m shy—maybe later.”</li>
+          </ul>
+
+          <h3>Safe Verification Steps:</h3>
+          <ul>
+            <li>Require a <strong>live</strong> video call (not a recorded video).</li>
+            <li>Ask a simple real-time action: “Wave with your left hand and say today’s date.”</li>
+            <li>Do not accept excuses forever. Repeated avoidance = stop.</li>
+            <li>Search images carefully (scammers often reuse stolen photos).</li>
+          </ul>
+
+          <div class="callout">
+            <strong>Rule:</strong> No live verification + emotional pressure = high risk. You do not owe anyone trust.
+          </div>
+        `,
+        quiz: {
+          minPercentToPass: 80,
+          questions: [
+            {
+              q: "Which is the strongest verification option?",
+              options: [
+                "A recorded video they send you",
+                "A live video call with a simple real-time action",
+                "A photo of their ID sent by text",
+                "A long message describing their life story"
+              ],
+              answerIndex: 1,
+              explain: "Live verification is harder to fake and allows real-time checks."
+            },
+            {
+              q: "If someone keeps avoiding live video calls, the safest response is:",
+              options: [
+                "Send money to prove you trust them",
+                "Wait months and keep it private",
+                "Set a boundary and stop if they refuse verification",
+                "Share personal documents so they feel safer"
+              ],
+              answerIndex: 2,
+              explain: "Repeated avoidance is a major red flag; set boundaries and stop contact if needed."
+            },
+            {
+              q: "Why are excuses like “restricted area” used?",
+              options: [
+                "To help you plan a trip",
+                "To justify why you can’t verify them",
+                "To comply with platform rules",
+                "To protect your phone"
+              ],
+              answerIndex: 1,
+              explain: "It blocks verification and keeps you relying on emotional storytelling."
+            }
+          ]
+        }
+      },
+      {
+        title: "Money Requests (Emergencies, Travel, Customs Fees, Gift Cards)",
+        body: `
+          <p>
+            The scam usually turns into a request: an “emergency,” travel money, medical bills, or “fees.”
+            Even small requests are a test. Once you pay once, requests usually escalate.
+          </p>
+
+          <h3>Common Money Scripts:</h3>
+          <ul>
+            <li>“I need help with a medical bill. I’ll pay you back.”</li>
+            <li>“I bought a ticket to see you but customs is holding it.”</li>
+            <li>“My wallet was stolen while traveling.”</li>
+            <li>“Please buy gift cards. It’s faster.”</li>
+          </ul>
+
+          <div class="grid2">
+            <div class="mini">
+              <div class="hdr">
+                <div>Scammer trick</div>
+                <span class="tag bad">Red flag</span>
+              </div>
+              <div class="body">
+                They choose a payment method that is hard to reverse (gift cards, wire, crypto) and push urgency.
+              </div>
+            </div>
+            <div class="mini">
+              <div class="hdr">
+                <div>Safe rule</div>
+                <span class="tag good">Best move</span>
+              </div>
+              <div class="body">
+                Never send money to someone you haven’t verified in real life. “No money. No exceptions.”
+              </div>
+            </div>
+          </div>
+
+          <div class="callout">
+            <strong>Rule:</strong> If they ask for money, it’s a scam until proven otherwise by strong, independent verification.
+          </div>
+        `,
+        quiz: {
+          minPercentToPass: 80,
+          questions: [
+            {
+              q: "What should you do if an online relationship asks for money?",
+              options: [
+                "Send a small amount to help",
+                "Send gift cards because it’s quick",
+                "Refuse and verify identity independently; involve a trusted contact",
+                "Keep it secret so nobody judges you"
+              ],
+              answerIndex: 2,
+              explain: "Never send money without real-world verification; involve someone you trust."
+            },
+            {
+              q: "Why do scammers start with small money requests?",
+              options: [
+                "They are being polite",
+                "It’s a test to see if you’ll pay; then they escalate",
+                "It’s required by the platform",
+                "To help you practice banking"
+              ],
+              answerIndex: 1,
+              explain: "Small payments are often “hooks” that lead to larger demands."
+            },
+            {
+              q: "Which payment request is a major red flag?",
+              options: [
+                "Pay through a verified company portal you already use",
+                "Gift cards or crypto for an emergency",
+                "Waiting for written documentation you can verify",
+                "Talking to your bank using official numbers"
+              ],
+              answerIndex: 1,
+              explain: "Gift cards/crypto are common scam payment methods and hard to reverse."
+            }
+          ]
+        }
+      },
+      {
+        title: "Protecting Privacy + If You Shared Photos/Info (Recovery Steps)",
+        body: `
+          <p>
+            Romance scammers may ask for personal photos or sensitive information. Once shared, they can threaten to expose it.
+            The best protection is to avoid sharing private content with unverified strangers.
+          </p>
+
+          <h3>Privacy Rules:</h3>
+          <ul>
+            <li>Do not share private photos with unverified people.</li>
+            <li>Do not share: SSN, banking details, address, or copies of IDs.</li>
+            <li>Be careful with “forms” or “verification” requests.</li>
+          </ul>
+
+          <h3>If You Already Shared Something:</h3>
+          <ul>
+            <li><strong>Stop contact</strong> and do not pay any “threat” demand.</li>
+            <li>Save evidence: usernames, numbers, screenshots, messages.</li>
+            <li>Tell a trusted person so you aren’t dealing with it alone.</li>
+            <li>Change passwords and enable 2-factor authentication.</li>
+          </ul>
+
+          <div class="callout">
+            <strong>Important:</strong> Threats are meant to create panic. Paying usually increases demands. Focus on evidence, support, and securing accounts.
+          </div>
+        `,
+        quiz: {
+          minPercentToPass: 80,
+          questions: [
+            {
+              q: "If someone threatens you after you shared a private photo, what is safest?",
+              options: [
+                "Pay immediately to make it stop",
+                "Stop contact, save evidence, tell a trusted person, and secure accounts",
+                "Send more photos to prove loyalty",
+                "Argue with them for hours"
+              ],
+              answerIndex: 1,
+              explain: "Paying usually increases demands; focus on support, evidence, and security."
+            },
+            {
+              q: "Which info should you never share with an unverified online relationship?",
+              options: [
+                "Your favorite hobbies",
+                "Your SSN or banking details",
+                "Your general music taste",
+                "A photo of a sunset"
+              ],
+              answerIndex: 1,
+              explain: "Sensitive identifiers and financial details can be used for fraud and identity theft."
+            },
+            {
+              q: "Why is telling a trusted person important?",
+              options: [
+                "So they can post about it online",
+                "Because support reduces panic and helps you make safe decisions",
+                "So they can contact the scammer directly",
+                "Because it makes scammers nicer"
+              ],
+              answerIndex: 1,
+              explain: "A trusted person helps you slow down, think clearly, and take safer steps."
+            }
+          ]
+        }
+      }
+    ];
+
+    // FINAL EXAM
+    const finalExam = {
+      passPercent: 80,
+      questions: [
+        {
+          q: "What is love-bombing?",
+          options: [
+            "A healthy pace with respect for boundaries",
+            "A scam tactic: intense attention and fast commitment to build trust quickly",
+            "Only speaking once a month",
+            "A requirement before meeting in person"
+          ],
+          answerIndex: 1,
+          explain: "Love-bombing is intense attention/affection used to create fast trust."
+        },
+        {
+          q: "Why do romance scammers often avoid live video calls?",
+          options: [
+            "They prefer texting only",
+            "To prevent identity verification",
+            "Because video calls are illegal",
+            "Because you must pay first"
+          ],
+          answerIndex: 1,
+          explain: "Avoiding live video prevents you from verifying who they really are."
+        },
+        {
+          q: "Which is the strongest verification step?",
+          options: [
+            "A recorded video they send",
+            "A live video call with a real-time action (e.g., wave and say today’s date)",
+            "A photo of an ID they text",
+            "A long emotional story"
+          ],
+          answerIndex: 1,
+          explain: "Live verification is harder to fake and includes real-time checks."
+        },
+        {
+          q: "If an online relationship asks for money, the safest rule is:",
+          options: [
+            "Send a small amount first",
+            "Never send money unless verified in real life; involve a trusted person",
+            "Send gift cards only",
+            "Keep it secret and decide alone"
+          ],
+          answerIndex: 1,
+          explain: "Money requests are a top scam indicator—verify independently and get a second opinion."
+        },
+        {
+          q: "Why do scammers start with small payments?",
+          options: [
+            "To be polite",
+            "To test if you’ll pay and then escalate",
+            "Because banks require it",
+            "To help you learn budgeting"
+          ],
+          answerIndex: 1,
+          explain: "Small requests often lead to bigger demands once you comply."
+        },
+        {
+          q: "Which request is a major red flag?",
+          options: [
+            "A live video call",
+            "Gift cards or crypto for an emergency",
+            "Taking time to verify",
+            "Talking to a trusted contact"
+          ],
+          answerIndex: 1,
+          explain: "Gift cards/crypto are common scam payment methods and hard to reverse."
+        },
+        {
+          q: "What should you do if someone pressures you to keep the relationship secret?",
+          options: [
+            "Agree so it stays special",
+            "Treat it as high risk and talk to a trusted person",
+            "Send them your private documents",
+            "Give them your passwords"
+          ],
+          answerIndex: 1,
+          explain: "Secrecy is used to isolate you from support and verification."
+        },
+        {
+          q: "If you shared a private photo and they threaten you, safest next step is:",
+          options: [
+            "Pay immediately",
+            "Stop contact, save evidence, secure accounts, tell a trusted person",
+            "Send more photos to calm them",
+            "Argue until they apologize"
+          ],
+          answerIndex: 1,
+          explain: "Paying usually increases demands; focus on evidence, support, and account security."
+        },
+        {
+          q: "Which should you never share with an unverified online relationship?",
+          options: [
+            "Your hobbies",
+            "Your SSN or banking details",
+            "Your favorite movies",
+            "A harmless photo of nature"
+          ],
+          answerIndex: 1,
+          explain: "Sensitive identifiers and financial details can be used for fraud."
+        },
+        {
+          q: "Why is involving a trusted person helpful?",
+          options: [
+            "They can insult the scammer",
+            "Support reduces panic and helps you make safer decisions",
+            "They can pay for you",
+            "It makes the scam go away instantly"
+          ],
+          answerIndex: 1,
+          explain: "A second opinion helps you slow down, verify, and avoid pressure."
+        }
+      ]
+    };
+
+    // ===================== STATE =====================
+    const KEY = "gs_romance_course_v1";
+    const progressFill = document.getElementById("progressFill");
+    const lessonCounter = document.getElementById("lessonCounter");
+    const lessonCard = document.getElementById("lessonCard");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const tabs = [...document.querySelectorAll(".tab")];
+
+    const courseStatus = document.getElementById("courseStatus");
+    const courseScore = document.getElementById("courseScore");
+
+    const examOverlay = document.getElementById("examOverlay");
+    const closeExamBtn = document.getElementById("closeExamBtn");
+    const submitExamBtn = document.getElementById("submitExamBtn");
+    const retakeExamBtn = document.getElementById("retakeExamBtn");
+    const examQuestions = document.getElementById("examQuestions");
+    const examResult = document.getElementById("examResult");
+    const examExplain = document.getElementById("examExplain");
+    const examScorePill = document.getElementById("examScorePill");
+    const examPassPill = document.getElementById("examPassPill");
+
+    let state = {
+      current: 1,
+      doneLessons: [false,false,false,false],
+      quizPass: [false,false,false,false],
+      quizScores: [null,null,null,null],
+      finalExam: { attempts: 0, bestPercent: null, passed: false }
+    };
+
+    function loadState(){
+      try{
+        const saved = JSON.parse(localStorage.getItem(KEY));
+        if(saved) state = saved;
+      }catch(e){}
+      state.current = clampNum(state.current, 1, 4);
+      state.doneLessons = normBoolArr(state.doneLessons, 4);
+      state.quizPass = normBoolArr(state.quizPass, 4);
+      state.quizScores = normScoreArr(state.quizScores, 4);
+      if(!state.finalExam) state.finalExam = { attempts: 0, bestPercent: null, passed: false };
+      if(typeof state.finalExam.attempts !== "number") state.finalExam.attempts = 0;
+      if(typeof state.finalExam.passed !== "boolean") state.finalExam.passed = false;
+    }
+    function saveState(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+
+    function clampNum(n, lo, hi){
+      n = Number(n);
+      if(Number.isNaN(n)) return lo;
+      return Math.max(lo, Math.min(hi, n));
+    }
+    function normBoolArr(arr, len){
+      if(!Array.isArray(arr) || arr.length !== len) return Array(len).fill(false);
+      return arr.map(Boolean);
+    }
+    function normScoreArr(arr, len){
+      if(!Array.isArray(arr) || arr.length !== len) return Array(len).fill(null);
+      return arr.map(v => (typeof v === "number" ? v : null));
+    }
+
+    // ===================== RENDER =====================
+    function renderTopStatus(){
+      if(state.finalExam.passed){
+        courseStatus.textContent = "Completed";
+        courseStatus.className = "chip pass";
+      }else{
+        const allLessonQuizzesPassed = state.quizPass.every(Boolean);
+        courseStatus.textContent = allLessonQuizzesPassed ? "Ready for Final Exam" : "Not completed";
+        courseStatus.className = "chip warn";
+      }
+
+      const best = state.finalExam.bestPercent;
+      courseScore.textContent = (typeof best === "number")
+        ? `Course score: ${best}%`
+        : "Course score: —";
+    }
+
+    function lessonPercentComplete(){
+      return Math.round((state.current / 4) * 100);
+    }
+
+    function renderLesson(n){
+      const idx = n - 1;
+      const data = lessons[idx];
+
+      lessonCounter.textContent = `Lesson ${n} of 4`;
+      progressFill.style.width = lessonPercentComplete() + "%";
+
+      tabs.forEach(t => {
+        const ln = Number(t.dataset.lesson);
+        t.classList.remove("active");
+        t.setAttribute("aria-selected", "false");
+
+        if(state.doneLessons[ln - 1] && state.quizPass[ln - 1]){
+          t.classList.add("done");
+        }else{
+          t.classList.remove("done");
+        }
+
+        if(ln === n){
+          t.classList.add("active");
+          t.setAttribute("aria-selected", "true");
+        }
+      });
+
+      lessonCard.innerHTML = `
+        <h2>${data.title}</h2>
+        ${data.body}
+        ${renderLessonQuiz(n)}
+        ${renderAssistantBox()}
+      `;
+
+      attachLessonQuizHandlers(n);
+
+      prevBtn.disabled = (n === 1);
+      nextBtn.textContent = (n === 4) ? "Finish Lesson 4" : "Next";
+
+      const passed = !!state.quizPass[idx];
+      nextBtn.disabled = !passed;
+
+      renderTopStatus();
+    }
+
+    function renderAssistantBox(){
+      return `
+        <div class="assistant">
+          <div class="assistantHead">
+            <div class="badge" aria-hidden="true">✨</div>
+            <span>AI Learning Assistant</span>
+          </div>
+
+          <button class="assistantBtn" type="button" aria-disabled="true" title="Not functional in this build">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 6h16M4 12h16M4 18h10" stroke="#9d174d" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Explain this in simpler terms
+          </button>
+        </div>
+      `;
+    }
+
+    function renderLessonQuiz(lessonNumber){
+      const idx = lessonNumber - 1;
+      const qz = lessons[idx].quiz;
+      const prevScore = state.quizScores[idx];
+      const passed = state.quizPass[idx];
+
+      const statusText = passed
+        ? `Passed (${prevScore}% ≥ ${qz.minPercentToPass}%)`
+        : (typeof prevScore === "number"
+            ? `Not passed (${prevScore}% — need ${qz.minPercentToPass}%)`
+            : `You must score at least ${qz.minPercentToPass}% to continue`);
+
+      const statusClass = passed ? "chip pass" : (typeof prevScore === "number" ? "chip fail" : "chip warn");
+
+      const qs = qz.questions.map((item, qi) => {
+        const name = `l${lessonNumber}_q${qi}`;
+        const opts = item.options.map((opt, oi) => {
+          const id = `${name}_opt${oi}`;
+          return `
+            <label class="opt" for="${id}">
+              <input type="radio" id="${id}" name="${name}" value="${oi}">
+              <span>${escapeHtml(opt)}</span>
+            </label>
+          `;
+        }).join("");
+
+        return `
+          <div class="q" data-qi="${qi}">
+            <div class="qText">${qi + 1}. ${escapeHtml(item.q)}</div>
+            ${opts}
+          </div>
+        `;
+      }).join("");
+
+      return `
+        <div class="quiz" id="lessonQuiz">
+          <div class="quizHead">
+            <div class="quizTitle">
+              <div class="dot">Q</div>
+              <span>Lesson ${lessonNumber} Checkpoint Quiz</span>
+            </div>
+            <span class="quizNote ${statusClass}" id="lessonQuizNote">${statusText}</span>
+          </div>
+
+          ${qs}
+
+          <div class="quizActions">
+            <button class="btn secondary" id="resetLessonQuizBtn" type="button">Reset</button>
+            <button class="btn primary" id="submitLessonQuizBtn" type="button">Submit Quiz</button>
+          </div>
+
+          <div class="result" id="lessonQuizResult"></div>
+          <div class="explain" id="lessonQuizExplain"></div>
+        </div>
+      `;
+    }
+
+    function attachLessonQuizHandlers(lessonNumber){
+      const idx = lessonNumber - 1;
+      const qz = lessons[idx].quiz;
+
+      const note = document.getElementById("lessonQuizNote");
+      const result = document.getElementById("lessonQuizResult");
+      const explain = document.getElementById("lessonQuizExplain");
+
+      const submitBtn = document.getElementById("submitLessonQuizBtn");
+      const resetBtn = document.getElementById("resetLessonQuizBtn");
+
+      resetBtn.addEventListener("click", () => {
+        qz.questions.forEach((_, qi) => {
+          const name = `l${lessonNumber}_q${qi}`;
+          document.querySelectorAll(`input[name="${name}"]`).forEach(r => r.checked = false);
+        });
+        result.style.display = "none";
+        explain.style.display = "none";
+      });
+
+      submitBtn.addEventListener("click", () => {
+        const { percent, correctCount, total, details } = gradeLessonQuiz(lessonNumber);
+
+        state.quizScores[idx] = percent;
+        const passed = percent >= qz.minPercentToPass;
+        state.quizPass[idx] = passed;
+        state.doneLessons[idx] = passed;
+
+        saveState();
+
+        result.style.display = "block";
+        result.className = "result " + (passed ? "ok" : "bad");
+        result.textContent = passed
+          ? `Passed! You scored ${percent}% (${correctCount}/${total}). You can continue.`
+          : `Not passed. You scored ${percent}% (${correctCount}/${total}). You need ${qz.minPercentToPass}% to continue.`;
+
+        explain.style.display = "block";
+        explain.innerHTML = `
+          <div style="font-weight:950; color:#0f172a; margin-bottom:6px;">Answer Review</div>
+          <ul>
+            ${details.map(d => `
+              <li>
+                <strong>Q${d.qi+1}:</strong>
+                ${d.correct ? '<span style="color:#166534; font-weight:950;">Correct</span>' : '<span style="color:#991b1b; font-weight:950;">Incorrect</span>'}
+                — ${escapeHtml(d.explain)}
+              </li>
+            `).join("")}
+          </ul>
+        `;
+
+        note.textContent = passed
+          ? `Passed (${percent}% ≥ ${qz.minPercentToPass}%)`
+          : `Not passed (${percent}% — need ${qz.minPercentToPass}%)`;
+        note.className = "quizNote " + (passed ? "chip pass" : "chip fail");
+
+        renderLesson(state.current);
+      });
+    }
+
+    function gradeLessonQuiz(lessonNumber){
+      const idx = lessonNumber - 1;
+      const qz = lessons[idx].quiz;
+
+      let correctCount = 0;
+      const details = [];
+
+      qz.questions.forEach((item, qi) => {
+        const name = `l${lessonNumber}_q${qi}`;
+        const selected = document.querySelector(`input[name="${name}"]:checked`);
+        const val = selected ? Number(selected.value) : -1;
+        const correct = (val === item.answerIndex);
+        if(correct) correctCount++;
+        details.push({ qi, correct, explain: item.explain });
+      });
+
+      const total = qz.questions.length;
+      const percent = Math.round((correctCount / total) * 100);
+      return { percent, correctCount, total, details };
+    }
+
+    // ===================== NAV =====================
+    function goTo(n){
+      state.current = clampNum(n, 1, 4);
+      saveState();
+      renderLesson(state.current);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    tabs.forEach(tab => tab.addEventListener("click", () => goTo(Number(tab.dataset.lesson))));
+
+    prevBtn.addEventListener("click", () => {
+      if(state.current > 1) goTo(state.current - 1);
+    });
+
+    nextBtn.addEventListener("click", () => {
+      const idx = state.current - 1;
+      if(!state.quizPass[idx]) return;
+
+      if(state.current < 4){
+        goTo(state.current + 1);
+        return;
+      }
+      openExam();
+    });
+
+    // ===================== FINAL EXAM =====================
+    function openExam(){
+      const ready = state.quizPass.every(Boolean);
+      if(!ready){
+        alert("You must pass all lesson quizzes before taking the final exam.");
+        return;
+      }
+      renderExamQuestions();
+      examOverlay.style.display = "flex";
+      examOverlay.setAttribute("aria-hidden", "false");
+      examResult.style.display = "none";
+      examExplain.style.display = "none";
+      updateExamPills(null, null);
+    }
+
+    function closeExam(){
+      examOverlay.style.display = "none";
+      examOverlay.setAttribute("aria-hidden", "true");
+      renderTopStatus();
+    }
+
+    closeExamBtn.addEventListener("click", closeExam);
+    examOverlay.addEventListener("click", (e) => { if(e.target === examOverlay) closeExam(); });
+
+    function renderExamQuestions(){
+      examQuestions.innerHTML = finalExam.questions.map((item, qi) => {
+        const name = `exam_q${qi}`;
+        const opts = item.options.map((opt, oi) => {
+          const id = `${name}_opt${oi}`;
+          return `
+            <label class="opt" for="${id}">
+              <input type="radio" id="${id}" name="${name}" value="${oi}">
+              <span>${escapeHtml(opt)}</span>
+            </label>
+          `;
+        }).join("");
+
+        return `
+          <div class="q">
+            <div class="qText">${qi + 1}. ${escapeHtml(item.q)}</div>
+            ${opts}
+          </div>
+        `;
+      }).join("");
+    }
+
+    function resetExam(){
+      finalExam.questions.forEach((_, qi) => {
+        const name = `exam_q${qi}`;
+        document.querySelectorAll(`input[name="${name}"]`).forEach(r => r.checked = false);
+      });
+      examResult.style.display = "none";
+      examExplain.style.display = "none";
+      updateExamPills(null, null);
+    }
+
+    retakeExamBtn.addEventListener("click", resetExam);
+
+    submitExamBtn.addEventListener("click", () => {
+      const graded = gradeExam();
+      state.finalExam.attempts += 1;
+
+      if(typeof state.finalExam.bestPercent !== "number" || graded.percent > state.finalExam.bestPercent){
+        state.finalExam.bestPercent = graded.percent;
+      }
+
+      const passed = graded.percent >= finalExam.passPercent;
+      state.finalExam.passed = passed;
+
+      saveState();
+
+      examResult.style.display = "block";
+      examResult.className = "result " + (passed ? "ok" : "bad");
+      examResult.textContent = passed
+        ? `Passed! You scored ${graded.percent}% (${graded.correctCount}/${graded.total}). Course completed.`
+        : `Not passed. You scored ${graded.percent}% (${graded.correctCount}/${graded.total}). You need ${finalExam.passPercent}% to pass.`;
+
+      examExplain.style.display = "block";
+      examExplain.innerHTML = `
+        <div style="font-weight:950; color:#0f172a; margin-bottom:6px;">Answer Review</div>
+        <ul>
+          ${graded.details.map(d => `
+            <li>
+              <strong>Q${d.qi+1}:</strong>
+              ${d.correct ? '<span style="color:#166534; font-weight:950;">Correct</span>' : '<span style="color:#991b1b; font-weight:950;">Incorrect</span>'}
+              — ${escapeHtml(d.explain)}
+            </li>
+          `).join("")}
+        </ul>
+      `;
+
+      updateExamPills(graded.percent, passed);
+      renderTopStatus();
+
+      if(passed){
+        setTimeout(() => { window.location.href = "courses.html"; }, 900);
+      }
+    });
+
+    function gradeExam(){
+      let correctCount = 0;
+      const details = [];
+
+      finalExam.questions.forEach((item, qi) => {
+        const name = `exam_q${qi}`;
+        const selected = document.querySelector(`input[name="${name}"]:checked`);
+        const val = selected ? Number(selected.value) : -1;
+        const correct = (val === item.answerIndex);
+        if(correct) correctCount++;
+        details.push({ qi, correct, explain: item.explain });
+      });
+
+      const total = finalExam.questions.length;
+      const percent = Math.round((correctCount / total) * 100);
+      return { percent, correctCount, total, details };
+    }
+
+    function updateExamPills(percent, passed){
+      if(typeof percent !== "number"){
+        examScorePill.textContent = "Score: —";
+        examScorePill.className = "scorePill";
+        examPassPill.textContent = "Status: Not graded";
+        examPassPill.className = "scorePill";
+        return;
+      }
+
+      examScorePill.textContent = `Score: ${percent}%`;
+      examScorePill.className = "scorePill " + (passed ? "pass" : "fail");
+      examPassPill.textContent = passed ? "Status: Passed" : `Status: Not passed (need ≥ ${finalExam.passPercent}%)`;
+      examPassPill.className = "scorePill " + (passed ? "pass" : "fail");
+    }
+
+    // ===================== HELPERS =====================
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    // ===================== INIT =====================
+    loadState();
+    renderTopStatus();
+    renderLesson(state.current);
+  </script>
+</body>
+</html>

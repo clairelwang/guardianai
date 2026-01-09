@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Scam Simulator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#64748b;
+      --border:#e5e7eb;
+      --shadow: 0 10px 30px rgba(15,23,42,.08);
+      --shadow2: 0 8px 18px rgba(15,23,42,.08);
+
+      --danger:#e11d48;
+      --dangerSoft:#ffe4ea;
+
+      --green:#16a34a;
+      --greenSoft:#e9f9ef;
+
+      --amber:#eab308;
+      --amberSoft:#fff7db;
+
+      --red:#ef4444;
+      --redSoft:#ffe6e6;
+
+      --radius: 16px;
+      --radius2: 14px;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    /* ===== mini top-left bar ===== */
+    .miniBar{
+      position: fixed;
+      top: 18px;
+      left: 18px;
+      z-index: 9999;
+
+      display:flex;
+      align-items:center;
+      gap:10px;
+
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius: 12px;
+      padding: 8px 10px;
+      box-shadow: 0 10px 20px rgba(15,23,42,.10);
+    }
+    .miniSelectWrap{
+      position: relative;
+      width: 175px;
+    }
+    .miniSelect{
+      width:100%;
+      height:34px;
+      border:2px solid #111827;
+      border-radius: 10px;
+      padding: 0 34px 0 12px;
+      font-weight: 600;
+      background:#fff;
+      outline:none;
+      appearance:none;
+      -webkit-appearance:none;
+      -moz-appearance:none;
+    }
+    .miniChevron{
+      position:absolute;
+      right:10px; top:50%;
+      transform: translateY(-50%);
+      pointer-events:none;
+      width:18px; height:18px;
+      color:#111827;
+      opacity:.9;
+    }
+
+    .miniBtn{
+      width: 34px;
+      height: 34px;
+      display:grid;
+      place-items:center;
+      border: 2px solid #111827;
+      background:#fff;
+      border-radius: 10px;
+      cursor:pointer;
+      transition: transform .05s ease, background .2s ease;
+    }
+    .miniBtn:active{ transform: scale(.98); }
+    .miniBtn svg{ width:18px; height:18px; }
+    .miniBtn:hover{ background:#f3f4f6; }
+
+    .tooltip{
+      position: fixed;
+      z-index: 9999;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(17,24,39,.92);
+      color:#fff;
+      font-size: 12px;
+      font-weight: 600;
+      transform: translate(-50%, -120%);
+      opacity: 0;
+      pointer-events:none;
+      transition: opacity .15s ease;
+      white-space: nowrap;
+    }
+    .tooltip.show{ opacity: 1; }
+
+    /* ===== page layout ===== */
+    .page{
+      width: min(1100px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 92px 0 80px;
+    }
+
+    .topIcon{
+      width:68px;
+      height:68px;
+      margin: 0 auto 10px;
+      border-radius: 18px;
+      background: #ffe4ea;
+      display:grid;
+      place-items:center;
+      box-shadow: 0 10px 24px rgba(225,29,72,.12);
+    }
+    .topIcon svg{ width: 30px; height: 30px; color: var(--danger); }
+
+    h1{
+      text-align:center;
+      font-size: 44px;
+      line-height: 1.05;
+      margin: 10px 0 10px;
+      letter-spacing: -0.02em;
+    }
+    .subtitle{
+      text-align:center;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.5;
+      margin: 0 auto 34px;
+      max-width: 680px;
+    }
+
+    .chooserCard{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 32px;
+    }
+    .chooserTitle{
+      text-align:center;
+      font-size: 24px;
+      margin: 0 0 22px;
+      font-weight: 800;
+      letter-spacing: -.01em;
+    }
+
+    .diffGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+    .diff{
+      border: 2px solid #e5e7eb;
+      border-radius: var(--radius2);
+      padding: 22px 18px;
+      background:#fff;
+      cursor:pointer;
+      transition: transform .08s ease, border-color .2s ease, box-shadow .2s ease, background .2s ease;
+      min-height: 170px;
+
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
+    .diff:hover{
+      box-shadow: var(--shadow2);
+      transform: translateY(-1px);
+    }
+    .diff.selected{
+      border-color: var(--danger);
+      background: var(--dangerSoft);
+      box-shadow: 0 12px 30px rgba(225,29,72,.10);
+    }
+
+    .diffIcon{
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display:grid;
+      place-items:center;
+      margin-bottom: 12px;
+    }
+    .diffIcon svg{ width:22px; height:22px; color:#fff; }
+
+    .diffIcon.green{ background: var(--green); }
+    .diffIcon.amber{ background: var(--amber); }
+    .diffIcon.red{ background: var(--red); }
+
+    .diffName{
+      font-weight: 800;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+    .diffDesc{
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+      max-width: 240px;
+    }
+
+    .startRow{
+      display:flex;
+      justify-content:center;
+      margin-top: 20px;
+    }
+    .startBtn{
+      border: none;
+      background: var(--danger);
+      color:#fff;
+      font-weight: 800;
+      font-size: 14px;
+      padding: 12px 24px;
+      border-radius: 10px;
+      cursor:pointer;
+      box-shadow: 0 12px 26px rgba(225,29,72,.18);
+      display:flex;
+      align-items:center;
+      gap:10px;
+      transition: transform .05s ease, filter .2s ease;
+    }
+    .startBtn:hover{ filter: brightness(.98); }
+    .startBtn:active{ transform: scale(.99); }
+    .startBtn svg{ width: 18px; height: 18px; }
+
+    .features{
+      margin-top: 26px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+    .featureCard{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px 18px;
+      box-shadow: var(--shadow2);
+      text-align:center;
+      min-height: 150px;
+    }
+    .featureIcon{
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      margin: 0 auto 10px;
+      display:grid;
+      place-items:center;
+    }
+    .featureIcon svg{ width: 22px; height: 22px; }
+    .featureTitle{
+      font-weight: 800;
+      margin: 6px 0 6px;
+    }
+    .featureText{
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+      margin: 0;
+    }
+
+    .fi1{ background:#dbeafe; }
+    .fi1 svg{ color:#2563eb; }
+    .fi2{ background:#dcfce7; }
+    .fi2 svg{ color:#16a34a; }
+    .fi3{ background:#ede9fe; }
+    .fi3 svg{ color:#7c3aed; }
+
+    /* mobile */
+    body.mobileView .page{
+      width: min(780px, calc(100% - 30px));
+      padding-top: 84px;
+    }
+    @media (max-width: 900px){
+      .diffGrid{ grid-template-columns: 1fr; }
+      .features{ grid-template-columns: 1fr; }
+      h1{ font-size: 36px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- MINI BAR (paste this whole block right after <body> on every page) -->
+  <div class="miniBar" aria-label="Page switcher">
+    <div class="miniSelectWrap">
+      <select id="pageSelect" class="miniSelect" aria-label="Switch page">
+        <option value="index.html">Home</option>
+        <option value="scamanalyzer.html">ScamAnalyzer</option>
+        <option value="courses.html">Courses</option>
+        <option value="trustedContacts.html">TrustedContacts</option>
+        <option value="alerts.html">Alerts</option>
+        <option value="simulator.html" selected>Simulator</option>
+        <option value="report.html">Report</option>
+      </select>
+      <svg class="miniChevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <button class="miniBtn" id="mobileBtn" type="button" data-tip="Switch to mobile view" aria-label="Switch to mobile view">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M9 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2"/>
+        <path d="M11 18h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+
+    <button class="miniBtn" id="refreshBtn" type="button" data-tip="Refresh" aria-label="Refresh">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M20 12a8 8 0 1 1-2.34-5.66" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M20 4v6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </div>
+  <div id="tooltip" class="tooltip" role="tooltip"></div>
+  <!-- /MINI BAR -->
+
+  <main class="page">
+
+    <div class="topIcon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M12 2 4.5 5.2V11c0 6 3.9 9.8 7.5 11 3.6-1.2 7.5-5 7.5-11V5.2L12 2Z"
+              stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M12 8v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 15.7h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <h1>Scam Simulator</h1>
+    <p class="subtitle">
+      Practice identifying scams in a safe environment with AI-generated realistic scenarios.
+    </p>
+
+    <section class="chooserCard">
+      <div class="chooserTitle">Choose Your Difficulty</div>
+
+      <div class="diffGrid" role="radiogroup" aria-label="Difficulty">
+        <button class="diff selected" type="button" data-diff="beginner" aria-checked="true" role="radio">
+          <div class="diffIcon green" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 3a9 9 0 1 0 9 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M12 7a5 5 0 1 0 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M12 11a1 1 0 1 0 1 1" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="diffName">Beginner</div>
+          <div class="diffDesc">Clear red flags, obvious scams</div>
+        </button>
+
+        <button class="diff" type="button" data-diff="intermediate" aria-checked="false" role="radio">
+          <div class="diffIcon amber" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M13 2 4 14h7l-1 8 10-14h-7l0-6Z"
+                    stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="diffName">Intermediate</div>
+          <div class="diffDesc">Subtle tactics, careful analysis needed</div>
+        </button>
+
+        <button class="diff" type="button" data-diff="advanced" aria-checked="false" role="radio">
+          <div class="diffIcon red" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M8 10V8a4 4 0 1 1 8 0v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M7 10h10a2 2 0 0 1 2 2v6a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-6a2 2 0 0 1 2-2Z"
+                    stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M12 14v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="diffName">Advanced</div>
+          <div class="diffDesc">AI-enhanced, sophisticated scams</div>
+        </button>
+      </div>
+
+      <div class="startRow">
+        <button class="startBtn" type="button" id="startBtn">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M8 5l12 7-12 7V5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          Start Training
+        </button>
+      </div>
+    </section>
+
+    <section class="features" aria-label="Simulator features">
+      <div class="featureCard">
+        <div class="featureIcon fi1" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 3l2.2 4.5L19 9l-3.5 3.4.8 4.8L12 15.9 7.7 17.2l.8-4.8L5 9l4.8-1.5L12 3Z"
+                  stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="featureTitle">Realistic Scenarios</div>
+        <p class="featureText">Practice with AI-generated scams that mirror real threats</p>
+      </div>
+
+      <div class="featureCard">
+        <div class="featureIcon fi2" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M12 2 4.5 5.2V11c0 6 3.9 9.8 7.5 11 3.6-1.2 7.5-5 7.5-11V5.2L12 2Z"
+                  stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="featureTitle">Safe Environment</div>
+        <p class="featureText">Make mistakes without real consequences</p>
+      </div>
+
+      <div class="featureCard">
+        <div class="featureIcon fi3" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M4 4h16v16H4V4Z" stroke="currentColor" stroke-width="2"/>
+            <path d="M8 8h8M8 12h8M8 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="featureTitle">Learn as You Go</div>
+        <p class="featureText">Get detailed explanations for each scenario</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // ===== mini bar behavior =====
+    const pageSelect = document.getElementById('pageSelect');
+    const mobileBtn = document.getElementById('mobileBtn');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const tooltip = document.getElementById('tooltip');
+
+    pageSelect.addEventListener('change', () => {
+      window.location.href = pageSelect.value;
+    });
+
+    refreshBtn.addEventListener('click', () => window.location.reload());
+
+    mobileBtn.addEventListener('click', () => {
+      document.body.classList.toggle('mobileView');
+    });
+
+    // tooltips
+    function showTip(el, text){
+      tooltip.textContent = text;
+      const r = el.getBoundingClientRect();
+      tooltip.style.left = (r.left + r.width/2) + 'px';
+      tooltip.style.top  = (r.top) + 'px';
+      tooltip.classList.add('show');
+    }
+    function hideTip(){ tooltip.classList.remove('show'); }
+
+    document.querySelectorAll('[data-tip]').forEach(btn => {
+      btn.addEventListener('mouseenter', () => showTip(btn, btn.getAttribute('data-tip')));
+      btn.addEventListener('mouseleave', hideTip);
+      btn.addEventListener('focus', () => showTip(btn, btn.getAttribute('data-tip')));
+      btn.addEventListener('blur', hideTip);
+    });
+
+    // ===== difficulty selection =====
+    const diffBtns = document.querySelectorAll('.diff');
+    let selectedDiff = "beginner";
+
+    diffBtns.forEach(b => {
+      b.addEventListener('click', () => {
+        diffBtns.forEach(x => { x.classList.remove('selected'); x.setAttribute('aria-checked','false'); });
+        b.classList.add('selected');
+        b.setAttribute('aria-checked','true');
+        selectedDiff = b.dataset.diff;
+      });
+    });
+
+    document.getElementById('startBtn').addEventListener('click', () => {
+      // placeholder action (you can route to a scenario page later)
+      alert("Starting training: " + selectedDiff);
+    });
+  </script>
+</body>
+</html>
