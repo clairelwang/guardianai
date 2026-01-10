@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Safety Education Center – Guardian Shield</title>
+  <title>Safety Education Center – Guardian AI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,60 +21,165 @@
     }
 
     *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
       margin:0;
       font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       background:var(--bg);
       color:var(--ink);
     }
+    a{ color:inherit; text-decoration:none; }
 
+    /* ===== ONE NAV BAR (ALWAYS VISIBLE) ===== */
+    .site-header{
+      position: sticky;
+      top: 0;
+      z-index: 9998;
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .nav-wrap{
+      width: min(1200px, calc(100% - 64px));
+      margin: 0 auto;
+      padding: 14px 0;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 220px;
+    }
+
+    .brand-ico{
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: rgba(110,231,184,.20);
+      border: 1px solid rgba(52,211,153,.35);
+      color: #0f766e;
+      flex: 0 0 auto;
+    }
+
+    .brand-text{ display:flex; flex-direction:column; line-height:1.05; }
+    .brand-name{
+      font-weight: 900;
+      letter-spacing: -0.01em;
+      font-size: 18px;
+      color: #0b1220;
+    }
+    .brand-sub{
+      margin-top: 4px;
+      font-weight: 700;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .nav-links{
+      flex:1;
+      display:flex;
+      justify-content:center;
+      gap:14px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .nav-link{
+      font-weight: 800;
+      font-size: 15px;
+      color: #0b1220;
+      padding: 10px 14px;
+      border-radius: 14px;
+      transition: background .15s ease, border-color .15s ease, color .15s ease;
+      white-space:nowrap;
+    }
+    .nav-link:hover{ background:#f1f5f9; }
+
+    .nav-link.active{
+      background: rgba(110,231,184,.22);
+      border: 1px solid rgba(52,211,153,.40);
+      color: #0f766e;
+    }
+
+    .nav-cta{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .cta-btn{
+      height: 44px;
+      padding: 0 18px;
+      border-radius: 14px;
+      font-weight: 900;
+      font-size: 15px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      white-space: nowrap;
+      background:#fff;
+    }
+
+    .cta-btn.ghost{
+      border-color: #e5e7eb;
+      color: #0b1220;
+    }
+
+    .cta-btn.solid{
+      background: #0b1220;
+      border-color: #0b1220;
+      color: #ffffff;
+    }
+
+    /* Responsive: still ONE navbar, it just wraps */
+    @media (max-width: 1100px){
+      .nav-wrap{ width: min(1200px, calc(100% - 32px)); }
+      .nav-links{ gap:8px; }
+      .nav-link{ padding: 9px 10px; font-size: 14px; }
+      .cta-btn{ height: 42px; padding: 0 14px; font-size: 14px; }
+    }
+
+    @media (max-width: 900px){
+      .nav-wrap{
+        flex-wrap: wrap;
+        row-gap: 12px;
+        padding: 12px 0;
+      }
+      .nav-links{
+        order: 3;
+        flex: 1 1 100%;
+        justify-content: flex-start;
+      }
+      .nav-cta{
+        margin-left: auto;
+      }
+    }
+
+    @media (max-width: 520px){
+      .brand{ min-width: 0; }
+      .brand-name{ font-size: 16px; }
+      .brand-sub{ font-size: 12px; }
+
+      .nav-cta{
+        width: 100%;
+        order: 4;
+        justify-content: flex-start;
+        gap: 10px;
+      }
+      .cta-btn{ flex: 1; }
+    }
+
+    /* Page layout */
     .container{
       width:min(1200px, calc(100% - 64px));
       margin:0 auto;
       padding:80px 0 100px;
     }
-
-    /* --------- MOBILE-ONLY MINI BAR --------- */
-    .mini-bar{
-      position: fixed;
-      top: 14px;
-      left: 14px;
-      z-index: 9999;
-      display: none;
-      align-items: center;
-      gap: 10px;
-      background: white;
-      padding: 10px 12px;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-    }
-    .mini-bar select{
-      padding: 10px 12px;
-      border-radius: 12px;
-      border: 1px solid #e5e7eb;
-      font-size: 14px;
-      cursor: pointer;
-      outline: none;
-      min-width: 160px;
-      background: #fff;
-    }
-    .mini-bar button{
-      width: 42px;
-      height: 42px;
-      border: none;
-      background: #f3f4f6;
-      border-radius: 12px;
-      cursor: pointer;
-      font-size: 16px;
-      display:grid;
-      place-items:center;
-    }
-    .mini-bar button:hover { background:#e5e7eb; }
-    .mini-bar button.active { background:#0f172a; color:white; }
-
-   /* show mini-bar on ALL screen sizes */
-.mini-bar{ display:flex; }
-
 
     /* header */
     .page-head{
@@ -263,7 +368,7 @@
       font-size:22px;
     }
 
-    /* --------- TABLE SECTION --------- */
+    /* table section */
     .table-wrap{
       margin-top:54px;
       background:var(--card);
@@ -295,9 +400,7 @@
       line-height:1.5;
       max-width:720px;
     }
-    .table-scroll{
-      overflow-x:auto;
-    }
+    .table-scroll{ overflow-x:auto; }
     table{
       width:100%;
       border-collapse:separate;
@@ -324,18 +427,12 @@
       font-weight:600;
       line-height:1.5;
     }
-
-    /* clickable rows */
     tbody tr{
       cursor:pointer;
       transition: background .14s ease;
     }
-    tbody tr:hover td{
-      background:#fbfdff;
-    }
-    tbody tr:focus-within td{
-      background:#f1f5ff;
-    }
+    tbody tr:hover td{ background:#fbfdff; }
+    tbody tr:focus-within td{ background:#f1f5ff; }
 
     .badge{
       display:inline-flex;
@@ -360,41 +457,302 @@
       font-size:13px;
       line-height:1.65;
     }
-    .tips ul{
-      margin:8px 0 0 18px;
-      padding:0;
-    }
-    .tips li{ margin:6px 0; }
 
     @media(max-width:980px){
+      .container{ width:min(1200px, calc(100% - 32px)); }
       .stats{ grid-template-columns:1fr; }
       .grid{ grid-template-columns:1fr; }
       table{ min-width:720px; }
     }
   </style>
 </head>
+<!-- ===== PASTE THIS EXACT HEADER (HTML + CSS + JS) INTO EVERY PAGE ===== -->
+<!-- 1) Put the CSS in your <style> (or stylesheet) -->
+<!-- 2) Put the HEADER markup right after <body> starts -->
+<!-- 3) Put the JS near the bottom of <body> (before </body>) -->
+
+<!-- ===================== CSS: TOP NAV (EXACT) ===================== -->
+<style>
+  /* ===================== TOP NAV (NEW) ===================== */
+  .top-nav{
+    position: sticky;
+    top: 0;
+    z-index: 9998;
+    background: rgba(255,255,255,.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(226,232,240,.9);
+  }
+  .top-nav .nav-inner{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .nav-brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-weight:900;
+    letter-spacing:-.01em;
+    color:#0b1220;
+    min-width: 180px;
+  }
+  .nav-logo{
+    width:42px;height:42px;
+    border-radius:14px;
+    background: rgba(110,231,184,.14);
+    border:1px solid rgba(110,231,184,.34);
+    display:grid;place-items:center;
+    color:#065f46;
+  }
+  .nav-title{
+    display:flex;
+    flex-direction:column;
+    line-height:1.05;
+  }
+  .nav-title strong{ font-size:15px; }
+  .nav-title span{
+    font-size:12px;
+    color:#64748b;
+    font-weight:700;
+    margin-top:2px;
+  }
+
+  .nav-links{
+    display:flex;
+    align-items:center;
+    gap: 6px;
+    flex: 1;
+    justify-content: center;
+  }
+  .nav-links a{
+    font-weight:800;
+    font-size:13px;
+    color:#0b1220;
+    padding:10px 12px;
+    border-radius:12px;
+    border:1px solid transparent;
+    transition: .15s ease;
+    white-space: nowrap;
+  }
+  .nav-links a:hover{
+    background: rgba(15,23,42,.06);
+    border-color: rgba(15,23,42,.06);
+  }
+  .nav-links a.active{
+    background: rgba(52,211,153,.18);
+    border-color: rgba(52,211,153,.40);
+    color:#065f46;
+  }
+
+  .nav-actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    justify-content:flex-end;
+    min-width: 230px;
+  }
+  .nav-btn{
+    height:42px;
+    padding: 0 14px;
+    border-radius: 12px;
+    font-weight:900;
+    font-size:13px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border: 1px solid rgba(15,23,42,.10);
+    background: #fff;
+    color:#0b1220;
+    cursor:pointer;
+    transition: .15s ease;
+    white-space: nowrap;
+  }
+  .nav-btn:hover{ background: rgba(15,23,42,.04); }
+  .nav-btn.primary{
+    background: #0b1220;
+    border-color: #0b1220;
+    color:#fff;
+  }
+  .nav-btn.primary:hover{ filter: brightness(1.05); }
+
+  .nav-toggle{
+    display:none;
+    width:44px;height:44px;
+    border-radius: 14px;
+    border: 1px solid rgba(15,23,42,.10);
+    background: #fff;
+    cursor:pointer;
+  }
+  .nav-toggle span{
+    display:block;
+    width:18px;height:2px;
+    background:#0b1220;
+    margin: 4px auto;
+    border-radius:99px;
+  }
+
+  .nav-mobile{
+    display:none;
+    border-top:1px solid rgba(226,232,240,.9);
+    background: rgba(255,255,255,.92);
+  }
+  .nav-mobile .nav-mobile-inner{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 10px 18px 14px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .nav-mobile a{
+    font-weight:900;
+    font-size:14px;
+    padding:12px 12px;
+    border-radius: 14px;
+    background: rgba(15,23,42,.04);
+    border: 1px solid rgba(15,23,42,.06);
+  }
+  .nav-mobile a.active{
+    background: rgba(52,211,153,.18);
+    border-color: rgba(52,211,153,.40);
+    color:#065f46;
+  }
+  .nav-mobile .row{
+    display:flex;
+    gap:10px;
+    margin-top:6px;
+  }
+  .nav-mobile .row .nav-btn{
+    flex:1;
+    height:46px;
+    border-radius: 14px;
+  }
+
+  @media (max-width: 980px){
+    .nav-links{ display:none; }
+    .nav-actions{ display:none; }
+    .nav-toggle{ display:block; margin-left:auto; }
+    .nav-brand{ min-width: unset; }
+    .top-nav .nav-inner{ padding: 12px 16px; }
+    .nav-mobile{ display:block; }
+    .nav-mobile[hidden]{ display:none; }
+  }
+  /* Keep your mini-bar visible only on very small screens */
+  @media (max-width: 560px){
+    .top-nav{ display:none; }
+  }
+  /* ===================== END TOP NAV ===================== */
+</style>
+
+<!-- ===================== HTML: HEADER (EXACT) ===================== -->
+<header class="top-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="javascript:void(0)" onclick="switchPage('index.html')">
+      <div class="nav-logo" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2l7 4v7c0 5-3.5 9-7 9s-7-4-7-9V6l7-4z" stroke="currentColor" stroke-width="2"/>
+          <path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="nav-title">
+        <strong>Guardian AI</strong>
+        <span>Scam Protection</span>
+      </div>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
+      <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Scam Analyzer</a>
+      <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
+      <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedContacts.html">Trusted Contacts</a>
+      <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
+      <a href="javascript:void(0)" onclick="switchPage('simulator.html')" data-page="simulator.html">Simulator</a>
+      <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
+      <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Scam</button>
+    </div>
+
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" id="navToggle">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- tablet dropdown (your mini-bar still handles tiny screens) -->
+  <div class="nav-mobile" id="navMobile" hidden>
+    <div class="nav-mobile-inner">
+      <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
+      <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Scam Analyzer</a>
+      <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
+      <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedContacts.html">Trusted Contacts</a>
+      <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
+      <a href="javascript:void(0)" onclick="switchPage('simulator.html')" data-page="simulator.html">Simulator</a>
+      <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
+      <div class="row">
+        <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
+        <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Scam</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== JS: NAV FUNCTIONS (EXACT BEHAVIOR) ===================== -->
+<script>
+  // --- BASE-PATH SAFE NAVIGATION (fixes GitHub Pages subfolder issues) ---
+  function getBaseDir() {
+    const path = window.location.pathname;
+    const parts = path.split("/");
+    const last = parts[parts.length - 1];
+    if (!last || last.includes(".html")) parts.pop();
+    const base = parts.join("/") + (parts.length > 1 ? "/" : "/");
+    return base;
+  }
+
+  function switchPage(page) {
+    if (!page) return;
+    if (/^https?:\/\//i.test(page)) { window.location.href = page; return; }
+    window.location.href = getBaseDir() + page;
+  }
+
+  // Highlight active nav link (desktop + tablet dropdown)
+  (function highlightActiveNav(){
+    const file = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
+    document.querySelectorAll('[data-page]').forEach(a => {
+      a.classList.toggle('active', (a.getAttribute('data-page') || '').toLowerCase() === file);
+    });
+  })();
+
+  // Nav toggle (tablet)
+  (function navToggle(){
+    const btn = document.getElementById("navToggle");
+    const panel = document.getElementById("navMobile");
+    if (!btn || !panel) return;
+
+    btn.addEventListener("click", () => {
+      const open = !panel.hasAttribute("hidden");
+      if (open) {
+        panel.setAttribute("hidden", "");
+        btn.setAttribute("aria-expanded", "false");
+      } else {
+        panel.removeAttribute("hidden");
+        btn.setAttribute("aria-expanded", "true");
+      }
+    });
+  })();
+</script>
 
 <body>
-  <!-- Mini Page Switcher (mobile only via CSS) -->
-  <div class="mini-bar">
-    <select id="pageSelect">
-      <option value="index.html">Home</option>
-      <option value="scamanalyzer.html">ScamAnalyzer</option>
-      <option value="courses.html">Courses</option>
-      <option value="trustedContacts.html">TrustedContacts</option>
-      <option value="alerts.html">Alerts</option>
-      <option value="simulator.html">Simulator</option>
-      <option value="report.html">Report</option>
-    </select>
 
-    <button id="coursesBtn" title="Courses">📚</button>
-    <button onclick="toggleMobileView()" title="Mobile view">📱</button>
-    <button onclick="location.reload()" title="Refresh">⟳</button>
-  </div>
+
 
   <div class="container">
 
-    <!-- HEADER -->
     <div class="page-head">
       <div class="page-icon">🎓</div>
       <h1>Safety Education Center</h1>
@@ -404,26 +762,15 @@
       </p>
     </div>
 
-    <!-- STATS -->
     <div class="stats">
-      <div class="stat">
-        <strong>6</strong>
-        <span>Courses</span>
-      </div>
-      <div class="stat">
-        <strong>2 hrs</strong>
-        <span>Total Content</span>
-      </div>
-      <div class="stat">
-        <strong>0</strong>
-        <span>Completed</span>
-      </div>
+      <div class="stat"><strong>6</strong><span>Courses</span></div>
+      <div class="stat"><strong>2 hrs</strong><span>Total Content</span></div>
+      <div class="stat"><strong>0</strong><span>Completed</span></div>
     </div>
 
-    <!-- COURSES (CLICKABLE) -->
     <div class="grid">
 
-      <a class="course-link" href="course-deepfakes.html" aria-label="Open Spotting AI Deepfakes course">
+      <a class="course-link" href="javascript:void(0)" onclick="switchPage('course-deepfakes.html')" aria-label="Open Spotting AI Deepfakes course">
         <div class="course">
           <div class="course-icon purple">🧠</div>
           <h3>Spotting AI Deepfakes</h3>
@@ -442,7 +789,7 @@
         </div>
       </a>
 
-      <a class="course-link" href="course-phone.html" aria-label="Open Phone Call Scams course">
+      <a class="course-link" href="javascript:void(0)" onclick="switchPage('course-phone.html')" aria-label="Open Phone Call Scams course">
         <div class="course">
           <div class="course-icon blue">📞</div>
           <h3>Phone Call Scams</h3>
@@ -461,7 +808,7 @@
         </div>
       </a>
 
-      <a class="course-link" href="course-phishing.html" aria-label="Open Email & Text Phishing course">
+      <a class="course-link" href="javascript:void(0)" onclick="switchPage('course-phishing.html')" aria-label="Open Email & Text Phishing course">
         <div class="course">
           <div class="course-icon red">✉️</div>
           <h3>Email & Text Phishing</h3>
@@ -480,7 +827,7 @@
         </div>
       </a>
 
-      <a class="course-link" href="course-finance.html" aria-label="Open Financial Fraud Prevention course">
+      <a class="course-link" href="javascript:void(0)" onclick="switchPage('course-finance.html')" aria-label="Open Financial Fraud Prevention course">
         <div class="course">
           <div class="course-icon green">💳</div>
           <h3>Financial Fraud Prevention</h3>
@@ -499,7 +846,7 @@
         </div>
       </a>
 
-      <a class="course-link" href="course-romance.html" aria-label="Open Romance & Relationship Scams course">
+      <a class="course-link" href="javascript:void(0)" onclick="switchPage('course-romance.html')" aria-label="Open Romance & Relationship Scams course">
         <div class="course">
           <div class="course-icon pink">❤️</div>
           <h3>Romance & Relationship Scams</h3>
@@ -518,7 +865,7 @@
         </div>
       </a>
 
-      <a class="course-link" href="course-social.html" aria-label="Open Social Engineering Tactics course">
+      <a class="course-link" href="javascript:void(0)" onclick="switchPage('course-social.html')" aria-label="Open Social Engineering Tactics course">
         <div class="course">
           <div class="course-icon orange">🛡️</div>
           <h3>Social Engineering Tactics</h3>
@@ -539,7 +886,6 @@
 
     </div>
 
-    <!-- CLICKABLE TABLE -->
     <div class="table-wrap">
       <div class="table-head">
         <div>
@@ -608,57 +954,44 @@
   </div>
 
   <script>
-    const pageSelect = document.getElementById("pageSelect");
-    const coursesBtn = document.getElementById("coursesBtn");
-
-    const currentPage = location.pathname.split("/").pop() || "index.html";
-
-    // set dropdown current
-    [...pageSelect.options].forEach(opt => {
-      if (opt.value === currentPage) opt.selected = true;
-    });
-
-    pageSelect.addEventListener("change", () => {
-      location.href = pageSelect.value;
-    });
-
-    // courses button logic
-    if (currentPage === "courses.html") {
-      coursesBtn.classList.add("active");
-      coursesBtn.disabled = true;
-      coursesBtn.style.cursor = "default";
-    } else {
-      coursesBtn.onclick = () => location.href = "courses.html";
+    // --- BASE-PATH SAFE NAVIGATION (GitHub Pages subfolder safe) ---
+    function getBaseDir() {
+      const path = window.location.pathname;
+      const parts = path.split("/");
+      const last = parts[parts.length - 1];
+      if (!last || last.includes(".html")) parts.pop();
+      return parts.join("/") + (parts.length > 1 ? "/" : "/");
     }
 
-    // clickable table rows
+    function switchPage(page) {
+      if (!page) return;
+      if (/^https?:\/\//i.test(page)) { window.location.href = page; return; }
+      window.location.href = getBaseDir() + page;
+    }
+
+    // Active nav highlight
+    (function setActiveNav(){
+      const file = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+      document.querySelectorAll(".nav-link[data-page]").forEach(a => {
+        a.classList.toggle("active", a.dataset.page.toLowerCase() === file);
+      });
+    })();
+
+    // Clickable table rows
     document.querySelectorAll("tbody tr[data-href]").forEach(row => {
       row.addEventListener("click", () => {
         const href = row.getAttribute("data-href");
-        if (href) window.location.href = href;
+        if (href) switchPage(href);
       });
 
-      // keyboard support (Enter/Space)
       row.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           const href = row.getAttribute("data-href");
-          if (href) window.location.href = href;
+          if (href) switchPage(href);
         }
       });
     });
-
-    // mobile preview toggle
-    function toggleMobileView() {
-      const meta = document.querySelector('meta[name="viewport"]');
-      if (!meta) return;
-
-      if (meta.content.includes("width=375")) {
-        meta.content = "width=device-width, initial-scale=1";
-      } else {
-        meta.content = "width=375, initial-scale=1";
-      }
-    }
   </script>
 
 </body>

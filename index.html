@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Guardian AI — Scam Protection</title>
 
-  <!-- Font (closest to the screenshots) -->
+  <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@
       top: 14px;
       left: 14px;
       z-index: 9999;
-      display: none; /* hidden by default (desktop) */
+      display: none;
       align-items: center;
       gap: 10px;
       background: white;
@@ -48,7 +48,6 @@
     }
     .mini-bar button:hover{ background:#e5e7eb; }
 
-    /* Show mini-bar ONLY on mobile */
     @media (max-width: 560px){
       .mini-bar{ display:flex; }
     }
@@ -61,7 +60,7 @@
       --accent:#6ee7b8;
       --accent-2:#34d399;
 
-      --ink:#0b1220;      /* FIXED: added missing semicolon */
+      --ink:#0b1220;
       --muted:#64748b;
       --muted-2:#94a3b8;
 
@@ -89,6 +88,180 @@
       width:min(1200px, calc(100% - 64px));
       margin:0 auto;
     }
+
+    /* ===================== TOP NAV (NEW) ===================== */
+    .top-nav{
+      position: sticky;
+      top: 0;
+      z-index: 9998;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(226,232,240,.9);
+    }
+    .top-nav .nav-inner{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .nav-brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:900;
+      letter-spacing:-.01em;
+      color:#0b1220;
+      min-width: 180px;
+    }
+    .nav-logo{
+      width:42px;height:42px;
+      border-radius:14px;
+      background: rgba(110,231,184,.14);
+      border:1px solid rgba(110,231,184,.34);
+      display:grid;place-items:center;
+      color:#065f46;
+    }
+    .nav-title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.05;
+    }
+    .nav-title strong{ font-size:15px; }
+    .nav-title span{
+      font-size:12px;
+      color:#64748b;
+      font-weight:700;
+      margin-top:2px;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap: 6px;
+      flex: 1;
+      justify-content: center;
+    }
+    .nav-links a{
+      font-weight:800;
+      font-size:13px;
+      color:#0b1220;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid transparent;
+      transition: .15s ease;
+      white-space: nowrap;
+    }
+    .nav-links a:hover{
+      background: rgba(15,23,42,.06);
+      border-color: rgba(15,23,42,.06);
+    }
+    .nav-links a.active{
+      background: rgba(52,211,153,.18);
+      border-color: rgba(52,211,153,.40);
+      color:#065f46;
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      justify-content:flex-end;
+      min-width: 230px;
+    }
+    .nav-btn{
+      height:42px;
+      padding: 0 14px;
+      border-radius: 12px;
+      font-weight:900;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border: 1px solid rgba(15,23,42,.10);
+      background: #fff;
+      color:#0b1220;
+      cursor:pointer;
+      transition: .15s ease;
+      white-space: nowrap;
+    }
+    .nav-btn:hover{ background: rgba(15,23,42,.04); }
+    .nav-btn.primary{
+      background: #0b1220;
+      border-color: #0b1220;
+      color:#fff;
+    }
+    .nav-btn.primary:hover{ filter: brightness(1.05); }
+
+    .nav-toggle{
+      display:none;
+      width:44px;height:44px;
+      border-radius: 14px;
+      border: 1px solid rgba(15,23,42,.10);
+      background: #fff;
+      cursor:pointer;
+    }
+    .nav-toggle span{
+      display:block;
+      width:18px;height:2px;
+      background:#0b1220;
+      margin: 4px auto;
+      border-radius:99px;
+    }
+
+    .nav-mobile{
+      display:none;
+      border-top:1px solid rgba(226,232,240,.9);
+      background: rgba(255,255,255,.92);
+    }
+    .nav-mobile .nav-mobile-inner{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 18px 14px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .nav-mobile a{
+      font-weight:900;
+      font-size:14px;
+      padding:12px 12px;
+      border-radius: 14px;
+      background: rgba(15,23,42,.04);
+      border: 1px solid rgba(15,23,42,.06);
+    }
+    .nav-mobile a.active{
+      background: rgba(52,211,153,.18);
+      border-color: rgba(52,211,153,.40);
+      color:#065f46;
+    }
+    .nav-mobile .row{
+      display:flex;
+      gap:10px;
+      margin-top:6px;
+    }
+    .nav-mobile .row .nav-btn{
+      flex:1;
+      height:46px;
+      border-radius: 14px;
+    }
+
+    @media (max-width: 980px){
+      .nav-links{ display:none; }
+      .nav-actions{ display:none; }
+      .nav-toggle{ display:block; margin-left:auto; }
+      .nav-brand{ min-width: unset; }
+      .top-nav .nav-inner{ padding: 12px 16px; }
+      .nav-mobile{ display:block; }
+      .nav-mobile[hidden]{ display:none; }
+    }
+    /* Keep your mini-bar visible only on very small screens */
+    @media (max-width: 560px){
+      .top-nav{ display:none; }
+    }
+    /* ===================== END TOP NAV ===================== */
 
     /* ---------------- HERO ---------------- */
     .hero{
@@ -179,6 +352,7 @@
       transition: transform .15s ease, filter .15s ease, background .15s ease, border-color .15s ease;
       user-select:none;
       white-space:nowrap;
+      cursor:pointer;
     }
     .btn:active{ transform: translateY(1px); }
     .btn-primary{
@@ -361,7 +535,6 @@
       margin-top:22px;
     }
 
-    /* Clickable cards */
     .card-link{ display:block; }
     .tool-card{
       background:var(--card);
@@ -508,14 +681,34 @@
       align-items:center;
       gap:12px;
     }
+
+    /* Image-ready avatar (replaces your old .avatar) */
     .avatar{
       width:44px;height:44px;
-      border-radius:999px;
-      background:#f1f5f9;
+      border-radius:50%;
+      overflow:hidden;
+      background:#e5e7eb;
       border:1px solid #e5e7eb;
-      display:grid;place-items:center;
-      font-size:20px;
+      flex:0 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
+    .avatar img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    }
+    .avatar .fallback{
+      display:none;
+      width:100%;
+      height:100%;
+      align-items:center;
+      justify-content:center;
+      font-size:22px;
+    }
+
     .t-name{
       margin:0;
       font-weight:900;
@@ -703,6 +896,60 @@
     <button onclick="location.reload()" title="Refresh">⟳</button>
   </div>
 
+  <!-- ✅ NEW TOP HEADER (desktop/tablet) -->
+  <header class="top-nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="javascript:void(0)" onclick="switchPage('index.html')">
+        <div class="nav-logo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l7 4v7c0 5-3.5 9-7 9s-7-4-7-9V6l7-4z" stroke="currentColor" stroke-width="2"/>
+            <path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="nav-title">
+          <strong>Guardian AI</strong>
+          <span>Scam Protection</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
+        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Scam Analyzer</a>
+        <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
+        <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedContacts.html">Trusted Contacts</a>
+        <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
+        <a href="javascript:void(0)" onclick="switchPage('simulator.html')" data-page="simulator.html">Simulator</a>
+        <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
+        <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Scam</button>
+      </div>
+
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <!-- mobile dropdown (for tablet sizes; your mini-bar still handles tiny screens) -->
+    <div class="nav-mobile" id="navMobile" hidden>
+      <div class="nav-mobile-inner">
+        <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
+        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Scam Analyzer</a>
+        <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
+        <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedContacts.html">Trusted Contacts</a>
+        <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
+        <a href="javascript:void(0)" onclick="switchPage('simulator.html')" data-page="simulator.html">Simulator</a>
+        <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
+        <div class="row">
+          <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
+          <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Scam</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
   <!-- HERO -->
   <section class="hero">
     <div class="container">
@@ -715,7 +962,7 @@
                 <path d="M12 2l7 4v7c0 5-3.5 9-7 9s-7-4-7-9V6l7-4z" stroke="rgba(110,231,184,.95)" stroke-width="2" />
               </svg>
             </span>
-            Trusted by 50,000+ seniors nationwide
+            Built to help seniors recognize and avoid scams
           </div>
 
           <h1>
@@ -730,7 +977,6 @@
           </p>
 
           <div class="hero-actions">
-            <!-- UPDATED: now base-path safe -->
             <a class="btn btn-primary" href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')">
               Analyze a Scam
               <span class="arrow" aria-hidden="true">
@@ -741,7 +987,6 @@
               </span>
             </a>
 
-            <!-- UPDATED: now base-path safe -->
             <a class="btn btn-secondary" href="javascript:void(0)" onclick="switchPage('courses.html')">
               Start Learning
             </a>
@@ -902,7 +1147,6 @@
       </div>
 
       <div class="tool-grid">
-        <!-- UPDATED: now base-path safe -->
         <a class="card-link" href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')">
           <div class="tool-card">
             <div class="tool-ico purple" aria-hidden="true">
@@ -994,7 +1238,7 @@
   <section class="gov" id="resources">
     <div class="container">
       <div class="section-head">
-        <h2>Backed by Government Resources</h2>
+        <h2>Government Resources</h2>
         <p>We integrate official guidance and reporting channels from federal agencies<br>dedicated to protecting consumers.</p>
       </div>
 
@@ -1035,7 +1279,7 @@
     <div class="container">
       <div class="section-head">
         <h2>Trusted by Thousands of Seniors</h2>
-        <p>Real stories from people who avoided scams with Guardian Shield</p>
+        <p>Real stories from people who avoided scams with Guardian AI</p>
       </div>
 
       <div class="t-grid">
@@ -1051,9 +1295,13 @@
 
           <div class="t-footer">
             <div class="t-person">
-              <div class="avatar">👵</div>
+              <div class="avatar">
+                <img src="meiling.png" alt="Photo of Meiling T."
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <span class="fallback" aria-hidden="true">👵</span>
+              </div>
               <div>
-                <p class="t-name">Margaret T., 72</p>
+                <p class="t-name">Meiling T., 72</p>
                 <p class="t-loc">Florida</p>
               </div>
             </div>
@@ -1080,7 +1328,11 @@
 
           <div class="t-footer">
             <div class="t-person">
-              <div class="avatar">👴</div>
+              <div class="avatar">
+                <img src="robert.png" alt="Photo of Robert K."
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <span class="fallback" aria-hidden="true">👴</span>
+              </div>
               <div>
                 <p class="t-name">Robert K., 68</p>
                 <p class="t-loc">Arizona</p>
@@ -1109,7 +1361,11 @@
 
           <div class="t-footer">
             <div class="t-person">
-              <div class="avatar">👵</div>
+              <div class="avatar">
+                <img src="dorothy.png" alt="Photo of Dorothy M."
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <span class="fallback" aria-hidden="true">👵</span>
+              </div>
               <div>
                 <p class="t-name">Dorothy M., 75</p>
                 <p class="t-loc">Ohio</p>
@@ -1134,7 +1390,7 @@
   <section class="cta" id="get-started">
     <div class="container">
       <h2>Ready to Protect Yourself?</h2>
-      <p>Start using Guardian Shield today. It's free and takes less than a minute to get started.</p>
+      <p>Start using Guardian AI today. It's free and takes less than a minute to get started.</p>
 
       <div class="cta-actions">
         <a class="btn btn-primary" href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')">
@@ -1164,7 +1420,7 @@
                 <path d="M12 2l7 4v7c0 5-3.5 9-7 9s-7-4-7-9V6l7-4z" stroke="rgba(110,231,184,.95)" stroke-width="2"/>
               </svg>
             </div>
-            <h3 class="brand-title">Guardian Shield</h3>
+            <h3 class="brand-title">Guardian AI</h3>
           </div>
           <p class="foot-p">Protecting seniors from AI-powered scams with cutting-edge technology and accessible education.</p>
         </div>
@@ -1182,7 +1438,6 @@
         <div class="foot-col">
           <h4>Government Resources</h4>
           <div class="foot-links">
-            <!-- UPDATED: real external links that always work -->
             <a href="https://www.ftc.gov/scams" target="_blank" rel="noopener">FTC Scam Alerts</a>
             <a href="https://www.ic3.gov/" target="_blank" rel="noopener">FBI IC3</a>
             <a href="https://www.usa.gov/scams-and-fraud" target="_blank" rel="noopener">USA.gov Fraud Info</a>
@@ -1205,11 +1460,10 @@
               <path d="M4 6h16v12H4V6z" stroke="rgba(226,232,240,.8)" stroke-width="2"/>
               <path d="M4 7l8 6 8-6" stroke="rgba(226,232,240,.8)" stroke-width="2" stroke-linejoin="round"/>
             </svg>
-            help@guardianshield.gov
+            guardianai.help@gmail.com
           </div>
 
           <p class="report-label">Report Fraud Directly:</p>
-          <!-- UPDATED: text matches destination + works -->
           <a class="report-link" href="https://reportfraud.ftc.gov/" target="_blank" rel="noopener">reportfraud.ftc.gov</a>
         </div>
 
@@ -1228,7 +1482,6 @@
     // --- BASE-PATH SAFE NAVIGATION (fixes GitHub Pages subfolder issues) ---
     function getBaseDir() {
       const path = window.location.pathname;
-      // If current is /repo/ or /repo/index.html or /repo/anything.html, return "/repo/"
       const parts = path.split("/");
       const last = parts[parts.length - 1];
       if (!last || last.includes(".html")) parts.pop();
@@ -1238,35 +1491,50 @@
 
     function switchPage(page) {
       if (!page) return;
-
-      // Allow full URLs too (if you ever pass https://...)
-      if (/^https?:\/\//i.test(page)) {
-        window.location.href = page;
-        return;
-      }
-
+      if (/^https?:\/\//i.test(page)) { window.location.href = page; return; }
       window.location.href = getBaseDir() + page;
     }
 
     function toggleMobileView() {
       const meta = document.querySelector('meta[name="viewport"]');
       if (!meta) return;
-
-      if (meta.content.includes("width=375")) {
-        meta.content = "width=device-width, initial-scale=1";
-      } else {
-        meta.content = "width=375, initial-scale=1";
-      }
+      if (meta.content.includes("width=375")) meta.content = "width=device-width, initial-scale=1";
+      else meta.content = "width=375, initial-scale=1";
     }
 
-    // Keep dropdown synced to current page (mobile mini-bar)
+    // Keep dropdown synced to current page (mini-bar)
     (function syncDropdownToPage(){
       const sel = document.getElementById("pageSelect");
       if (!sel) return;
       const file = window.location.pathname.split("/").pop();
       sel.value = (file && file.includes(".html")) ? file : "index.html";
     })();
-  </script>
 
+    // Highlight active nav link (desktop + mobile dropdown)
+    (function highlightActiveNav(){
+      const file = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
+      document.querySelectorAll('[data-page]').forEach(a => {
+        a.classList.toggle('active', (a.getAttribute('data-page') || '').toLowerCase() === file);
+      });
+    })();
+
+    // Nav toggle (tablet)
+    (function navToggle(){
+      const btn = document.getElementById("navToggle");
+      const panel = document.getElementById("navMobile");
+      if (!btn || !panel) return;
+
+      btn.addEventListener("click", () => {
+        const open = !panel.hasAttribute("hidden");
+        if (open) {
+          panel.setAttribute("hidden", "");
+          btn.setAttribute("aria-expanded", "false");
+        } else {
+          panel.removeAttribute("hidden");
+          btn.setAttribute("aria-expanded", "true");
+        }
+      });
+    })();
+  </script>
 </body>
 </html>

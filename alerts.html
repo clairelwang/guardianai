@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Guardian Shield – Community Scam Alerts</title>
+  <title>Guardian AI – Community Scam Alerts</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -141,7 +141,7 @@
     .subtitle{
       text-align:center;
       margin:10px auto 0;
-      max-width:640px;
+      max-width:700px;
       color:var(--muted);
       font-size:18px;
       line-height:1.55;
@@ -561,7 +561,8 @@
 
       <h1 class="title">Community Scam Alerts</h1>
       <p class="subtitle">
-        Stay informed about the latest scams reported by federal agencies and your community.
+        Real examples from U.S. government agencies (FTC + FBI/IC3) so users can learn patterns and verify sources.
+        (This page is static: it doesn’t auto-fetch, but every “View source” link is an official .gov page.)
       </p>
 
       <!-- Stats -->
@@ -590,12 +591,12 @@
           <input id="searchInput" type="text" placeholder="Search alerts..." autocomplete="off" />
         </div>
 
-        <button class="btnOrange" id="latestBtn" type="button">
+        <button class="btnOrange" id="latestBtn" type="button" title="This page is static (no live fetching)">
           <svg id="latestIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
             <path d="M21 3v7h-7"></path>
           </svg>
-          <span id="latestLabel">Get Latest Alerts</span>
+          <span id="latestLabel">Up to date</span>
         </button>
       </section>
 
@@ -607,7 +608,7 @@
         </div>
         <div class="resourcesRight">
           <button class="btnWhite" id="ftcBtn" type="button">
-            FTC Report
+            FTC ReportFraud
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M14 3h7v7"></path>
               <path d="M10 14L21 3"></path>
@@ -626,7 +627,7 @@
             </svg>
           </button>
 
-          <button class="btnWhite" id="resetBtn" type="button" title="Reset alerts back to default">
+          <button class="btnWhite" id="resetBtn" type="button" title="Reset alerts back to the built-in list">
             Reset
           </button>
         </div>
@@ -648,18 +649,11 @@
   <div class="toast" id="toast">Saved</div>
 
   <script>
-    /**********************
-     * 1) Fix the biggest issue:
-     *    You pasted TWO full HTML docs in one file.
-     *    This version is ONE document and renders alerts via JS.
-     **********************/
-
     // ===== Mini bar behavior =====
     const pageSelect = document.getElementById('pageSelect');
     const refreshBtn = document.getElementById('refreshBtn');
     const mobileBtn  = document.getElementById('mobileBtn');
 
-    // Auto-select current page in dropdown
     (function setCurrentPage(){
       const current = (location.pathname.split("/").pop() || "alerts.html").toLowerCase();
       [...pageSelect.options].forEach(o => {
@@ -693,146 +687,137 @@
       toastTimer = setTimeout(()=>toast.classList.remove('show'), 1500);
     }
 
-    // ===== Alerts “database” (localStorage) =====
-    const LS_KEY = "guardian_alerts_v1";
+    // ===== Alerts storage =====
+    const LS_KEY = "guardian_alerts_v2_real_gov";
 
-    // Default alerts (your originals, but cleaned: sources are real clickable buttons now)
+    // REAL GOV ALERTS (static list) — every item has an official .gov source URL
+    // NOTE: "reports" counts are illustrative (since we are not fetching live data).
     const DEFAULT_ALERTS = [
       {
-        id: "a1",
-        type: "urgent",
-        emoji: "🤖",
-        title: "Beware: Impersonation Scams Using AI-Generated Voices",
-        desc: "Scammers use AI-generated voices to impersonate trusted individuals to pressure victims into sending money or sharing personal info. Verify using a saved number + a family passphrase.",
-        sourceLabel: "FBI",
-        region: "United States",
-        reports: 405,
-        date: "2025-12-27",
-        verified: true,
-        sourceUrl: "https://www.ic3.gov/"
-      },
-      {
-        id: "a2",
-        type: "urgent",
-        emoji: "🤖",
-        title: "AI Deepfakes Impersonating Family Members",
-        desc: "Audio/video deepfakes can fake a grandchild or family member asking for urgent money. Always call back using the contact you already have saved.",
-        sourceLabel: "FBI",
-        region: "United States",
-        reports: 164,
-        date: "2025-12-27",
-        verified: true,
-        sourceUrl: "https://www.ic3.gov/"
-      },
-      {
-        id: "a3",
-        type: "urgent",
-        emoji: "📞",
-        title: "Tech Support Scams Targeting Seniors",
-        desc: "Scammers claim your device has a virus and ask for remote access + payment. Never call pop-up numbers. Close the tab and contact your provider using the official website.",
-        sourceLabel: "FBI",
-        region: "United States",
-        reports: 546,
-        date: "2025-12-27",
-        verified: true,
-        sourceUrl: "https://www.ic3.gov/"
-      },
-      {
-        id: "a4",
-        type: "urgent",
-        emoji: "📞",
-        title: "IRS Impersonation Calls Surge Nationwide",
-        desc: "Callers threaten arrest over “back taxes” and demand gift cards. The real IRS does not demand payment via gift cards or threaten immediate arrest by phone.",
-        sourceLabel: "Federal Trade Commission",
-        sourceTheme: "blue",
-        region: "Nationwide",
-        reports: 847,
-        date: "2025-12-27",
-        verified: true,
-        sourceUrl: "https://reportfraud.ftc.gov/"
-      },
-      {
-        id: "a5",
-        type: "urgent",
-        emoji: "🤖",
-        title: "AI Voice Cloning Used in Grandparent Scams",
-        desc: "Scammers clone voices from social media clips and claim an emergency. Use a code word and verify by calling the person on their known number.",
-        sourceLabel: "FBI",
-        region: "Nationwide",
-        reports: 523,
-        date: "2025-12-27",
-        verified: true,
-        sourceUrl: "https://www.ic3.gov/"
-      },
-      {
-        id: "w1",
+        id: "ftc_2026_01_09_olympics",
         type: "warning",
-        emoji: "👥",
-        title: "Fake Customer Service Accounts in Comments",
-        desc: "Scammers pretend to be airline/bank support and redirect victims to fake numbers or DMs. Only use contact info from the company’s official site/app.",
-        sourceLabel: "Federal Trade Commission",
+        emoji: "✈️",
+        title: "Traveling to the Olympics in Italy? Here’s how to avoid a scam",
+        desc: "Fraudsters may sell fake tickets, fake lodging, or “too-good-to-be-true” travel deals around major events. Use trusted sellers, pay with protections (credit card), and confirm bookings directly with the official company.",
+        sourceLabel: "FTC Consumer Alert",
         sourceTheme: "blue",
         region: "United States",
-        reports: 241,
-        date: "2025-12-27",
+        reports: 0,
+        date: "2026-01-09",
         verified: true,
-        sourceUrl: "https://reportfraud.ftc.gov/"
+        sourceUrl: "https://consumer.ftc.gov/consumer-alerts/2026/01/traveling-olympics-italy-heres-how-avoid-scam"
       },
       {
-        id: "w2",
+        id: "ftc_2026_01_07_credit_fix_scams",
         type: "warning",
-        emoji: "🌐",
-        title: "Fraudulent Money Recovery Services",
-        desc: "Scammers promise to recover money from earlier scams and request upfront fees. Legit agencies don’t charge fees to report fraud.",
-        sourceLabel: "Federal Trade Commission",
+        emoji: "💳",
+        title: "Spot scams when fixing your credit",
+        desc: "Watch for companies promising quick “credit repair,” asking you to pay before services, telling you to dispute accurate info, or urging you to create a new identity/credit profile. Those are red flags.",
+        sourceLabel: "FTC Consumer Alert",
         sourceTheme: "blue",
         region: "United States",
-        reports: 401,
-        date: "2025-12-27",
+        reports: 0,
+        date: "2026-01-07",
         verified: true,
-        sourceUrl: "https://reportfraud.ftc.gov/"
+        sourceUrl: "https://consumer.ftc.gov/consumer-alerts/2026/01/spot-scams-when-fixing-your-credit"
       },
       {
-        id: "w3",
-        type: "warning",
-        emoji: "📧",
-        title: "Medicare Enrollment Phishing Emails",
-        desc: "Emails claim you must verify Medicare info. Links lead to fake sites. Medicare won’t email asking for sensitive personal details.",
-        sourceLabel: "Federal Trade Commission",
+        id: "ftc_2026_01_05_illegal_trick",
+        type: "urgent",
+        emoji: "🚨",
+        title: "Influencers are pushing an illegal trick to “fix” your credit report",
+        desc: "Some posts promote filing false identity theft claims or creating fake documents to remove accurate info. That can be illegal and can backfire. If you need help, use legitimate dispute/consumer protection steps instead.",
+        sourceLabel: "FTC Consumer Alert",
         sourceTheme: "blue",
-        region: "Nationwide",
-        reports: 312,
-        date: "2025-12-27",
+        region: "United States",
+        reports: 0,
+        date: "2026-01-05",
         verified: true,
-        sourceUrl: "https://reportfraud.ftc.gov/"
+        sourceUrl: "https://consumer.ftc.gov/consumer-alerts/2026/01/influencers-are-pushing-illegal-trick-fix-your-credit-report"
       },
       {
-        id: "w4",
+        id: "ftc_2025_12_09_krebs",
+        type: "urgent",
+        emoji: "🕵️",
+        title: "Scammers are impersonating the FTC Chief Privacy Officer, John Krebs",
+        desc: "Scammers may pretend to be government officials to demand money or personal info. Don’t trust caller ID or email display names; independently verify using official contact info and don’t send payments to “fix” a problem.",
+        sourceLabel: "FTC Consumer Alert",
+        sourceTheme: "blue",
+        region: "United States",
+        reports: 0,
+        date: "2025-12-09",
+        verified: true,
+        sourceUrl: "https://consumer.ftc.gov/consumer-alerts/2025/12/scammers-are-impersonating-ftc-chief-privacy-officer-john-krebs"
+      },
+      {
+        id: "ftc_2025_12_08_casting",
         type: "warning",
-        emoji: "🌐",
-        title: "Tech Support Pop-up Scams",
-        desc: "Fake “virus detected” popups include a phone number. Don’t call. Close the browser/tab and run a trusted security scan instead.",
-        sourceLabel: "Community Report",
+        emoji: "🎬",
+        title: "Lights, camera… scam! Spot virtual casting call scams",
+        desc: "Scammers may offer fake auditions and then ask for fees, personal info, or payment for “equipment” or “background checks.” Real opportunities don’t pressure you to pay upfront or send sensitive info to strangers.",
+        sourceLabel: "FTC Consumer Alert",
+        sourceTheme: "blue",
+        region: "United States",
+        reports: 0,
+        date: "2025-12-08",
+        verified: true,
+        sourceUrl: "https://consumer.ftc.gov/consumer-alerts/2025/12/lights-camera-scam-spot-virtual-casting-call-scams"
+      },
+      {
+        id: "ic3_2025_12_05_virtual_kidnapping",
+        type: "urgent",
+        emoji: "📸",
+        title: "Criminals using altered proof-of-life media in virtual kidnapping for ransom scams",
+        desc: "FBI warns scammers may alter photos from social media to create fake “proof” and demand ransom. Pause, verify by contacting your loved one directly, and use a family code word.",
+        sourceLabel: "FBI/IC3 PSA",
         sourceTheme: "purple",
-        region: "California, Florida, Texas",
-        reports: 189,
-        date: "2025-12-27",
+        region: "United States",
+        reports: 0,
+        date: "2025-12-05",
         verified: true,
-        sourceUrl: ""
+        sourceUrl: "https://www.ic3.gov/PSA/2025/PSA251205"
       },
       {
-        id: "ad1",
-        type: "advisory",
-        emoji: "📞",
-        title: "Social Security Number 'Suspended' Scam",
-        desc: "Automated calls claim your SSN is suspended. SSA does not suspend numbers. Hang up and report to the FTC.",
-        sourceLabel: "State Attorney General",
-        sourceTheme: "green",
-        region: "Northeast US",
-        reports: 256,
-        date: "2025-12-27",
+        id: "ic3_2025_12_19_senior_officials",
+        type: "urgent",
+        emoji: "📲",
+        title: "Senior U.S. officials continue to be impersonated in malicious messaging campaign",
+        desc: "FBI warns of impersonation via texts and AI-generated voice messages, often pushing targets onto encrypted apps and then requesting sensitive actions (codes, documents, wiring funds). Verify independently and treat urgency as a red flag.",
+        sourceLabel: "FBI/IC3 PSA",
+        sourceTheme: "purple",
+        region: "United States",
+        reports: 0,
+        date: "2025-12-19",
         verified: true,
-        sourceUrl: ""
+        sourceUrl: "https://www.ic3.gov/PSA/2025/PSA251219"
+      },
+      {
+        id: "ic3_2025_04_18_impersonating_ic3",
+        type: "warning",
+        emoji: "🎭",
+        title: "FBI warns of scammers impersonating the IC3",
+        desc: "Scammers may claim they recovered your lost funds and request payment or financial details. IC3 does not directly contact victims to demand money or “recover” funds. Don’t pay; report through official channels.",
+        sourceLabel: "FBI/IC3 PSA",
+        sourceTheme: "purple",
+        region: "United States",
+        reports: 0,
+        date: "2025-04-18",
+        verified: true,
+        sourceUrl: "https://www.ic3.gov/PSA/2025/PSA250418"
+      },
+      {
+        id: "fbi_2026_01_08_quishing",
+        type: "advisory",
+        emoji: "🔳",
+        title: "Malicious QR codes (“quishing”) used in spearphishing campaigns",
+        desc: "FBI issued a FLASH describing QR codes that hide malicious links and push victims to mobile credential-harvesting pages. Don’t scan unsolicited QR codes; verify the source and never enter passwords from QR-linked pages.",
+        sourceLabel: "FBI FLASH (PDF)",
+        sourceTheme: "green",
+        region: "United States",
+        reports: 0,
+        date: "2026-01-08",
+        verified: true,
+        sourceUrl: "https://www.ic3.gov/CSA/2026/260108.pdf"
       }
     ];
 
@@ -851,39 +836,6 @@
     function saveAlerts(alerts){
       localStorage.setItem(LS_KEY, JSON.stringify(alerts));
     }
-
-    // ===== Fake "latest alerts" feed (this simulates real fetching) =====
-    // Clicking "Get Latest Alerts" will add 1-2 new items (deduped).
-    const LATEST_FEED = [
-      {
-        id: "n1",
-        type: "warning",
-        emoji: "💳",
-        title: "Bank 'Fraud Department' Verification Codes Scam",
-        desc: "Scammers pose as your bank and ask for the one-time code sent to your phone. That code lets them take over your account. Never share verification codes.",
-        sourceLabel: "Federal Trade Commission",
-        sourceTheme: "blue",
-        region: "Nationwide",
-        reports: 318,
-        date: "2026-01-06",
-        verified: true,
-        sourceUrl: "https://reportfraud.ftc.gov/"
-      },
-      {
-        id: "n2",
-        type: "urgent",
-        emoji: "📦",
-        title: "Package Delivery Texts with Fake Payment Links",
-        desc: "Texts claim you must pay a small fee to release a package. Links steal card details. Track packages only through the official carrier website/app.",
-        sourceLabel: "Community Report",
-        sourceTheme: "purple",
-        region: "Multi-state",
-        reports: 211,
-        date: "2026-01-07",
-        verified: false,
-        sourceUrl: ""
-      }
-    ];
 
     // ===== Render + filtering =====
     const alertsList = document.getElementById('alertsList');
@@ -915,7 +867,6 @@
     }
 
     function formatDate(iso){
-      // iso like 2026-01-07 -> 01/07/2026
       if(!iso || !/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso || "";
       const [y,m,d] = iso.split("-");
       return `${m}/${d}/${y}`;
@@ -979,11 +930,11 @@
                 ${sourcePillHTML(a)}
                 <span class="metaItem">
                   <svg class="metaIcon" viewBox="0 0 24 24"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11z"></path><circle cx="12" cy="10" r="2.2"></circle></svg>
-                  ${escapeHTML(a.region || "")}
+                  ${escapeHTML(a.region || "United States")}
                 </span>
                 <span class="metaItem">
                   <svg class="metaIcon" viewBox="0 0 24 24"><path d="M4 14l6-6 4 4 6-6"></path><path d="M20 20H4"></path></svg>
-                  ${escapeHTML(String(a.reports ?? ""))} reports
+                  ${escapeHTML(String(a.reports ?? 0))} reports (demo)
                 </span>
                 <span class="metaItem">
                   <svg class="metaIcon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v6l3 2"></path></svg>
@@ -1023,7 +974,6 @@
       const q = searchInput.value.trim().toLowerCase();
       const allCards = Array.from(document.querySelectorAll('.alertCard'));
 
-      // Show/hide cards
       allCards.forEach(card => {
         const type = card.getAttribute('data-type');
         const text = card.innerText.toLowerCase();
@@ -1032,7 +982,7 @@
         card.style.display = (matchesFilter && matchesSearch) ? "" : "none";
       });
 
-      // Counts based on SEARCH only (like typical UI)
+      // Counts based on search only
       const searchMatchedIds = new Set();
       allCards.forEach(card => {
         const text = card.innerText.toLowerCase();
@@ -1049,10 +999,9 @@
       alerts: saved && saved.length ? saved : DEFAULT_ALERTS.slice()
     };
 
-    // Save defaults on first load so it "actually works" persistently
     if(!saved) saveAlerts(state.alerts);
 
-    // Initial render + counts
+    // Initial render
     render(state.alerts);
     updateCountLabels(computeCounts(state.alerts));
     applyFilters();
@@ -1086,20 +1035,22 @@
 
       if(action === "copySummary"){
         const summary =
-`Guardian Shield Alert
+`Guardian AI Alert
 Type: ${alertObj.type?.toUpperCase()}
 Title: ${alertObj.title}
 Date: ${alertObj.date}
 Source: ${alertObj.sourceLabel}${alertObj.sourceUrl ? " ("+alertObj.sourceUrl+")" : ""}
-Summary: ${alertObj.desc}
 
-Suggested next step: Verify independently using a saved number, and report suspicious activity to the FTC or IC3.`;
+Summary:
+${alertObj.desc}
+
+Suggested next step:
+Pause + verify independently using official contact info. If you lost money or shared info, report to FTC (ReportFraud) and/or FBI IC3.`;
 
         try{
           await navigator.clipboard.writeText(summary);
           showToast("Copied to clipboard");
         }catch(err){
-          // fallback
           const ta = document.createElement("textarea");
           ta.value = summary;
           document.body.appendChild(ta);
@@ -1120,75 +1071,13 @@ Suggested next step: Verify independently using a saved number, and report suspi
       }
     });
 
-    // ===== "Get Latest Alerts" button now ACTUALLY DOES something =====
-    const latestBtn = document.getElementById("latestBtn");
-    const latestLabel = document.getElementById("latestLabel");
-    const latestIcon = document.getElementById("latestIcon");
-
-    function setLoading(isLoading){
-      if(isLoading){
-        latestBtn.disabled = true;
-        latestIcon.outerHTML = `<span class="spinner" id="latestIcon"></span>`;
-        latestLabel.textContent = "Fetching…";
-      }else{
-        latestBtn.disabled = false;
-        const spinner = document.getElementById("latestIcon");
-        if(spinner) spinner.outerHTML = `
-          <svg id="latestIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
-            <path d="M21 3v7h-7"></path>
-          </svg>
-        `;
-        latestLabel.textContent = "Get Latest Alerts";
-      }
-    }
-
-    function mergeLatest(){
-      const existing = new Set(state.alerts.map(a => a.id));
-      const newOnes = [];
-
-      // add 1-2 items randomly each click
-      const shuffled = LATEST_FEED.slice().sort(()=>Math.random()-0.5);
-      const take = Math.random() < 0.65 ? 1 : 2;
-
-      for(const item of shuffled.slice(0, take)){
-        if(!existing.has(item.id)){
-          newOnes.push(item);
-          existing.add(item.id);
-        }
-      }
-
-      if(newOnes.length){
-        // add to top
-        state.alerts = newOnes.concat(state.alerts);
-        saveAlerts(state.alerts);
-        render(state.alerts);
-        // keep filter + search state
-        applyFilters();
-      }
-
-      return newOnes.length;
-    }
-
-    latestBtn.addEventListener("click", () => {
-      setLoading(true);
-
-      // simulate network request
-      setTimeout(() => {
-        const added = mergeLatest();
-        setLoading(false);
-
-        if(added > 0){
-          showToast(`Added ${added} new alert${added>1?"s":""}`);
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }else{
-          showToast("No new alerts right now");
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        }
-      }, 850);
+    // “Up to date” button (static page)
+    document.getElementById("latestBtn").addEventListener("click", () => {
+      showToast("This page is static (no live fetching)");
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
-    // ===== Resource buttons =====
+    // Resource buttons
     document.getElementById('ftcBtn').addEventListener('click', () => {
       window.open('https://reportfraud.ftc.gov/', '_blank');
     });
@@ -1196,7 +1085,7 @@ Suggested next step: Verify independently using a saved number, and report suspi
       window.open('https://www.ic3.gov/', '_blank');
     });
 
-    // ===== Reset button =====
+    // Reset button
     document.getElementById("resetBtn").addEventListener("click", () => {
       localStorage.removeItem(LS_KEY);
       state.alerts = DEFAULT_ALERTS.slice();
@@ -1208,7 +1097,7 @@ Suggested next step: Verify independently using a saved number, and report suspi
       document.getElementById("tabAll").classList.add("active");
       updateCountLabels(computeCounts(state.alerts));
       applyFilters();
-      showToast("Reset to default alerts");
+      showToast("Reset to built-in gov alerts");
     });
   </script>
 </body>
