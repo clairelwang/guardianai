@@ -8,6 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -40,79 +43,186 @@
       color:var(--text);
       background:#fff;
     }
+    a{ color:inherit; text-decoration:none; }
 
-    /* ===== Mini switch bar (top-left) ===== */
-    .miniBar{
-      position:fixed;
-      top:10px;
-      left:10px;
-      z-index:9999;
-      transform: translateX(18px);
+    /* ===================== TOP NAV (FROM index.html) ===================== */
+    .top-nav{
+      position: sticky;
+      top: 0;
+      z-index: 9998;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(226,232,240,.9);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
+    .top-nav .nav-inner{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .nav-brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:900;
+      letter-spacing:-.01em;
+      color:#0b1220;
+      min-width: 180px;
+    }
+    .nav-logo{
+      width:42px;height:42px;
+      border-radius:14px;
+      background: rgba(110,231,184,.14);
+      border:1px solid rgba(110,231,184,.34);
+      display:grid;place-items:center;
+      color:#065f46;
+    }
+    .nav-title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.05;
+    }
+    .nav-title strong{ font-size:15px; }
+    .nav-title span{
+      font-size:12px;
+      color:#64748b;
+      font-weight:700;
+      margin-top:2px;
+    }
 
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap: 6px;
+      flex: 1;
+      justify-content: center;
+    }
+    .nav-links a{
+      font-weight:800;
+      font-size:13px;
+      color:#0b1220;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid transparent;
+      transition: .15s ease;
+      white-space: nowrap;
+    }
+    .nav-links a:hover{
+      background: rgba(15,23,42,.06);
+      border-color: rgba(15,23,42,.06);
+    }
+    .nav-links a.active{
+      background: rgba(52,211,153,.18);
+      border-color: rgba(52,211,153,.40);
+      color:#065f46;
+    }
+
+    .nav-actions{
       display:flex;
       align-items:center;
       gap:10px;
-      background:#fff;
-      border:1px solid #d1d5db;
-      border-radius:12px;
-      padding:8px;
-      box-shadow: 0 10px 22px rgba(2,6,23,.10);
+      justify-content:flex-end;
+      min-width: 230px;
     }
-    .miniSelect{
-      appearance:none;
-      -webkit-appearance:none;
-      -moz-appearance:none;
-      font-family:inherit;
-      font-weight:700;
+    .nav-btn{
+      height:42px;
+      padding: 0 14px;
+      border-radius: 12px;
+      font-weight:900;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border: 1px solid rgba(15,23,42,.10);
+      background: #fff;
+      color:#0b1220;
+      cursor:pointer;
+      transition: .15s ease;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+    .nav-btn:hover{ background: rgba(15,23,42,.04); }
+    .nav-btn.primary{
+      background: #0b1220;
+      border-color: #0b1220;
+      color:#fff;
+    }
+    .nav-btn.primary:hover{ filter: brightness(1.05); }
+
+    .nav-toggle{
+      display:none;
+      width:44px;height:44px;
+      border-radius: 14px;
+      border: 1px solid rgba(15,23,42,.10);
+      background: #fff;
+      cursor:pointer;
+      margin-left:auto;
+    }
+    .nav-toggle span{
+      display:block;
+      width:18px;height:2px;
+      background:#0b1220;
+      margin: 4px auto;
+      border-radius:99px;
+    }
+
+    .nav-mobile{
+      display:none;
+      border-top:1px solid rgba(226,232,240,.9);
+      background: rgba(255,255,255,.92);
+    }
+    .nav-mobile .nav-mobile-inner{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 18px 14px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .nav-mobile a{
+      font-weight:900;
       font-size:14px;
-      padding:8px 36px 8px 12px;
-      border-radius:10px;
-      border:2px solid #111827;
-      outline:none;
-      background:
-        linear-gradient(180deg,#fff,#fff) padding-box,
-        linear-gradient(180deg,#111827,#111827) border-box;
-      position:relative;
-      min-width:165px;
-      cursor:pointer;
+      padding:12px 12px;
+      border-radius: 14px;
+      background: rgba(15,23,42,.04);
+      border: 1px solid rgba(15,23,42,.06);
     }
-    .miniWrap{ position:relative; }
-    .miniWrap:after{
-      content:"";
-      position:absolute;
-      right:12px;
-      top:50%;
-      width:10px;
-      height:10px;
-      transform:translateY(-50%) rotate(45deg);
-      border-right:2px solid #111827;
-      border-bottom:2px solid #111827;
-      pointer-events:none;
+    .nav-mobile a.active{
+      background: rgba(52,211,153,.18);
+      border-color: rgba(52,211,153,.40);
+      color:#065f46;
     }
-    .miniIconBtn{
-      width:36px;
-      height:36px;
-      border-radius:10px;
-      border:2px solid #111827;
-      background:#fff;
-      display:grid;
-      place-items:center;
-      cursor:pointer;
-      transition:transform .08s ease, box-shadow .15s ease;
+    .nav-mobile .row{
+      display:flex;
+      gap:10px;
+      margin-top:6px;
     }
-    .miniIconBtn:hover{ box-shadow: 0 10px 18px rgba(2,6,23,.10); }
-    .miniIconBtn:active{ transform: translateY(1px); }
-    .miniIcon{
-      width:18px;height:18px;display:block;
-      stroke:#111827; fill:none; stroke-width:2;
-      stroke-linecap:round; stroke-linejoin:round;
+    .nav-mobile .row .nav-btn{
+      flex:1;
+      height:46px;
+      border-radius: 14px;
     }
+
+    @media (max-width: 980px){
+      .nav-links{ display:none; }
+      .nav-actions{ display:none; }
+      .nav-toggle{ display:block; }
+      .nav-brand{ min-width: unset; }
+      .top-nav .nav-inner{ padding: 12px 16px; }
+      .nav-mobile{ display:block; }
+      .nav-mobile[hidden]{ display:none; }
+    }
+    /* ===================== END TOP NAV ===================== */
 
     /* ===== Page layout ===== */
     .page{
       min-height:100vh;
       background:var(--bg);
-      padding:92px 24px 80px;
+      padding:52px 24px 80px; /* reduced because top-nav exists */
     }
     .container{
       width:min(1040px, 100%);
@@ -515,40 +625,59 @@
       .searchRow{ grid-template-columns: 1fr; }
       .resourcesBar{ flex-direction:column; align-items:flex-start; }
       .resourcesRight{ width:100%; justify-content:flex-start; flex-wrap:wrap; }
-      .miniBar{ transform: translateX(10px); }
     }
   </style>
 </head>
 
 <body>
-  <!-- Mini bar -->
-  <div class="miniBar" aria-label="Page switcher bar">
-    <div class="miniWrap">
-      <select class="miniSelect" id="pageSelect" aria-label="Switch page">
-        <option value="index.html">Home</option>
-        <option value="scamanalyzer.html">ScamAnalyzer</option>
-        <option value="courses.html">Courses</option>
-        <option value="trustedContacts.html">TrustedContacts</option>
-        <option value="alerts.html">Alerts</option>
-        <option value="simulator.html">Simulator</option>
-        <option value="report.html">Report</option>
-      </select>
+  <!-- ✅ NAV BAR FROM index.html -->
+  <header class="top-nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="javascript:void(0)" onclick="switchPage('index.html')">
+        <div class="nav-logo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l7 4v7c0 5-3.5 9-7 9s-7-4-7-9V6l7-4z" stroke="currentColor" stroke-width="2"/>
+            <path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="nav-title">
+          <strong>Guardian AI</strong>
+          <span>Scam Protection</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
+        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Deepfake Analyzer</a>
+        <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
+        <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
+        <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
+        <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Scam</button>
+      </div>
+
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
     </div>
 
-    <button class="miniIconBtn" id="mobileBtn" title="Switch to mobile view" aria-label="Switch to mobile view">
-      <svg class="miniIcon" viewBox="0 0 24 24">
-        <rect x="7" y="2.8" width="10" height="18.4" rx="2.2"></rect>
-        <line x1="11" y1="18.5" x2="13" y2="18.5"></line>
-      </svg>
-    </button>
-
-    <button class="miniIconBtn" id="refreshBtn" title="Refresh" aria-label="Refresh">
-      <svg class="miniIcon" viewBox="0 0 24 24">
-        <path d="M20 12a8 8 0 1 1-2.3-5.7"></path>
-        <path d="M20 4v6h-6"></path>
-      </svg>
-    </button>
-  </div>
+    <div class="nav-mobile" id="navMobile" hidden>
+      <div class="nav-mobile-inner">
+        <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
+        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Scam Analyzer</a>
+        <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
+        <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
+        <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
+        <div class="row">
+          <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
+          <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Scam</button>
+        </div>
+      </div>
+    </div>
+  </header>
 
   <main class="page">
     <div class="container">
@@ -649,33 +778,45 @@
   <div class="toast" id="toast">Saved</div>
 
   <script>
-    // ===== Mini bar behavior =====
-    const pageSelect = document.getElementById('pageSelect');
-    const refreshBtn = document.getElementById('refreshBtn');
-    const mobileBtn  = document.getElementById('mobileBtn');
+    // --- BASE-PATH SAFE NAVIGATION (fixes GitHub Pages subfolder issues) ---
+    function getBaseDir() {
+      const path = window.location.pathname;
+      const parts = path.split("/");
+      const last = parts[parts.length - 1];
+      if (!last || last.includes(".html")) parts.pop();
+      const base = parts.join("/") + (parts.length > 1 ? "/" : "/");
+      return base;
+    }
+    function switchPage(page) {
+      if (!page) return;
+      if (/^https?:\/\//i.test(page)) { window.location.href = page; return; }
+      window.location.href = getBaseDir() + page;
+    }
 
-    (function setCurrentPage(){
-      const current = (location.pathname.split("/").pop() || "alerts.html").toLowerCase();
-      [...pageSelect.options].forEach(o => {
-        if (o.value.toLowerCase() === current) o.selected = true;
+    // Highlight active nav link (desktop + mobile dropdown)
+    (function highlightActiveNav(){
+      const file = (window.location.pathname.split("/").pop() || "alerts.html").toLowerCase();
+      document.querySelectorAll('[data-page]').forEach(a => {
+        a.classList.toggle('active', (a.getAttribute('data-page') || '').toLowerCase() === file);
       });
     })();
 
-    pageSelect.addEventListener('change', () => window.location.href = pageSelect.value);
-    refreshBtn.addEventListener('click', () => window.location.reload());
-
-    mobileBtn.addEventListener('click', () => {
-      document.body.classList.toggle('forceMobile');
-      if (document.body.classList.contains('forceMobile')) {
-        document.documentElement.style.maxWidth = "430px";
-        document.documentElement.style.margin = "0 auto";
-        document.body.style.background = "#111827";
-      } else {
-        document.documentElement.style.maxWidth = "";
-        document.documentElement.style.margin = "";
-        document.body.style.background = "";
-      }
-    });
+    // Nav toggle (tablet)
+    (function navToggle(){
+      const btn = document.getElementById("navToggle");
+      const panel = document.getElementById("navMobile");
+      if (!btn || !panel) return;
+      btn.addEventListener("click", () => {
+        const open = !panel.hasAttribute("hidden");
+        if (open) {
+          panel.setAttribute("hidden", "");
+          btn.setAttribute("aria-expanded", "false");
+        } else {
+          panel.removeAttribute("hidden");
+          btn.setAttribute("aria-expanded", "true");
+        }
+      });
+    })();
 
     // ===== Toast helper =====
     const toast = document.getElementById('toast');
@@ -690,8 +831,6 @@
     // ===== Alerts storage =====
     const LS_KEY = "guardian_alerts_v2_real_gov";
 
-    // REAL GOV ALERTS (static list) — every item has an official .gov source URL
-    // NOTE: "reports" counts are illustrative (since we are not fetching live data).
     const DEFAULT_ALERTS = [
       {
         id: "ftc_2026_01_09_olympics",
@@ -828,11 +967,8 @@
         const parsed = JSON.parse(raw);
         if(!Array.isArray(parsed)) return null;
         return parsed;
-      }catch(e){
-        return null;
-      }
+      }catch(e){ return null; }
     }
-
     function saveAlerts(alerts){
       localStorage.setItem(LS_KEY, JSON.stringify(alerts));
     }
@@ -949,9 +1085,7 @@
 
     function computeCounts(list){
       const c = { urgent:0, warning:0, advisory:0, all: list.length };
-      list.forEach(a => {
-        if(c[a.type] !== undefined) c[a.type]++;
-      });
+      list.forEach(a => { if(c[a.type] !== undefined) c[a.type]++; });
       return c;
     }
 
@@ -982,7 +1116,6 @@
         card.style.display = (matchesFilter && matchesSearch) ? "" : "none";
       });
 
-      // Counts based on search only
       const searchMatchedIds = new Set();
       allCards.forEach(card => {
         const text = card.innerText.toLowerCase();
@@ -995,18 +1128,13 @@
 
     // ===== State init =====
     const saved = loadAlerts();
-    const state = {
-      alerts: saved && saved.length ? saved : DEFAULT_ALERTS.slice()
-    };
-
+    const state = { alerts: saved && saved.length ? saved : DEFAULT_ALERTS.slice() };
     if(!saved) saveAlerts(state.alerts);
 
-    // Initial render
     render(state.alerts);
     updateCountLabels(computeCounts(state.alerts));
     applyFilters();
 
-    // Tabs
     tabs.forEach(btn => {
       btn.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
@@ -1016,10 +1144,8 @@
       });
     });
 
-    // Search
     searchInput.addEventListener('input', applyFilters);
 
-    // Card actions (copy + open source)
     alertsList.addEventListener("click", async (e) => {
       const btn = e.target.closest("button[data-action]");
       if(!btn) return;
@@ -1071,13 +1197,11 @@ Pause + verify independently using official contact info. If you lost money or s
       }
     });
 
-    // “Up to date” button (static page)
     document.getElementById("latestBtn").addEventListener("click", () => {
       showToast("This page is static (no live fetching)");
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
-    // Resource buttons
     document.getElementById('ftcBtn').addEventListener('click', () => {
       window.open('https://reportfraud.ftc.gov/', '_blank');
     });
@@ -1085,7 +1209,6 @@ Pause + verify independently using official contact info. If you lost money or s
       window.open('https://www.ic3.gov/', '_blank');
     });
 
-    // Reset button
     document.getElementById("resetBtn").addEventListener("click", () => {
       localStorage.removeItem(LS_KEY);
       state.alerts = DEFAULT_ALERTS.slice();

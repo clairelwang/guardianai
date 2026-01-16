@@ -342,6 +342,109 @@
       width:min(1040px, 100%);
       margin: 0 auto;
     }
+    /* ===== Disclaimer (safety notice – YELLOW) ===== */
+.disclaimer{
+  margin: -18px auto 18px;
+  width: min(1040px, 100%);
+}
+
+.disclaimer-card{
+  display:flex;
+  gap:12px;
+  align-items:flex-start;
+  padding:14px 14px;
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(253,224,71,.22), rgba(255,255,255,.95));
+  border: 1px solid rgba(234,179,8,.55);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, .06);
+}
+
+.disclaimer-ico{
+  width:40px;height:40px;
+  border-radius:14px;
+  display:grid;
+  place-items:center;
+  background: rgba(253,224,71,.35);
+  border:1px solid rgba(234,179,8,.65);
+  color:#854d0e;
+  flex:0 0 auto;
+}
+
+.disclaimer-ico svg{ width:20px;height:20px; stroke: currentColor; }
+
+.disclaimer-text{
+  min-width:0;
+  flex:1;
+}
+
+.disclaimer-title{
+  margin:0;
+  font-weight:900;
+  color:#0b1220;
+  font-size:13px;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+}
+
+.disclaimer-body{
+  margin:6px 0 0;
+  color:#5f3f0f;
+  font-size:13px;
+  line-height:1.65;
+  font-weight:650;
+}
+
+.disclaimer-actions{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  margin-left:auto;
+  flex:0 0 auto;
+}
+
+.disclaimer-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  border-radius:999px;
+  font-weight:900;
+  font-size:12px;
+  border:1px solid rgba(234,179,8,.6);
+  background: rgba(253,224,71,.30);
+  color:#854d0e;
+  white-space:nowrap;
+}
+
+.disclaimer-chip .dot{
+  width:8px;height:8px;border-radius:999px;
+  background:#facc15;
+}
+
+.disclaimer-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  height:36px;
+  padding:0 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(15,23,42,.10);
+  background:#fff;
+  color:#0b1220;
+  font-weight:900;
+  font-size:12px;
+  cursor:pointer;
+  white-space:nowrap;
+  font-family: inherit;
+}
+.disclaimer-link:hover{ background: rgba(15,23,42,.04); }
+
+@media (max-width: 680px){
+  .disclaimer-card{ flex-direction:column; }
+  .disclaimer-actions{ margin-left:0; width:100%; justify-content:flex-start; flex-wrap:wrap; }
+}
+
     .grid{
       display:grid;
       grid-template-columns: 1.15fr .85fr;
@@ -739,12 +842,9 @@
   <div class="mini-bar">
     <select id="pageSelect" onchange="switchPage(this.value)">
       <option value="index.html">Home</option>
-      <option value="scamanalyzer.html">ScamAnalyzer</option>
-      <option value="deepfake.html">Deepfake</option>
-      <option value="courses.html">Courses</option>
-      <option value="trustedContacts.html">TrustedContacts</option>
+      <option value="scamanalyzer.html">Deepfake Detector</option>
+       <option value="courses.html">Courses</option>
       <option value="alerts.html">Alerts</option>
-      <option value="simulator.html">Simulator</option>
       <option value="report.html">Report</option>
     </select>
 
@@ -770,12 +870,10 @@
 
       <nav class="nav-links" aria-label="Primary">
         <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
-        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Scam Analyzer</a>
-        <a href="javascript:void(0)" onclick="switchPage('deepfake.html')" data-page="deepfake.html">Deepfake</a>
+        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Deepfake Detector</a>
+    
         <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
-        <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedContacts.html">Trusted Contacts</a>
         <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
-        <a href="javascript:void(0)" onclick="switchPage('simulator.html')" data-page="simulator.html">Simulator</a>
         <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
       </nav>
 
@@ -792,12 +890,9 @@
     <div class="nav-mobile" id="navMobile" hidden>
       <div class="nav-mobile-inner">
         <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
-        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Scam Analyzer</a>
-        <a href="javascript:void(0)" onclick="switchPage('deepfake.html')" data-page="deepfake.html">Deepfake</a>
+        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Deepfake Detector</a>
         <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
-        <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedContacts.html">Trusted Contacts</a>
         <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
-        <a href="javascript:void(0)" onclick="switchPage('simulator.html')" data-page="simulator.html">Simulator</a>
         <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
         <div class="row">
           <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
@@ -827,6 +922,33 @@
 
   <!-- MAIN -->
   <main class="page">
+    <div class="disclaimer">
+  <div class="disclaimer-card" role="note" aria-label="Disclaimer">
+    <div class="disclaimer-ico" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M12 9v4" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 17h.01" stroke-width="3" stroke-linecap="round"/>
+        <path d="M10.3 3.6l-8 14A2 2 0 0 0 4 20h16a2 2 0 0 0 1.7-3l-8-14a2 2 0 0 0-3.4 0z" stroke-width="2" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <div class="disclaimer-text">
+      <p class="disclaimer-title">Important disclaimer</p>
+      <p class="disclaimer-body">
+        Guardian AI provides an estimate based on patterns seen in the uploaded media. It may be wrong and should not be used as a final decision.
+        If a clip is tied to money, legal, medical, or safety decisions, verify through trusted sources and a second channel.
+      </p>
+    </div>
+
+    <div class="disclaimer-actions">
+      <span class="disclaimer-chip"><span class="dot"></span>Not a final verdict</span>
+      <button class="disclaimer-link" type="button">
+        Verify with trusted contacts
+      </button>
+    </div>
+  </div>
+</div>
+
     <div class="container">
       <div class="wrap">
         <section class="grid">
@@ -1147,7 +1269,7 @@
       try {
         setProgress(10, "Uploading media…");
 
-        const res = await fetch("https://anshvkapadia-guardianai-backend.hf.space/api/deepfake", {
+        const res = await fetch("https://guardianai-backend.onrender.com/api/deepfake", {
           method: "POST",
           body: form
         });
@@ -1296,9 +1418,8 @@
 
     // Wake up backend when page loads
     window.addEventListener("load", () => {
-      fetch("https://anshvkapadia-guardianai-backend.hf.space/").catch(() => {});
+      fetch("https://guardianai-backend.onrender.com/").catch(() => {});
     });
   </script>
 </body>
 </html>
-  

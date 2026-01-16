@@ -10,6 +10,217 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
+
+    /* ===================== TOP NAV (from index) ===================== */
+.top-nav{
+  position: sticky;
+  top: 0;
+  z-index: 9998;
+  background: rgba(255,255,255,.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(226,232,240,.9);
+}
+.top-nav .nav-inner{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.nav-brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:900;
+  letter-spacing:-.01em;
+  color:#0b1220;
+  min-width: 180px;
+  text-decoration:none;
+}
+.nav-logo{
+  width:42px;height:42px;
+  border-radius:14px;
+  background: rgba(110,231,184,.14);
+  border:1px solid rgba(110,231,184,.34);
+  display:grid;place-items:center;
+  color:#065f46;
+}
+.nav-title{
+  display:flex;
+  flex-direction:column;
+  line-height:1.05;
+}
+.nav-title strong{ font-size:15px; }
+.nav-title span{
+  font-size:12px;
+  color:#64748b;
+  font-weight:700;
+  margin-top:2px;
+}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap: 6px;
+  flex: 1;
+  justify-content: center;
+}
+.nav-links a{
+  font-weight:800;
+  font-size:13px;
+  color:#0b1220;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid transparent;
+  transition: .15s ease;
+  white-space: nowrap;
+  text-decoration:none;
+}
+.nav-links a:hover{
+  background: rgba(15,23,42,.06);
+  border-color: rgba(15,23,42,.06);
+}
+.nav-links a.active{
+  background: rgba(52,211,153,.18);
+  border-color: rgba(52,211,153,.40);
+  color:#065f46;
+}
+/* ===== Green animated "active" indicator (like index) ===== */
+.nav-links{
+  position: relative; /* needed for the slider */
+}
+
+.nav-slider{
+  position:absolute;
+  left:0; top:50%;
+  transform: translateY(-50%);
+  height: 36px;
+  border-radius: 12px;
+  background: rgba(52,211,153,.18);
+  border: 1px solid rgba(52,211,153,.40);
+  box-shadow: 0 10px 18px rgba(2,6,23,.06);
+  transition: transform .22s ease, width .22s ease;
+  z-index: 0;
+  pointer-events:none;
+}
+
+.nav-links a{
+  position: relative;
+  z-index: 1; /* keep links above slider */
+}
+
+.nav-links a.active{
+  background: transparent;      /* slider handles the green */
+  border-color: transparent;
+  color:#065f46;
+}
+
+
+.nav-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  justify-content:flex-end;
+  min-width: 230px;
+}
+.nav-btn{
+  height:42px;
+  padding: 0 14px;
+  border-radius: 12px;
+  font-weight:900;
+  font-size:13px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border: 1px solid rgba(15,23,42,.10);
+  background: #fff;
+  color:#0b1220;
+  cursor:pointer;
+  transition: .15s ease;
+  white-space: nowrap;
+}
+.nav-btn:hover{ background: rgba(15,23,42,.04); }
+.nav-btn.primary{
+  background: #0b1220;
+  border-color: #0b1220;
+  color:#fff;
+}
+.nav-btn.primary:hover{ filter: brightness(1.05); }
+
+.nav-toggle{
+  display:none;
+  width:44px;height:44px;
+  border-radius: 14px;
+  border: 1px solid rgba(15,23,42,.10);
+  background: #fff;
+  cursor:pointer;
+}
+.nav-toggle span{
+  display:block;
+  width:18px;height:2px;
+  background:#0b1220;
+  margin: 4px auto;
+  border-radius:99px;
+}
+
+.nav-mobile{
+  display:none;
+  border-top:1px solid rgba(226,232,240,.9);
+  background: rgba(255,255,255,.92);
+}
+.nav-mobile .nav-mobile-inner{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px 18px 14px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+.nav-mobile a{
+  font-weight:900;
+  font-size:14px;
+  padding:12px 12px;
+  border-radius: 14px;
+  background: rgba(15,23,42,.04);
+  border: 1px solid rgba(15,23,42,.06);
+  text-decoration:none;
+}
+.nav-mobile a.active{
+  background: rgba(52,211,153,.18);
+  border-color: rgba(52,211,153,.40);
+  color:#065f46;
+}
+.nav-mobile .row{
+  display:flex;
+  gap:10px;
+  margin-top:6px;
+}
+.nav-mobile .row .nav-btn{
+  flex:1;
+  height:46px;
+  border-radius: 14px;
+}
+
+@media (max-width: 980px){
+  .nav-links{ display:none; }
+  .nav-actions{ display:none; }
+  .nav-toggle{ display:block; margin-left:auto; }
+  .nav-brand{ min-width: unset; }
+  .top-nav .nav-inner{ padding: 12px 16px; }
+  .nav-mobile{ display:block; }
+  .nav-mobile[hidden]{ display:none; }
+}
+/* If you want index behavior: hide top-nav on tiny screens (miniBar shows) */
+@media (max-width: 560px){
+  .top-nav{ display:none; }
+}
+
+/* IMPORTANT: your page padding was based on miniBar only; add top padding for nav */
+.page{ padding-top: 34px; } /* keeps layout comfy under sticky nav */
+/* ===================== END TOP NAV ===================== */
+
     :root{
       --bg:#f6f7fb; --card:#ffffff; --text:#0f172a; --muted:#64748b;
       --border:#e5e7eb; --shadow: 0 10px 30px rgba(15,23,42,.08);
@@ -142,38 +353,59 @@
   </style>
 </head>
 
-<body>
-  <!-- MINI BAR -->
-  <div class="miniBar" aria-label="Page switcher">
-    <div class="miniSelectWrap">
-      <select id="pageSelect" class="miniSelect" aria-label="Switch page">
-        <option value="index.html">Home</option>
-        <option value="scamanalyzer.html">ScamAnalyzer</option>
-        <option value="courses.html">Courses</option>
-        <option value="trustedContacts.html">TrustedContacts</option>
-        <option value="alerts.html">Alerts</option>
-        <option value="simulator.html">Simulator</option>
-        <option value="report.html" selected>Report</option>
-      </select>
-      <svg class="miniChevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+<body><!-- ✅ TOP HEADER (matches index) -->
+<header class="top-nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="javascript:void(0)" onclick="switchPage('index.html')">
+      <div class="nav-logo" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2l7 4v7c0 5-3.5 9-7 9s-7-4-7-9V6l7-4z" stroke="currentColor" stroke-width="2"/>
+          <path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="nav-title">
+        <strong>Guardian AI</strong>
+        <span>Scam Protection</span>
+      </div>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <div class="nav-slider" id="navSlider" aria-hidden="true"></div>
+
+      <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
+      <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Deepfake Analyzer</a>
+      <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
+      <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
+      <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
+      <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Scam</button>
     </div>
 
-    <button class="miniBtn" id="mobileBtn" type="button" aria-label="Switch to mobile view" title="Mobile view">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M9 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2"/>
-        <path d="M11 18h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </button>
-
-    <button class="miniBtn" id="refreshBtn" type="button" aria-label="Refresh" title="Refresh">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M20 12a8 8 0 1 1-2.34-5.66" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <path d="M20 4v6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+    <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" id="navToggle">
+      <span></span><span></span><span></span>
     </button>
   </div>
+
+  <div class="nav-mobile" id="navMobile" hidden>
+    <div class="nav-mobile-inner">
+      <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
+      <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Scam Analyzer</a>
+      <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
+      <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
+      <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
+
+      <div class="row">
+        <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
+        <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Scam</button>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- /TOP HEADER -->
+
   <!-- /MINI BAR -->
 
   <main class="page">
@@ -357,7 +589,7 @@
       <div class="actions">
         <button class="btn btnGhost" id="backTo2" type="button">Back</button>
         <button class="btn btnOk" id="copyBtn" type="button">Copy Report</button>
-        <button class="btn btnPrimary" id="submitBtn" type="button">Submit</button>
+
         <button class="btn btnDanger" id="clearAll" type="button">Clear</button>
       </div>
 
@@ -387,12 +619,7 @@
     const FORM_ENDPOINT = ""; // <-- put your endpoint here to make Submit реально send
 
     // mini bar
-    const pageSelect = document.getElementById('pageSelect');
-    const mobileBtn = document.getElementById('mobileBtn');
-    const refreshBtn = document.getElementById('refreshBtn');
-    pageSelect.addEventListener('change', () => window.location.href = pageSelect.value);
-    refreshBtn.addEventListener('click', () => window.location.reload());
-    mobileBtn.addEventListener('click', () => document.body.classList.toggle('mobileView'));
+   
 
     // steps + dots
     const step1 = document.getElementById('step1');
@@ -655,6 +882,66 @@
       populateFromDraft(draft);
       // if they already had a type picked, keep them at step 1 but ready
     }
+    // --- BASE-PATH SAFE NAVIGATION (matches index; fixes GitHub Pages subfolder issues) ---
+function getBaseDir() {
+  const path = window.location.pathname;
+  const parts = path.split("/");
+  const last = parts[parts.length - 1];
+  if (!last || last.includes(".html")) parts.pop();
+  const base = parts.join("/") + (parts.length > 1 ? "/" : "/");
+  return base;
+}
+function switchPage(page) {
+  if (!page) return;
+  if (/^https?:\/\//i.test(page)) { window.location.href = page; return; }
+  window.location.href = getBaseDir() + page;
+}
+/* ===== NAV: mobile toggle + active highlight + green slider ===== */
+(function navInit(){
+  const btn = document.getElementById("navToggle");
+  const panel = document.getElementById("navMobile");
+
+  if (btn && panel){
+    btn.addEventListener("click", () => {
+      const open = !panel.hasAttribute("hidden");
+      if (open){
+        panel.setAttribute("hidden", "");
+        btn.setAttribute("aria-expanded", "false");
+      } else {
+        panel.removeAttribute("hidden");
+        btn.setAttribute("aria-expanded", "true");
+      }
+    });
+  }
+
+  function setActiveNav(){
+    const file = (window.location.pathname.split("/").pop() || "report.html").toLowerCase();
+
+    // mark active in desktop + mobile
+    document.querySelectorAll('[data-page]').forEach(a => {
+      const p = (a.getAttribute("data-page") || "").toLowerCase();
+      a.classList.toggle("active", p === file);
+    });
+
+    // move slider (desktop only)
+    const slider = document.getElementById("navSlider");
+    const nav = document.querySelector(".nav-links");
+    const active = document.querySelector(".nav-links a.active");
+
+    if (!slider || !nav || !active) return;
+
+    const navRect = nav.getBoundingClientRect();
+    const aRect = active.getBoundingClientRect();
+    const left = aRect.left - navRect.left;
+
+    slider.style.width = aRect.width + "px";
+    slider.style.transform = `translate(${left}px, -50%)`;
+  }
+
+  setActiveNav();
+  window.addEventListener("resize", setActiveNav);
+})();
+
     // set initial type label if selected later
   </script>
 </body>

@@ -504,48 +504,87 @@
       font-size:13px;
     }
 
-    /* ---------------- TOOLS ---------------- */
-    .tools{
-      padding:66px 0 80px;
-      background:#ffffff;
-    }
-    .section-head{
-      text-align:center;
-      margin-bottom:40px;
-    }
-    .section-head h2{
-      margin:0 0 12px;
-      font-size:36px;
-      letter-spacing:-.03em;
-      font-weight:800;
-      color:#0b1220;
-    }
-    .section-head p{
-      margin:0 auto;
-      max-width:620px;
-      color:var(--muted);
-      font-weight:600;
-      line-height:1.65;
-    }
+  /* ---------------- TOOLS ---------------- */
+.tools{
+  padding:66px 0 80px;
+  background:#ffffff;
+}
+.section-head{
+  text-align:center;
+  margin-bottom:40px;
+}
+.section-head h2{
+  margin:0 0 12px;
+  font-size:36px;
+  letter-spacing:-.03em;
+  font-weight:800;
+  color:#0b1220;
+}
+.section-head p{
+  margin:0 auto;
+  max-width:620px;
+  color:var(--muted);
+  font-weight:600;
+  line-height:1.65;
+}
 
-    .tool-grid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:22px;
-      margin-top:22px;
-    }
+/* one clean 2x2 grid like your screenshot */
+.tool-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap:26px;
+  margin-top:22px;
+  align-items:stretch;
+}
 
-    .card-link{ display:block; }
-    .tool-card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:20px;
-      padding:28px 28px 30px;
-      box-shadow: 0 14px 30px rgba(15,23,42,.05);
-      min-height:210px;
-      cursor:pointer;
-      transition: transform .15s ease;
-    }
+.card-link{ display:block; height:100%; }
+
+.tool-card{
+  height:100%;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:34px 34px 36px;
+  box-shadow: 0 18px 40px rgba(15,23,42,.06);
+  cursor:pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.tool-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 22px 52px rgba(15,23,42,.09);
+}
+
+/* icon in top-left, with more spacing like screenshot */
+.tool-ico{
+  width:56px;height:56px;
+  border-radius:18px;
+  display:grid;place-items:center;
+  border:1px solid rgba(15,23,42,.06);
+  margin-bottom:18px;
+}
+
+/* typography spacing */
+.tool-card h3{
+  margin:0 0 10px;
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:-.01em;
+  color:#0b1220;
+}
+.tool-card p{
+  margin:0;
+  color:var(--muted);
+  font-weight:600;
+  line-height:1.7;
+  font-size:15px;
+  max-width: 44ch;
+}
+
+/* responsive */
+@media (max-width: 980px){
+  .tool-grid{ grid-template-columns: 1fr; }
+}
+
     .tool-card:hover{ transform: translateY(-2px); }
 
     .tool-ico{
@@ -886,9 +925,7 @@
       <option value="index.html">Home</option>
       <option value="scamanalyzer.html">ScamAnalyzer</option>
       <option value="courses.html">Courses</option>
-      <option value="trustedContacts.html">TrustedContacts</option>
       <option value="alerts.html">Alerts</option>
-      <option value="simulator.html">Simulator</option>
       <option value="report.html">Report</option>
     </select>
 
@@ -914,11 +951,9 @@
 
       <nav class="nav-links" aria-label="Primary">
         <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
-        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Scam Analyzer</a>
+        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Deepfake Analyzer</a>
         <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
-        <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedContacts.html">Trusted Contacts</a>
         <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
-        <a href="javascript:void(0)" onclick="switchPage('simulator.html')" data-page="simulator.html">Simulator</a>
         <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
       </nav>
 
@@ -938,9 +973,7 @@
         <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
         <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Scam Analyzer</a>
         <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
-        <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedContacts.html">Trusted Contacts</a>
         <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
-        <a href="javascript:void(0)" onclick="switchPage('simulator.html')" data-page="simulator.html">Simulator</a>
         <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
         <div class="row">
           <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
@@ -1035,44 +1068,46 @@
           <div class="status-shell">
             <div class="status-stack">
 
-              <div class="status-card">
-                <div class="s-ico" aria-hidden="true">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 3l10 18H2L12 3z" fill="rgba(245,158,11,.95)"/>
-                    <path d="M12 9v5" stroke="#0b1220" stroke-width="2" stroke-linecap="round"/>
-                    <path d="M12 17h.01" stroke="#0b1220" stroke-width="3" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <div>
-                  <p class="status-title">Scam Detected</p>
-                  <p class="status-sub">Suspicious IRS impersonation call</p>
-                </div>
-              </div>
+             <div class="status-card">
+  <div class="s-ico" aria-hidden="true">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path d="M12 3l10 18H2L12 3z" fill="rgba(245,158,11,.95)"/>
+      <path d="M12 9v5" stroke="#0b1220" stroke-width="2" stroke-linecap="round"/>
+      <path d="M12 17h.01" stroke="#0b1220" stroke-width="3" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div>
+    <p class="status-title">High-risk pattern flagged</p>
+    <p class="status-sub">Language matches common impersonation tactics</p>
+  </div>
+</div>
 
-              <div class="status-card">
-                <div class="s-ico" aria-hidden="true">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                    <rect x="3" y="3" width="18" height="18" rx="5" fill="rgba(34,197,94,.95)"/>
-                    <path d="M7 12.5l3 3L17 9" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  </svg>
-                </div>
-                <div>
-                  <p class="status-title">Family Notified</p>
-                  <p class="status-sub">Your daughter has been alerted</p>
-                </div>
-              </div>
+<div class="status-card">
+  <div class="s-ico" aria-hidden="true">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <rect x="3" y="3" width="18" height="18" rx="5" fill="rgba(34,197,94,.95)"/>
+      <path d="M7 12.5l3 3L17 9" stroke="#ffffff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+  <div>
+    <p class="status-title">Next steps ready</p>
+    <p class="status-sub">Suggested actions + what to say/avoid included</p>
+  </div>
+</div>
 
-              <div class="status-card">
-                <div class="s-ico" aria-hidden="true">
-                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                    <rect x="5" y="3" width="14" height="18" rx="3" fill="rgba(148,163,184,.90)"/>
-                    <path d="M8 8h8M8 12h8M8 16h6" stroke="#0b1220" stroke-width="2" stroke-linecap="round"/>
-                  </svg>
-                </div>
-                <div>
-                  <p class="status-title">Reported to FTC</p>
-                  <p class="status-sub">Case #2024-SC-48291 filed</p>
-                </div>
+<div class="status-card">
+  <div class="s-ico" aria-hidden="true">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <rect x="5" y="3" width="14" height="18" rx="3" fill="rgba(148,163,184,.90)"/>
+      <path d="M8 8h8M8 12h8M8 16h6" stroke="#0b1220" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div>
+    <p class="status-title">Report links provided</p>
+    <p class="status-sub">Direct FTC / IC3 options (user submits manually)</p>
+  </div>
+</div>
+
               </div>
 
             </div>
@@ -1139,100 +1174,71 @@
   </section>
 
   <!-- TOOLS -->
-  <section class="tools" id="tools">
-    <div class="container">
-      <div class="section-head">
-        <h2>Comprehensive Protection Tools</h2>
-        <p>Everything you need to stay safe from modern digital threats, all in one<br>place.</p>
-      </div>
-
-      <div class="tool-grid">
-        <a class="card-link" href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')">
-          <div class="tool-card">
-            <div class="tool-ico purple" aria-hidden="true">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-                <path d="M9 3c-2 0-3.5 1.7-3.5 3.7 0 .5.1 1 .3 1.5C4.7 8.7 4 9.9 4 11.3c0 1.4.8 2.7 2 3.3v.2c0 1.9 1.5 3.2 3.2 3.2H10" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-                <path d="M15 3c2 0 3.5 1.7 3.5 3.7 0 .5-.1 1-.3 1.5 1.1.5 1.8 1.7 1.8 3.1 0 1.4-.8 2.7-2 3.3v.2c0 1.9-1.5 3.2-3.2 3.2H14" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-                <path d="M12 4v16" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity=".85"/>
-              </svg>
-            </div>
-            <h3>AI Scam Analyzer</h3>
-            <p>Paste suspicious messages, emails, or describe phone calls. Our AI instantly detects scam patterns and explains the red flags.</p>
-          </div>
-        </a>
-
-        <a class="card-link" href="javascript:void(0)" onclick="switchPage('courses.html')">
-          <div class="tool-card">
-            <div class="tool-ico blue" aria-hidden="true">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-                <path d="M12 3L2 8l10 5 10-5-10-5z" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M6 10v6c2 2 10 2 12 0v-6" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h3>Safety Courses</h3>
-            <p>Learn to spot deepfakes, phishing attempts, and social engineering with easy-to-follow, bite-sized lessons.</p>
-          </div>
-        </a>
-
-        <a class="card-link" href="javascript:void(0)" onclick="switchPage('trustedContacts.html')">
-          <div class="tool-card">
-            <div class="tool-ico green" aria-hidden="true">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-                <path d="M8 11a3 3 0 100-6 3 3 0 000 6z" stroke="#ffffff" stroke-width="2"/>
-                <path d="M16 11a3 3 0 100-6 3 3 0 000 6z" stroke="#ffffff" stroke-width="2"/>
-                <path d="M3.5 20c.7-3 3.1-5 6.5-5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-                <path d="M20.5 20c-.7-3-3.1-5-6.5-5" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h3>Trusted Contacts</h3>
-            <p>Add family members who can verify suspicious requests and receive alerts when potential scams are detected.</p>
-          </div>
-        </a>
-      </div>
-
-      <div class="tool-grid">
-        <a class="card-link" href="javascript:void(0)" onclick="switchPage('alerts.html')">
-          <div class="tool-card">
-            <div class="tool-ico orange" aria-hidden="true">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-                <path d="M12 22a2.5 2.5 0 002.4-2H9.6A2.5 2.5 0 0012 22z" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-                <path d="M18 16H6l1-1.5V10a5 5 0 0110 0v4.5L18 16z" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <h3>Community Alerts</h3>
-            <p>Stay informed about the latest scams in your area with real-time alerts from the community and government agencies.</p>
-          </div>
-        </a>
-
-        <a class="card-link" href="javascript:void(0)" onclick="switchPage('simulator.html')">
-          <div class="tool-card">
-            <div class="tool-ico red" aria-hidden="true">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2l7 4v7c0 5-3.5 9-7 9s-7-4-7-9V6l7-4z" stroke="#ffffff" stroke-width="2"/>
-                <path d="M9 12l2 2 4-5" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
-              </svg>
-            </div>
-            <h3>Scam Simulator</h3>
-            <p>Practice identifying scams in a safe environment with AI-generated realistic scenarios tailored for seniors.</p>
-          </div>
-        </a>
-
-        <a class="card-link" href="javascript:void(0)" onclick="switchPage('report.html')">
-          <div class="tool-card">
-            <div class="tool-ico cyan" aria-hidden="true">
-              <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-                <path d="M7 3h7l3 3v15H7V3z" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M14 3v4h4" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
-                <path d="M9 11h6M9 15h6" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <h3>Report to FTC</h3>
-            <p>Easily report scams to the Federal Trade Commission and help protect others in your community.</p>
-          </div>
-        </a>
-      </div>
+ <section class="tools" id="tools">
+  <div class="container">
+    <div class="section-head">
+      <h2>Comprehensive Protection Tools</h2>
+      <p>Everything you need to stay safe from modern digital threats, all in one<br>place.</p>
     </div>
-  </section>
+
+    <div class="tool-grid">
+      <a class="card-link" href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')">
+        <div class="tool-card">
+          <div class="tool-ico purple" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+              <path d="M9 3c-2 0-3.5 1.7-3.5 3.7 0 .5.1 1 .3 1.5C4.7 8.7 4 9.9 4 11.3c0 1.4.8 2.7 2 3.3v.2c0 1.9 1.5 3.2 3.2 3.2H10" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+              <path d="M15 3c2 0 3.5 1.7 3.5 3.7 0 .5-.1 1-.3 1.5 1.1.5 1.8 1.7 1.8 3.1 0 1.4-.8 2.7-2 3.3v.2c0 1.9-1.5 3.2-3.2 3.2H14" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+              <path d="M12 4v16" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity=".85"/>
+            </svg>
+          </div>
+          <h3>AI Scam Analyzer</h3>
+          <p>Paste suspicious messages, emails, or describe phone calls. Our AI detects scam patterns and explains the red flags.</p>
+        </div>
+      </a>
+
+      <a class="card-link" href="javascript:void(0)" onclick="switchPage('courses.html')">
+        <div class="tool-card">
+          <div class="tool-ico blue" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+              <path d="M12 3L2 8l10 5 10-5-10-5z" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M6 10v6c2 2 10 2 12 0v-6" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Safety Courses</h3>
+          <p>Learn to spot deepfakes, phishing attempts, and social engineering with bite-sized lessons.</p>
+        </div>
+      </a>
+
+      <a class="card-link" href="javascript:void(0)" onclick="switchPage('alerts.html')">
+        <div class="tool-card">
+          <div class="tool-ico orange" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+              <path d="M12 22a2.5 2.5 0 002.4-2H9.6A2.5 2.5 0 0012 22z" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+              <path d="M18 16H6l1-1.5V10a5 5 0 0110 0v4.5L18 16z" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <h3>Community Alerts</h3>
+          <p>Stay informed about current scams with alerts from the community and official sources.</p>
+        </div>
+      </a>
+
+      <a class="card-link" href="javascript:void(0)" onclick="switchPage('report.html')">
+        <div class="tool-card">
+          <div class="tool-ico cyan" aria-hidden="true">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+              <path d="M7 3h7l3 3v15H7V3z" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M14 3v4h4" stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M9 11h6M9 15h6" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Report to FTC</h3>
+          <p>Create a report summary, then use the official FTC/IC3 links to file quickly.</p>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
 
   <!-- GOVERNMENT -->
   <section class="gov" id="resources">
@@ -1275,116 +1281,118 @@
   </section>
 
   <!-- TESTIMONIALS -->
-  <section class="testimonials" id="testimonials">
-    <div class="container">
-      <div class="section-head">
-        <h2>Trusted by Thousands of Seniors</h2>
-        <p>Real stories from people who avoided scams with Guardian AI</p>
-      </div>
-
-      <div class="t-grid">
-        <div class="t-card">
-          <div>
-            <div class="quote-ico" aria-hidden="true">
-              <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-                <path d="M10 11H6V7h4v4zM18 11h-4V7h4v4z" stroke="#cbd5e1" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <p class="t-text">"This app saved me from sending $5,000 to a fake IRS caller. The AI knew right away it was a scam!"</p>
-          </div>
-
-          <div class="t-footer">
-            <div class="t-person">
-              <div class="avatar">
-                <img src="meiling.png" alt="Photo of Meiling T."
-                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <span class="fallback" aria-hidden="true">👵</span>
-              </div>
-              <div>
-                <p class="t-name">Meiling T., 72</p>
-                <p class="t-loc">Florida</p>
-              </div>
-            </div>
-
-            <div class="stars" aria-label="5 star rating">
-              <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
-              <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
-              <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
-              <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
-              <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
-            </div>
-          </div>
-        </div>
-
-        <div class="t-card">
-          <div>
-            <div class="quote-ico" aria-hidden="true">
-              <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-                <path d="M10 11H6V7h4v4zM18 11h-4V7h4v4z" stroke="#cbd5e1" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <p class="t-text">"The courses are so easy to follow. I finally understand what deepfakes are and how to spot them."</p>
-          </div>
-
-          <div class="t-footer">
-            <div class="t-person">
-              <div class="avatar">
-                <img src="robert.png" alt="Photo of Robert K."
-                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <span class="fallback" aria-hidden="true">👴</span>
-              </div>
-              <div>
-                <p class="t-name">Robert K., 68</p>
-                <p class="t-loc">Arizona</p>
-              </div>
-            </div>
-
-            <div class="stars" aria-label="5 star rating">
-              <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
-              <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
-              <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
-              <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
-              <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
-            </div>
-          </div>
-        </div>
-
-        <div class="t-card">
-          <div>
-            <div class="quote-ico" aria-hidden="true">
-              <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-                <path d="M10 11H6V7h4v4zM18 11h-4V7h4v4z" stroke="#cbd5e1" stroke-width="2" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <p class="t-text">"My daughter gets alerts whenever I encounter something suspicious. It gives our whole family peace of mind."</p>
-          </div>
-
-          <div class="t-footer">
-            <div class="t-person">
-              <div class="avatar">
-                <img src="dorothy.png" alt="Photo of Dorothy M."
-                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <span class="fallback" aria-hidden="true">👵</span>
-              </div>
-              <div>
-                <p class="t-name">Dorothy M., 75</p>
-                <p class="t-loc">Ohio</p>
-              </div>
-            </div>
-
-            <div class="stars" aria-label="5 star rating">
-              <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
-              <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
-              <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
-              <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
-              <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
-            </div>
-          </div>
-        </div>
-
-      </div>
+  <!-- TESTIMONIALS -->
+<section class="testimonials" id="testimonials">
+  <div class="container">
+    <div class="section-head">
+      <h2>Built for Real-World Scam Situations</h2>
+      <p>How users say Guardian AI helps them understand scams and take safer next steps</p>
     </div>
-  </section>
+
+    <div class="t-grid">
+      <div class="t-card">
+        <div>
+          <div class="quote-ico" aria-hidden="true">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+              <path d="M10 11H6V7h4v4zM18 11h-4V7h4v4z" stroke="#cbd5e1" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="t-text">"I uploaded a suspicious text and it pointed out the exact red flags—urgency, weird payment requests, and fake links. It helped me slow down and verify before doing anything."</p>
+        </div>
+
+        <div class="t-footer">
+          <div class="t-person">
+            <div class="avatar">
+              <img src="meiling.png" alt="Photo of Meiling T."
+                   onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <span class="fallback" aria-hidden="true">👵</span>
+            </div>
+            <div>
+              <p class="t-name">Meiling T., 72</p>
+              <p class="t-loc">Florida</p>
+            </div>
+          </div>
+
+          <div class="stars" aria-label="5 star rating">
+            <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div>
+          <div class="quote-ico" aria-hidden="true">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+              <path d="M10 11H6V7h4v4zM18 11h-4V7h4v4z" stroke="#cbd5e1" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="t-text">"The lessons made everything click—phishing, deepfakes, and social engineering. I like that it explains what to look for in plain language, not tech jargon."</p>
+        </div>
+
+        <div class="t-footer">
+          <div class="t-person">
+            <div class="avatar">
+              <img src="robert.png" alt="Photo of Robert K."
+                   onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <span class="fallback" aria-hidden="true">👴</span>
+            </div>
+            <div>
+              <p class="t-name">Robert K., 68</p>
+              <p class="t-loc">Arizona</p>
+            </div>
+          </div>
+
+          <div class="stars" aria-label="5 star rating">
+            <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div>
+          <div class="quote-ico" aria-hidden="true">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+              <path d="M10 11H6V7h4v4zM18 11h-4V7h4v4z" stroke="#cbd5e1" stroke-width="2" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="t-text">"When I wasn’t sure what to do next, the site gave me clear steps and the official FTC/IC3 links. It made reporting feel less confusing and more ‘doable.’"</p>
+        </div>
+
+        <div class="t-footer">
+          <div class="t-person">
+            <div class="avatar">
+              <img src="dorothy.png" alt="Photo of Dorothy M."
+                   onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <span class="fallback" aria-hidden="true">👵</span>
+            </div>
+            <div>
+              <p class="t-name">Dorothy M., 75</p>
+              <p class="t-loc">Ohio</p>
+            </div>
+          </div>
+
+          <div class="stars" aria-label="5 star rating">
+            <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3 7 7 .6-5.3 4.6L18.5 22 12 18.2 5.5 22l1.8-7.2L2 9.6 9 9l3-7z"/></svg>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
   <!-- CTA -->
   <section class="cta" id="get-started">
@@ -1428,9 +1436,8 @@
         <div class="foot-col">
           <h4>Tools</h4>
           <div class="foot-links">
-            <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')">Scam Analyzer</a>
+            <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')">Deepfake Analyzer</a>
             <a href="javascript:void(0)" onclick="switchPage('courses.html')">Safety Courses</a>
-            <a href="javascript:void(0)" onclick="switchPage('simulator.html')">Scam Simulator</a>
             <a href="javascript:void(0)" onclick="switchPage('alerts.html')">Community Alerts</a>
           </div>
         </div>
