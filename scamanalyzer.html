@@ -3,63 +3,78 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Guardian Shield — AI Scam Analyzer</title>
+  <title>Guardian AI — Deepfake Detector</title>
 
+  <!-- Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    .mini-bar {
-  position: fixed;
-  top: 14px;
-  left: 56px;          /* aligns with page text */
-  z-index: 9999;
-  display: flex;
-  gap: 8px;
-  background: #ffffff;
-  padding: 6px 8px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-}
-
-.mini-bar select {
-  padding: 6px 10px;
-  border-radius: 8px;
-  border: 1px solid #e5e7eb;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.mini-bar button {
-  border: none;
-  background: #f3f4f6;
-  padding: 6px 10px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.mini-bar button:hover {
-  background: #e5e7eb;
-}
+    /* ---------- MOBILE-ONLY MINI BAR (matches your home page behavior) ---------- */
+    .mini-bar{
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      padding: 10px 12px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    .mini-bar select{
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      font-size: 14px;
+      cursor: pointer;
+      outline: none;
+      min-width: 160px;
+      background: #fff;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-weight: 700;
+      color: #0b1220;
+    }
+    .mini-bar button{
+      width: 42px;
+      height: 42px;
+      border: none;
+      background: #f3f4f6;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      display: grid;
+      place-items: center;
+    }
+    .mini-bar button:hover{ background:#e5e7eb; }
+    @media (max-width: 560px){
+      .mini-bar{ display:flex; }
+    }
 
     :root{
-      --bg:#ffffff;
-      --ink:#0f172a;
+      /* === Guardian AI theme (copied from your home page) === */
+      --hero-a:#1f3657;
+      --hero-b:#2a4b70;
+      --hero-c:#2f5779;
+
+      --accent:#6ee7b8;
+      --accent-2:#34d399;
+
+      --ink:#0b1220;
       --muted:#64748b;
-      --line:#e5e7eb;
+      --muted-2:#94a3b8;
 
       --card:#ffffff;
-      --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+      --line:#e9eef6;
+      --shadow: 0 18px 45px rgba(15, 23, 42, .08);
 
-      --lavender-50:#f5f0ff;
-      --lavender-100:#efe6ff;
-      --lavender-200:#e3d3ff;
-      --lavender-500:#a855f7;
-      --btn:#c8a2ff;           /* button bar like screenshot */
-      --btn-text:#ffffff;
+      --cta-a:#05966d;
+      --cta-b:#06948c;
 
-      --radius:16px;
+      --radius:18px;
     }
 
     *{ box-sizing:border-box; }
@@ -67,325 +82,1223 @@
     body{
       margin:0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:var(--bg);
       color:var(--ink);
+      background:#ffffff;
     }
-
-    /* page layout (lots of whitespace like screenshot) */
-    .page{
-      min-height:100%;
-      display:flex;
-      align-items:flex-start;
-      justify-content:center;
-      padding:64px 18px 90px;
-    }
-    .wrap{
-      width:min(980px, 100%);
-      text-align:center;
-    }
-
-    /* icon pill */
-    .top-icon{
-      width:56px;
-      height:56px;
-      margin:0 auto 18px;
-      border-radius:16px;
-      background:var(--lavender-50);
-      display:grid;
-      place-items:center;
-    }
-    .top-icon svg{
-      width:28px;height:28px;
-      stroke:var(--lavender-500);
-    }
-
-    h1{
-      margin:0 0 10px;
-      font-size:40px;
-      letter-spacing:-0.03em;
-      font-weight:800;
-      color:#0b1220;
-    }
-    .sub{
-      margin:0 auto 36px;
-      max-width:680px;
-      color:var(--muted);
-      font-size:16px;
-      line-height:1.65;
-      font-weight:500;
-    }
-
-    /* main card */
-    .card{
-      width:min(820px, 100%);
+    a{ color:inherit; text-decoration:none; }
+    .container{
+      width:min(1200px, calc(100% - 64px));
       margin:0 auto;
-      text-align:left;
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:18px;
-      box-shadow:var(--shadow);
-      padding:26px 26px 22px;
     }
 
-    .field{
-      margin-bottom:18px;
+    /* ===================== TOP NAV (same as home page) ===================== */
+    .top-nav{
+      position: sticky;
+      top: 0;
+      z-index: 9998;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(226,232,240,.9);
     }
-    .label{
-      display:block;
-      font-size:13px;
+    .top-nav .nav-inner{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .nav-brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:900;
+      letter-spacing:-.01em;
+      color:#0b1220;
+      min-width: 180px;
+    }
+    .nav-logo{
+      width:42px;height:42px;
+      border-radius:14px;
+      background: rgba(110,231,184,.14);
+      border:1px solid rgba(110,231,184,.34);
+      display:grid;place-items:center;
+      color:#065f46;
+    }
+    .nav-title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.05;
+    }
+    .nav-title strong{ font-size:15px; }
+    .nav-title span{
+      font-size:12px;
+      color:#64748b;
       font-weight:700;
-      color:#0f172a;
-      margin:0 0 10px;
+      margin-top:2px;
     }
 
-    .select-wrap{
-      position:relative;
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap: 6px;
+      flex: 1;
+      justify-content: center;
     }
-    select{
-      width:100%;
+    .nav-links a{
+      font-weight:800;
+      font-size:13px;
+      color:#0b1220;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid transparent;
+      transition: .15s ease;
+      white-space: nowrap;
+    }
+    .nav-links a:hover{
+      background: rgba(15,23,42,.06);
+      border-color: rgba(15,23,42,.06);
+    }
+    .nav-links a.active{
+      background: rgba(52,211,153,.18);
+      border-color: rgba(52,211,153,.40);
+      color:#065f46;
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      justify-content:flex-end;
+      min-width: 230px;
+    }
+    .nav-btn{
+      height:42px;
+      padding: 0 14px;
+      border-radius: 12px;
+      font-weight:900;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border: 1px solid rgba(15,23,42,.10);
+      background: #fff;
+      color:#0b1220;
+      cursor:pointer;
+      transition: .15s ease;
+      white-space: nowrap;
+      font-family: inherit;
+    }
+    .nav-btn:hover{ background: rgba(15,23,42,.04); }
+    .nav-btn.primary{
+      background: #0b1220;
+      border-color: #0b1220;
+      color:#fff;
+    }
+    .nav-btn.primary:hover{ filter: brightness(1.05); }
+
+    .nav-toggle{
+      display:none;
+      width:44px;height:44px;
+      border-radius: 14px;
+      border: 1px solid rgba(15,23,42,.10);
+      background: #fff;
+      cursor:pointer;
+    }
+    .nav-toggle span{
+      display:block;
+      width:18px;height:2px;
+      background:#0b1220;
+      margin: 4px auto;
+      border-radius:99px;
+    }
+
+    .nav-mobile{
+      display:none;
+      border-top:1px solid rgba(226,232,240,.9);
+      background: rgba(255,255,255,.92);
+    }
+    .nav-mobile .nav-mobile-inner{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 18px 14px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .nav-mobile a{
+      font-weight:900;
+      font-size:14px;
+      padding:12px 12px;
+      border-radius: 14px;
+      background: rgba(15,23,42,.04);
+      border: 1px solid rgba(15,23,42,.06);
+    }
+    .nav-mobile a.active{
+      background: rgba(52,211,153,.18);
+      border-color: rgba(52,211,153,.40);
+      color:#065f46;
+    }
+    .nav-mobile .row{
+      display:flex;
+      gap:10px;
+      margin-top:6px;
+    }
+    .nav-mobile .row .nav-btn{
+      flex:1;
       height:46px;
-      border:1px solid var(--line);
-      border-radius:8px;
-      padding:0 44px 0 44px;
+      border-radius: 14px;
+    }
+
+    @media (max-width: 980px){
+      .nav-links{ display:none; }
+      .nav-actions{ display:none; }
+      .nav-toggle{ display:block; margin-left:auto; }
+      .nav-brand{ min-width: unset; }
+      .top-nav .nav-inner{ padding: 12px 16px; }
+      .nav-mobile{ display:block; }
+      .nav-mobile[hidden]{ display:none; }
+    }
+    /* Keep your mini-bar visible only on very small screens */
+    @media (max-width: 560px){
+      .top-nav{ display:none; }
+    }
+    /* ===================== END TOP NAV ===================== */
+
+    /* ===== Page Hero (same visual language as your site) ===== */
+    .page-hero{
+      position: relative;
+      padding: 58px 0 46px;
+      background:
+        radial-gradient(900px 520px at 15% 25%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(900px 520px at 85% 35%, rgba(110,231,184,.10), transparent 60%),
+        linear-gradient(180deg, var(--hero-a) 0%, var(--hero-b) 55%, var(--hero-c) 100%);
+      color:#eaf2ff;
+      overflow:hidden;
+    }
+    .page-hero::after{
+      content:"";
+      position:absolute;
+      inset:-200px -200px auto -200px;
+      height:360px;
+      background: radial-gradient(closest-side, rgba(255,255,255,.06), transparent 70%);
+      transform: rotate(-8deg);
+      pointer-events:none;
+    }
+    .page-hero .inner{
+      position: relative;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      gap:10px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 16px;
+      border-radius:999px;
+      background:rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow: 0 10px 22px rgba(0,0,0,.10);
+      font-weight:700;
+      font-size:13px;
+      letter-spacing:.2px;
+      margin-bottom: 10px;
+    }
+    .pill .pill-ico{
+      width:18px;height:18px;
+      display:grid;place-items:center;
+      border-radius:7px;
+      background:rgba(110,231,184,.16);
+      border:1px solid rgba(110,231,184,.35);
+    }
+    .page-hero h1{
+      margin:0;
+      font-weight:900;
+      letter-spacing:-.03em;
+      line-height:1.06;
+      font-size: clamp(32px, 3.4vw, 44px);
+      color:#ffffff;
+    }
+    .page-hero h1 .accent{ color: var(--accent); }
+    .page-hero p{
+      margin:0;
+      max-width: 760px;
+      color:rgba(234,242,255,.84);
+      line-height:1.7;
       font-size:15px;
       font-weight:600;
-      outline:none;
-      background:#fff;
-      color:#0f172a;
-      appearance:none;
-    }
-    select:focus{
-      border-color: #d7c3ff;
-      box-shadow: 0 0 0 4px rgba(168,85,247,.12);
     }
 
-    /* left small icon in select */
-    .select-ico{
-      position:absolute;
-      left:14px;
-      top:50%;
-      transform:translateY(-50%);
-      width:18px;height:18px;
+    /* ===== Main content layout ===== */
+    .page{
+      padding: 28px 0 86px;
+      background: #fff;
+    }
+    .wrap{
+      width:min(1040px, 100%);
+      margin: 0 auto;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:18px;
+      align-items:start;
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card-head{
+      padding:18px 18px 14px;
+      border-bottom: 1px solid rgba(226,232,240,.9);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .card-title{
+      margin:0;
+      font-weight:900;
+      font-size:14px;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+      color:#0b1220;
+    }
+    .card-desc{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.6;
+      font-weight:600;
+    }
+    .card-body{ padding:18px; }
+
+    /* ===== Upload zone ===== */
+    .drop{
+      border: 1px dashed rgba(52,211,153,.55);
+      background: linear-gradient(180deg, rgba(52,211,153,.08), rgba(255,255,255,.95));
+      border-radius: 18px;
+      padding:16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      transition: transform .12s ease, box-shadow .12s ease, border-color .12s ease;
+    }
+    .drop:hover{
+      border-color: rgba(52,211,153,.80);
+      box-shadow: 0 18px 38px rgba(5,150,109,.12);
+      transform: translateY(-1px);
+    }
+    .drop-left{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      min-width: 0;
+    }
+    .ico{
+      width:44px;height:44px;
+      border-radius:14px;
       display:grid;
       place-items:center;
-      color:#8b5cf6;
-      pointer-events:none;
+      background: rgba(110,231,184,.14);
+      border:1px solid rgba(110,231,184,.34);
+      color:#065f46;
+      flex:0 0 auto;
     }
-
-    /* down chevron */
-    .chev{
-      position:absolute;
-      right:14px;
-      top:50%;
-      transform:translateY(-50%);
-      width:18px;height:18px;
-      color:#94a3b8;
-      pointer-events:none;
-    }
-
-    textarea{
-      width:100%;
-      min-height:180px;
-      border:1px solid var(--line);
-      border-radius:8px;
-      padding:14px 14px;
+    .ico svg{ width:22px;height:22px; stroke: currentColor; }
+    .drop-text{ min-width:0; }
+    .drop-text .top{
+      font-weight:900;
+      color:#0b1220;
       font-size:14px;
-      font-weight:500;
-      outline:none;
-      resize:vertical;
-      color:#0f172a;
+      margin:0;
     }
-    textarea::placeholder{
-      color:#9aa5b1;
-      font-weight:500;
-    }
-    textarea:focus{
-      border-color:#d7c3ff;
-      box-shadow: 0 0 0 4px rgba(168,85,247,.12);
+    .drop-text .bottom{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.55;
+      font-weight:600;
     }
 
+    .file{
+      width: 220px;
+      max-width: 100%;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      background:#fff;
+      padding:10px 12px;
+      font-size:13px;
+      font-weight:700;
+      color:#0b1220;
+      outline:none;
+      box-shadow: 0 10px 22px rgba(15,23,42,.06);
+      font-family: inherit;
+    }
+    .file:focus{
+      border-color: rgba(52,211,153,.65);
+      box-shadow: 0 0 0 4px rgba(52,211,153,.16), 0 10px 22px rgba(15,23,42,.06);
+    }
+
+    /* ===== Button (theme green) ===== */
     .btn{
       width:100%;
-      height:54px;
+      height:56px;
       border:none;
-      border-radius:8px;
-      background:var(--btn);
-      color:var(--btn-text);
-      font-weight:800;
+      border-radius: 14px;
+      background: linear-gradient(90deg, var(--cta-a) 0%, var(--cta-b) 55%, #0b8ba2 100%);
+      color:#fff;
+      font-weight:900;
       font-size:16px;
       display:flex;
       align-items:center;
       justify-content:center;
       gap:10px;
       cursor:pointer;
-      box-shadow: 0 14px 30px rgba(168, 85, 247, 0.18);
+      margin-top:14px;
+      box-shadow: 0 18px 40px rgba(5,150,109,0.22);
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+      font-family: inherit;
     }
-    .btn:active{ transform:translateY(1px); }
-    .btn .btn-ico{
-      width:18px;height:18px;
-      display:grid;
-      place-items:center;
-      filter: drop-shadow(0 6px 10px rgba(0,0,0,.08));
+    .btn:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 24px 54px rgba(5,150,109,0.24);
+      filter: brightness(1.02);
     }
+    .btn:active{ transform: translateY(0px); }
+    .btn:disabled{
+      opacity:.78;
+      cursor:not-allowed;
+      transform:none;
+      filter:none;
+    }
+    .btn .btn-ico{ width:18px;height:18px; display:grid; place-items:center; }
 
-    /* match screenshot: huge spacing above card */
-    .card-spacer{ height:6px; }
-
-    /* optional result panel (hidden by default) */
-    .result{
-      margin-top:18px;
-      border:1px solid var(--line);
-      border-radius:12px;
-      padding:16px;
-      background:#fafafa;
+    /* ===== Progress ===== */
+    .progressWrap{
       display:none;
+      margin-top:14px;
     }
-    .result h3{
-      margin:0 0 8px;
-      font-size:14px;
+    .progressRow{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:8px;
+    }
+    .progressLabel{
+      font-size:13px;
+      color:#0b1220;
       font-weight:800;
     }
-    .result p{
-      margin:0;
-      color:#334155;
-      line-height:1.6;
-      font-size:14px;
+    .progressPct{
+      font-size:12px;
+      color:var(--muted);
+      font-weight:900;
+      letter-spacing:.02em;
+    }
+    .progressTrack{
+      height:10px;
+      background: rgba(229,231,235,.95);
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .progressBar{
+      height:10px;
+      width:0%;
+      background: linear-gradient(90deg, #34d399, #22c55e);
+      border-radius:999px;
+      box-shadow: 0 10px 22px rgba(34,197,94,.18);
     }
 
-    @media (max-width: 560px){
-      h1{ font-size:30px; }
-      .sub{ font-size:15px; }
-      .card{ padding:18px 16px 16px; }
+    /* ===== Preview ===== */
+    .preview{
+      padding:16px 18px 18px;
+      border-top:1px solid rgba(226,232,240,.9);
     }
+    .preview-title{
+      margin:0 0 10px;
+      font-size:13px;
+      font-weight:900;
+      color:#0b1220;
+      letter-spacing:.02em;
+      text-transform:uppercase;
+    }
+    #mediaPreview img, #mediaPreview video{
+      max-width:100%;
+      border-radius:16px;
+      border:1px solid rgba(229,231,235,.95);
+      display:block;
+      box-shadow: 0 18px 44px rgba(15,23,42,.10);
+      background:#fff;
+    }
+
+    /* ===== Results ===== */
+    .result{
+      display:none;
+      border-top:1px solid rgba(226,232,240,.9);
+      padding:16px 18px 18px;
+      background: #fbfdff;
+    }
+
+    .pillRow{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    .pillChip{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:12px;
+      letter-spacing:.02em;
+      border:1px solid rgba(226,232,240,.95);
+      background: rgba(255,255,255,.92);
+      color:#0b1220;
+    }
+    .pillChip .s{
+      width:8px; height:8px; border-radius:999px;
+      background:#e5e7eb;
+    }
+
+    .headline{
+      margin:0 0 6px;
+      font-weight:1000;
+      letter-spacing:-0.02em;
+      color:#0b1220;
+      font-size:16px;
+    }
+    .reason{
+      margin:0 0 12px;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.7;
+      font-weight:600;
+    }
+
+    .meterTrack{
+      height:12px;
+      background: rgba(229,231,235,.95);
+      border-radius:999px;
+      overflow:hidden;
+    }
+    .meterFill{
+      height:12px;
+      width:0%;
+      background:#ef4444;
+      border-radius:999px;
+      box-shadow: 0 12px 26px rgba(239,68,68,.20);
+    }
+    .meta{
+      margin:8px 0 0;
+      font-size:13px;
+      color:var(--muted);
+      font-weight:700;
+      line-height:1.6;
+    }
+
+    .callout{
+      margin-top:12px;
+      border-radius:14px;
+      border:1px solid rgba(52,211,153,.38);
+      background: rgba(52,211,153,.10);
+      padding:12px 12px;
+      font-weight:800;
+      color:#065f46;
+      line-height:1.6;
+      font-size:13px;
+    }
+
+    details.tech{
+      margin-top:14px;
+      border-top:1px solid rgba(226,232,240,.9);
+      padding-top:12px;
+    }
+    details.tech summary{
+      cursor:pointer;
+      font-weight:900;
+      color:#0b1220;
+      list-style:none;
+      user-select:none;
+    }
+    details.tech summary::-webkit-details-marker{ display:none; }
+
+    .techBox{
+      margin-top:10px;
+      display:grid;
+      gap:10px;
+      font-size:13px;
+      color:#475569;
+      line-height:1.6;
+    }
+    .techCard{
+      border:1px solid rgba(226,232,240,.95);
+      border-radius:14px;
+      padding:12px;
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 12px 26px rgba(15,23,42,.06);
+    }
+    .techCard strong{
+      display:block;
+      margin-bottom:6px;
+      color:#0b1220;
+      font-weight:900;
+      font-size:12px;
+      text-transform:uppercase;
+      letter-spacing:.02em;
+    }
+
+    /* ===== Right column ===== */
+    .tips{ padding:18px; }
+    .tips h3{
+      margin:0;
+      font-size:14px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.02em;
+      color:#0b1220;
+    }
+    .tips p{
+      margin:8px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.7;
+      font-weight:600;
+    }
+    .tipList{
+      margin:14px 0 0;
+      padding:0;
+      list-style:none;
+      display:grid;
+      gap:10px;
+    }
+    .tip{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding:12px;
+      border-radius:14px;
+      border:1px solid rgba(226,232,240,.95);
+      background: rgba(255,255,255,.92);
+      box-shadow: 0 12px 26px rgba(15,23,42,.05);
+    }
+    .tip .tIco{
+      width:34px;height:34px;
+      border-radius:12px;
+      display:grid;
+      place-items:center;
+      background: rgba(110,231,184,.14);
+      border:1px solid rgba(110,231,184,.34);
+      color:#065f46;
+      flex:0 0 auto;
+    }
+    .tip .tIco svg{ width:18px;height:18px; stroke: currentColor; }
+    .tip .tText b{
+      display:block;
+      font-size:13px;
+      font-weight:900;
+      color:#0b1220;
+      margin-bottom:4px;
+    }
+    .tip .tText span{
+      display:block;
+      font-size:13px;
+      color:var(--muted);
+      line-height:1.6;
+      font-weight:600;
+    }
+
+    @media (max-width: 980px){
+      .grid{ grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px){
+      .container{ width: min(1200px, calc(100% - 32px)); }
+      .page-hero{ padding: 54px 0 40px; }
+    }
+
+    /* optional: "mobile preview" quick toggle (kept from your deepfake page) */
+    body.mobile-preview .wrap{ width: 390px; }
   </style>
 </head>
 
 <body>
-  <!-- Mini Page Switcher -->
-<div class="mini-bar">
-  <select id="pageSelect">
-    <option value="index.html">Home</option>
-    <option value="scamanalyzer.html">ScamAnalyzer</option>
-    <option value="courses.html">Courses</option>
-    <option value="trustedContacts.html">TrustedContacts</option>
-    <option value="alerts.html">Alerts</option>
-    <option value="simulator.html">Simulator</option>
-    <option value="report.html">Report</option>
-  </select>
+  <!-- Mini Page Switcher (MOBILE ONLY) -->
+  <div class="mini-bar">
+    <select id="pageSelect" onchange="switchPage(this.value)">
+      <option value="index.html">Home</option>
+      <option value="scamanalyzer.html">ScamAnalyzer</option>
+      <option value="deepfake.html">Deepfake</option>
+      <option value="courses.html">Courses</option>
+      <option value="trustedContacts.html">TrustedContacts</option>
+      <option value="alerts.html">Alerts</option>
+      <option value="simulator.html">Simulator</option>
+      <option value="report.html">Report</option>
+    </select>
 
-  <button onclick="toggleMobileView()" title="Mobile view">📱</button>
-  <button onclick="location.reload()" title="Refresh">⟳</button>
-</div>
+    <button type="button" onclick="toggleMobileView()" title="Mobile view">📱</button>
+    <button type="button" onclick="location.reload()" title="Refresh">⟳</button>
+  </div>
 
-  <main class="page">
-    <div class="wrap">
-      <div class="top-icon" aria-hidden="true">
-        <!-- brain icon -->
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M9 4.2c-2 0-3.6 1.6-3.6 3.6 0 .5.1 1 .3 1.5C4.7 9.8 4 11 4 12.5c0 1.6.9 2.9 2.2 3.4v.2c0 2 1.6 3.6 3.6 3.6H10" stroke-width="2" stroke-linecap="round"/>
-          <path d="M15 4.2c2 0 3.6 1.6 3.6 3.6 0 .5-.1 1-.3 1.5 1 .5 1.7 1.7 1.7 3.2 0 1.6-.9 2.9-2.2 3.4v.2c0 2-1.6 3.6-3.6 3.6H14" stroke-width="2" stroke-linecap="round"/>
-          <path d="M12 4v16" stroke-width="2" stroke-linecap="round" opacity=".8"/>
-        </svg>
+  <!-- TOP HEADER (same structure as home page) -->
+  <header class="top-nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="javascript:void(0)" onclick="switchPage('index.html')">
+        <div class="nav-logo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l7 4v7c0 5-3.5 9-7 9s-7-4-7-9V6l7-4z" stroke="currentColor" stroke-width="2"/>
+            <path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="nav-title">
+          <strong>Guardian AI</strong>
+          <span>Scam Protection</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
+        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Scam Analyzer</a>
+        <a href="javascript:void(0)" onclick="switchPage('deepfake.html')" data-page="deepfake.html">Deepfake</a>
+        <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
+        <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedContacts.html">Trusted Contacts</a>
+        <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
+        <a href="javascript:void(0)" onclick="switchPage('simulator.html')" data-page="simulator.html">Simulator</a>
+        <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
+        <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Scam</button>
       </div>
 
-      <h1>AI Scam Analyzer</h1>
-      <p class="sub">
-        Paste a suspicious message, email, or describe a phone call. Our AI will<br>
-        analyze it for scam patterns and explain any red flags.
-      </p>
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
 
-      <div class="card">
-        <div class="field">
-          <label class="label" for="type">Type of Communication</label>
-          <div class="select-wrap">
-            <span class="select-ico" aria-hidden="true">
-              <!-- small dot icon like screenshot -->
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <rect x="4.5" y="6.5" width="15" height="11" rx="2.5" stroke="#8b5cf6" stroke-width="2"/>
-                <circle cx="8" cy="12" r="2.2" fill="#8b5cf6"/>
-              </svg>
-            </span>
-
-            <select id="type" name="type">
-              <option selected>Email</option>
-              <option>Text Message</option>
-              <option>Phone Call</option>
-              <option>Social Media</option>
-              <option>Other</option>
-            </select>
-
-            <span class="chev" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-                <path d="M6 9l6 6 6-6" stroke="#94a3b8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </span>
-          </div>
+    <div class="nav-mobile" id="navMobile" hidden>
+      <div class="nav-mobile-inner">
+        <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
+        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Scam Analyzer</a>
+        <a href="javascript:void(0)" onclick="switchPage('deepfake.html')" data-page="deepfake.html">Deepfake</a>
+        <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
+        <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedContacts.html">Trusted Contacts</a>
+        <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
+        <a href="javascript:void(0)" onclick="switchPage('simulator.html')" data-page="simulator.html">Simulator</a>
+        <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
+        <div class="row">
+          <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
+          <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Scam</button>
         </div>
+      </div>
+    </div>
+  </header>
 
-        <div class="field">
-          <label class="label" for="content">Paste or describe the suspicious content</label>
-          <textarea id="content" placeholder="Paste the message here..."></textarea>
-        </div>
-
-        <button class="btn" type="button" id="analyzeBtn">
-          <span class="btn-ico" aria-hidden="true">
-            <!-- tiny brain icon -->
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-              <path d="M9 5c-1.6 0-3 1.3-3 3 0 .4.1.8.2 1.1-.9.5-1.4 1.4-1.4 2.5 0 1.2.7 2.2 1.8 2.6v.2c0 1.6 1.3 3 3 3H10" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-              <path d="M15 5c1.6 0 3 1.3 3 3 0 .4-.1.8-.2 1.1.9.5 1.4 1.4 1.4 2.5 0 1.2-.7 2.2-1.8 2.6v.2c0 1.6-1.3 3-3 3H14" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/>
-              <path d="M12 5v14" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity=".85"/>
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="inner">
+        <div class="pill">
+          <span class="pill-ico" aria-hidden="true">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+              <path d="M12 2l7 4v7c0 5-3.5 9-7 9s-7-4-7-9V6l7-4z" stroke="rgba(110,231,184,.95)" stroke-width="2"/>
             </svg>
           </span>
-          Analyze for Scams
-        </button>
-
-        <!-- optional (keep hidden if you don't want functionality) -->
-        <div class="result" id="result">
-          <h3>Analysis</h3>
-          <p id="resultText"></p>
+          Detect signs of AI-manipulated media
         </div>
+        <h1>Deepfake <span class="accent">Detector</span></h1>
+        <p>Upload an image or video. Our AI estimates whether it shows signs of AI-generated or manipulated media, and explains what it found.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN -->
+  <main class="page">
+    <div class="container">
+      <div class="wrap">
+        <section class="grid">
+          <!-- LEFT -->
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <p class="card-title">Analyze media</p>
+                <p class="card-desc">Supports images and videos. Results include confidence, signals, and basic forensics.</p>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="drop">
+                <div class="drop-left">
+                  <div class="ico" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M12 2l7 4v7c0 5-3.5 9-7 9s-7-4-7-9V6l7-4z" stroke-width="2"/>
+                      <path d="M9 12l2 2 4-5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="drop-text">
+                    <p class="top">Choose an image or video</p>
+                    <p class="bottom">If someone asks for money or personal info, verify through a trusted channel first.</p>
+                  </div>
+                </div>
+
+                <!-- IMPORTANT: keep the same IDs and accept types -->
+                <input class="file" id="mediaInput" type="file" accept="image/*,video/*" />
+              </div>
+
+              <!-- IMPORTANT: keep the same button ID -->
+              <button class="btn" id="deepfakeBtn" type="button">
+                <span class="btn-ico" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+                    <path d="M12 2l7 4v7c0 5-3.5 9-7 9s-7-4-7-9V6l7-4z"
+                          stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+                    <path d="M9 12l2 2 4-5"
+                          stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                Detect Deepfake
+              </button>
+
+              <!-- IMPORTANT: keep the same progress IDs -->
+              <div class="progressWrap" id="progressWrap">
+                <div class="progressRow">
+                  <div class="progressLabel" id="progressText">Preparing…</div>
+                  <div class="progressPct" id="progressPct">0%</div>
+                </div>
+                <div class="progressTrack">
+                  <div class="progressBar" id="progressBar"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="preview">
+              <p class="preview-title">Preview</p>
+              <div id="mediaPreview"></div>
+            </div>
+
+            <!-- IMPORTANT: keep the same result IDs -->
+            <div class="result" id="deepfakeResult">
+              <div class="pillRow">
+                <div class="pillChip"><span class="s" id="pillDot"></span><span id="pillStatus">Status</span></div>
+                <div class="pillChip"><span class="s" style="background:#e5e7eb"></span><span id="pillCertainty">Certainty</span></div>
+                <div class="pillChip"><span class="s" style="background:#e5e7eb"></span><span id="pillScore">Score</span></div>
+              </div>
+
+              <p class="headline" id="deepfakeHeadline"></p>
+              <p class="reason" id="deepfakeReason"></p>
+
+              <div class="meterTrack">
+                <div class="meterFill" id="deepfakeMeter"></div>
+              </div>
+              <p class="meta" id="deepfakeMeta"></p>
+
+              <div class="callout" id="plainEnglishSummary"></div>
+
+              <details class="tech">
+                <summary>Show technical details</summary>
+                <div class="techBox">
+                  <div class="techCard">
+                    <strong>How the AI models voted</strong>
+                    <div id="signalsBox"></div>
+                  </div>
+
+                  <div class="techCard">
+                    <strong>Image forensics</strong>
+                    <div id="forensicsBox"></div>
+                  </div>
+
+                  <div class="techCard">
+                    <strong>Ensemble details</strong>
+                    <div id="ensembleBox"></div>
+                  </div>
+
+                  <div class="techCard" id="videoBoxWrap" style="display:none;">
+                    <strong>Video timing analysis</strong>
+                    <div id="videoBox"></div>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+
+          <!-- RIGHT -->
+          <aside class="card">
+            <div class="tips">
+              <h3>Quick checks</h3>
+              <p>Deepfakes can look convincing. These cues can help before you trust a clip.</p>
+
+              <ul class="tipList">
+                <li class="tip">
+                  <div class="tIco" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M12 6v6l4 2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" stroke-width="2"/>
+                    </svg>
+                  </div>
+                  <div class="tText">
+                    <b>Timing mismatch</b>
+                    <span>Audio doesn’t match mouth movement, or expressions lag behind speech.</span>
+                  </div>
+                </li>
+
+                <li class="tip">
+                  <div class="tIco" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M4 20l4-10 4 6 4-12 4 8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="tText">
+                    <b>Over-smooth skin</b>
+                    <span>Faces look “airbrushed,” especially around cheeks, jawline, and forehead.</span>
+                  </div>
+                </li>
+
+                <li class="tip">
+                  <div class="tIco" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M3 12h18" stroke-width="2" stroke-linecap="round"/>
+                      <path d="M7 7l-4 5 4 5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M17 7l4 5-4 5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="tText">
+                    <b>Edges and warping</b>
+                    <span>Hairline, glasses, earrings, and teeth can “melt” or shimmer in motion.</span>
+                  </div>
+                </li>
+
+                <li class="tip">
+                  <div class="tIco" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none">
+                      <path d="M6 18V6" stroke-width="2" stroke-linecap="round"/>
+                      <path d="M18 18V6" stroke-width="2" stroke-linecap="round"/>
+                      <path d="M9 8h6" stroke-width="2" stroke-linecap="round"/>
+                      <path d="M9 12h6" stroke-width="2" stroke-linecap="round"/>
+                      <path d="M9 16h6" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                  <div class="tText">
+                    <b>Verify the source</b>
+                    <span>If it’s urgent or asks for money, confirm with a second trusted channel.</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </aside>
+        </section>
       </div>
     </div>
   </main>
 
+  <script>
+    // --- BASE-PATH SAFE NAVIGATION (same logic as home page) ---
+    function getBaseDir() {
+      const path = window.location.pathname;
+      const parts = path.split("/");
+      const last = parts[parts.length - 1];
+      if (!last || last.includes(".html")) parts.pop();
+      const base = parts.join("/") + (parts.length > 1 ? "/" : "/");
+      return base;
+    }
+
+    function switchPage(page) {
+      if (!page) return;
+      if (/^https?:\/\//i.test(page)) { window.location.href = page; return; }
+      window.location.href = getBaseDir() + page;
+    }
+
+    // Keep dropdown synced to current page (mini-bar)
+    (function syncDropdownToPage(){
+      const sel = document.getElementById("pageSelect");
+      if (!sel) return;
+      const file = window.location.pathname.split("/").pop();
+      sel.value = (file && file.includes(".html")) ? file : "index.html";
+    })();
+
+    // Highlight active nav link (desktop + mobile dropdown)
+    (function highlightActiveNav(){
+      const file = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
+      document.querySelectorAll('[data-page]').forEach(a => {
+        a.classList.toggle('active', (a.getAttribute('data-page') || '').toLowerCase() === file);
+      });
+    })();
+
+    // Nav toggle (tablet)
+    (function navToggle(){
+      const btn = document.getElementById("navToggle");
+      const panel = document.getElementById("navMobile");
+      if (!btn || !panel) return;
+
+      btn.addEventListener("click", () => {
+        const open = !panel.hasAttribute("hidden");
+        if (open) {
+          panel.setAttribute("hidden", "");
+          btn.setAttribute("aria-expanded", "false");
+        } else {
+          panel.removeAttribute("hidden");
+          btn.setAttribute("aria-expanded", "true");
+        }
+      });
+    })();
+
+    // Keep your original deepfake page's "mobile preview" behavior
+    function toggleMobileView() {
+      document.body.classList.toggle("mobile-preview");
+    }
+  </script>
 
   <script>
-    // Optional tiny demo interaction (remove if you want purely static)
-    const btn = document.getElementById('analyzeBtn');
-    const box = document.getElementById('content');
-    const result = document.getElementById('result');
-    const resultText = document.getElementById('resultText');
+    /* ==========================
+       Deepfake page logic (UNCHANGED)
+       ========================== */
+    const mediaInput = document.getElementById("mediaInput");
+    const mediaPreview = document.getElementById("mediaPreview");
+    const deepfakeBtn = document.getElementById("deepfakeBtn");
 
-    btn.addEventListener('click', () => {
-      const t = box.value.trim();
-      if (!t) {
-        result.style.display = 'block';
-        resultText.textContent = "Please paste or describe the suspicious content to analyze.";
+    const deepfakeResult = document.getElementById("deepfakeResult");
+    const deepfakeHeadline = document.getElementById("deepfakeHeadline");
+    const deepfakeReason = document.getElementById("deepfakeReason");
+    const deepfakeMeter = document.getElementById("deepfakeMeter");
+    const deepfakeMeta = document.getElementById("deepfakeMeta");
+
+    const signalsBox = document.getElementById("signalsBox");
+    const forensicsBox = document.getElementById("forensicsBox");
+    const ensembleBox = document.getElementById("ensembleBox");
+    const videoBoxWrap = document.getElementById("videoBoxWrap");
+    const videoBox = document.getElementById("videoBox");
+    const plainEnglishSummary = document.getElementById("plainEnglishSummary");
+
+    const progressWrap = document.getElementById("progressWrap");
+    const progressBar = document.getElementById("progressBar");
+    const progressText = document.getElementById("progressText");
+    const progressPct = document.getElementById("progressPct");
+
+    const pillDot = document.getElementById("pillDot");
+    const pillStatus = document.getElementById("pillStatus");
+    const pillCertainty = document.getElementById("pillCertainty");
+    const pillScore = document.getElementById("pillScore");
+
+    function setProgress(pct, text) {
+      progressWrap.style.display = "block";
+      progressBar.style.width = pct + "%";
+      progressText.textContent = text || "";
+      if (progressPct) progressPct.textContent = Math.round(pct) + "%";
+    }
+
+    function hideProgressSoon() {
+      setTimeout(() => { progressWrap.style.display = "none"; }, 800);
+    }
+
+    mediaInput.onchange = () => {
+      mediaPreview.innerHTML = "";
+      deepfakeResult.style.display = "none";
+      progressWrap.style.display = "none";
+
+      const f = mediaInput.files[0];
+      if (!f) return;
+
+      const url = URL.createObjectURL(f);
+      if (f.type.startsWith("image")) {
+        const img = document.createElement("img");
+        img.src = url;
+        img.alt = "Uploaded image preview";
+        mediaPreview.appendChild(img);
+      } else {
+        const vid = document.createElement("video");
+        vid.src = url;
+        vid.controls = true;
+        vid.playsInline = true;
+        mediaPreview.appendChild(vid);
+      }
+    };
+
+    deepfakeBtn.onclick = async () => {
+      const file = mediaInput.files?.[0];
+      if (!file) {
+        alert("Please upload an image or video first.");
         return;
       }
-      result.style.display = 'block';
-      resultText.textContent =
-        "This is a demo UI. Connect your AI backend here to return scam risk level, red flags, and recommended next steps.";
+
+      deepfakeBtn.disabled = true;
+      deepfakeBtn.textContent = "Detecting…";
+
+      deepfakeResult.style.display = "none";
+      signalsBox.innerHTML = "";
+      forensicsBox.innerHTML = "";
+      ensembleBox.innerHTML = "";
+      videoBoxWrap.style.display = "none";
+      videoBox.innerHTML = "";
+
+      const form = new FormData();
+      form.append("file", file);
+
+      try {
+        setProgress(10, "Uploading media…");
+
+        const res = await fetch("https://guardianai-backend.onrender.com/api/deepfake", {
+          method: "POST",
+          body: form
+        });
+
+        if (!res.ok) throw new Error(`Server error: ${res.status}`);
+
+        setProgress(55, "Running AI detection models…");
+        const data = await res.json();
+
+        setProgress(85, "Finalizing assessment…");
+
+        // ===== Core values =====
+        const score = Math.max(0, Math.min(1, Number(data.score ?? 0)));
+        const scorePctNum = score * 100;
+        const scorePct = scorePctNum.toFixed(1);
+
+        const certainty =
+          data.confidence_band === "High" ? "High Certainty" :
+          data.confidence_band === "Medium" ? "Medium Certainty" :
+          data.confidence_band === "Low" ? "Low Certainty" :
+          "Unknown Certainty";
+
+        const riskColor =
+          score < 0.4 ? "#22c55e" :
+          score < 0.6 ? "#f59e0b" :
+          "#ef4444";
+
+        // pills
+        if (pillDot) pillDot.style.background = riskColor;
+        if (pillStatus) pillStatus.textContent = data.label ?? "UNKNOWN";
+        if (pillCertainty) pillCertainty.textContent = certainty;
+        if (pillScore) pillScore.textContent = `${scorePct}%`;
+
+        deepfakeResult.style.display = "block";
+
+        // ===== Headline =====
+        deepfakeHeadline.textContent =
+          `${data.label ?? "UNKNOWN"} • ${scorePct}% • ${certainty}`;
+
+        // ===== Senior-friendly summary =====
+        if (data.label === "FAKE") {
+          plainEnglishSummary.textContent =
+            "This media shows strong signs of being created or altered by artificial intelligence. Be careful before trusting or sharing it.";
+        } else if (data.label === "REAL") {
+          plainEnglishSummary.textContent =
+            "This media looks like a normal photo or video with no strong signs of AI manipulation.";
+        } else {
+          plainEnglishSummary.textContent =
+            "The system is unsure. Some signs suggest AI manipulation, while others do not.";
+        }
+
+        deepfakeReason.textContent = data.decision_reason ?? "";
+
+        // ===== Meter =====
+        deepfakeMeter.style.width = `${scorePctNum}%`;
+        deepfakeMeter.style.background = riskColor;
+        deepfakeMeta.textContent =
+          "This result is based on multiple AI models and consistency checks.";
+
+        // ===== Model votes summary =====
+        const ens = data.ensemble || {};
+        const per = ens.per_model || {};
+        const modelCount = Object.keys(per).length;
+
+        let summaryLines = [];
+        if (ens.mode === "video") {
+          summaryLines.push(
+            "The video was analyzed frame-by-frame for consistency.",
+            "Large differences between frames may indicate AI manipulation."
+          );
+        } else {
+          summaryLines.push(
+            "Multiple AI detectors examined different parts of the image.",
+            "Stronger agreement increases confidence in the result."
+          );
+        }
+
+        Object.entries(per).forEach(([k, v]) => {
+          const val = Number(v);
+          if (!Number.isFinite(val)) return;
+          summaryLines.push(`${k}: ${(val * 100).toFixed(1)}% AI-likeness`);
+        });
+
+        signalsBox.innerHTML = summaryLines.map(s => `• ${s}`).join("<br>");
+
+        // ===== Technical details =====
+        let ensembleHTML = "";
+        if (ens.mode === "image") {
+          ensembleHTML = `
+            Models used: ${modelCount || "?"}<br>
+            Crops analyzed: ${ens.n_crops ?? "?"}<br>
+            Model disagreement: ${(Number(ens.disagreement ?? 0)).toFixed(3)}
+          `;
+        } else if (ens.mode === "video") {
+          ensembleHTML = `Models used: ${modelCount || "?"}`;
+        } else {
+          ensembleHTML = `Mode: ${ens.mode ?? "unknown"}`;
+        }
+        ensembleBox.innerHTML = ensembleHTML;
+
+        const f = data.forensics || {};
+        const meta = f.metadata || {};
+        const props = f.image_properties || {};
+
+        forensicsBox.innerHTML = `
+          EXIF data present: ${meta.exif_present ?? "unknown"}<br>
+          Camera make: ${meta.camera_make ?? "unknown"}<br>
+          Camera model: ${meta.camera_model ?? "unknown"}<br>
+          Resolution: ${props.width ?? "?"} × ${props.height ?? "?"}<br>
+          Faces detected: ${f.faces_detected ?? "?"}
+        `;
+
+        if (ens.mode === "video") {
+          const t = data.temporal || {};
+          videoBoxWrap.style.display = "block";
+          videoBox.innerHTML = `
+            Frames analyzed: ${t.n_frames ?? "?"}<br>
+            Frame volatility: ${(Number(t.volatility_std ?? 0)).toFixed(3)}<br>
+            Mean disagreement: ${(Number(t.mean_disagreement ?? 0)).toFixed(3)}
+          `;
+        } else {
+          videoBoxWrap.style.display = "none";
+        }
+
+        setProgress(100, "Done");
+        hideProgressSoon();
+      } catch (err) {
+        console.error(err);
+        alert("Could not reach the AI analysis service.");
+        progressWrap.style.display = "none";
+      } finally {
+        deepfakeBtn.disabled = false;
+        deepfakeBtn.innerHTML = `
+          <span class="btn-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+              <path d="M12 2l7 4v7c0 5-3.5 9-7 9s-7-4-7-9V6l7-4z"
+                    stroke="#ffffff" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M9 12l2 2 4-5"
+                    stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          Detect Deepfake
+        `;
+      }
+    };
+
+    // Wake up backend when page loads
+    window.addEventListener("load", () => {
+      fetch("https://guardianai-backend.onrender.com/").catch(() => {});
     });
   </script>
-  <script>
-  const pageSelect = document.getElementById("pageSelect");
-
-  const currentPage =
-    location.pathname.split("/").pop() || "index.html";
-
-  [...pageSelect.options].forEach(opt => {
-    if (opt.value === currentPage) opt.selected = true;
-  });
-
-  pageSelect.addEventListener("change", () => {
-    location.href = pageSelect.value;
-  });
-
-  function toggleMobileView() {
-    document.body.classList.toggle("mobile-preview");
-  }
-</script>
-
 </body>
 </html>
+  
