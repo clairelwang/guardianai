@@ -1269,7 +1269,7 @@
       try {
         setProgress(10, "Uploading media…");
 
-        const res = await fetch("https://guardianai-backend.onrender.com/api/deepfake", {
+        const res = await fetch("https://anshvkapadia-guardianai-backend.hf.space/api/deepfake", {
           method: "POST",
           body: form
         });
@@ -1418,8 +1418,9 @@
 
     // Wake up backend when page loads
     window.addEventListener("load", () => {
-      fetch("https://guardianai-backend.onrender.com/").catch(() => {});
+      fetch("https://anshvkapadia-guardianai-backend.hf.space/").catch(() => {});
     });
   </script>
 </body>
 </html>
+
