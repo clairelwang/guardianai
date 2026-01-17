@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Scam Simulator</title>
+  <title>Scam Simulator • Guardian AI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,11 +28,15 @@
       --amber:#eab308;
       --amberSoft:#fff7db;
 
-      --red:#ef4444;
-      --redSoft:#ffe6e6;
+      --blue:#2563eb;
+      --blueSoft:#e8f0ff;
 
       --radius: 16px;
       --radius2: 14px;
+
+      /* Nav palette */
+      --ink:#0b1220;
+      --accent:#6ee7b8;
     }
 
     *{ box-sizing:border-box; }
@@ -42,88 +46,228 @@
       background: var(--bg);
       color: var(--text);
     }
+    a{ color:inherit; text-decoration:none; }
 
-    /* ===== mini top-left bar ===== */
-    .miniBar{
+    /* ===================== MOBILE MINI-BAR ===================== */
+    .mini-bar{
       position: fixed;
-      top: 18px;
-      left: 18px;
+      top: 14px;
+      left: 14px;
       z-index: 9999;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      padding: 10px 12px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      border:1px solid rgba(226,232,240,.9);
+    }
+    .mini-bar select{
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      font-size: 14px;
+      cursor: pointer;
+      outline: none;
+      min-width: 170px;
+      background: #fff;
+      font-weight:700;
+    }
+    .mini-bar button{
+      width: 42px;
+      height: 42px;
+      border: none;
+      background: #f3f4f6;
+      border-radius: 12px;
+      cursor:pointer;
+      font-size: 16px;
+      display:grid;
+      place-items:center;
+    }
+    .mini-bar button:hover{ background:#e5e7eb; }
 
+    @media (max-width: 560px){
+      .mini-bar{ display:flex; }
+    }
+
+    /* ===================== TOP NAV ===================== */
+    .top-nav{
+      position: sticky;
+      top: 0;
+      z-index: 9998;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(226,232,240,.9);
+    }
+    .top-nav .nav-inner{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      display:flex;
+      align-items:center;
+      gap:16px;
+    }
+    .nav-brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:900;
+      letter-spacing:-.01em;
+      color: var(--ink);
+      min-width: 180px;
+    }
+    .nav-logo{
+      width:42px;height:42px;
+      border-radius:14px;
+      background: rgba(110,231,184,.14);
+      border:1px solid rgba(110,231,184,.34);
+      display:grid;place-items:center;
+      color:#065f46;
+    }
+    .nav-title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.05;
+    }
+    .nav-title strong{ font-size:15px; }
+    .nav-title span{
+      font-size:12px;
+      color:#64748b;
+      font-weight:700;
+      margin-top:2px;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      flex:1;
+      justify-content:center;
+    }
+    .nav-links a{
+      font-weight:800;
+      font-size:13px;
+      color: var(--ink);
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid transparent;
+      transition: .15s ease;
+      white-space: nowrap;
+    }
+    .nav-links a:hover{
+      background: rgba(15,23,42,.06);
+      border-color: rgba(15,23,42,.06);
+    }
+    .nav-links a.active{
+      background: rgba(52,211,153,.18);
+      border-color: rgba(52,211,153,.40);
+      color:#065f46;
+    }
+
+    .nav-actions{
       display:flex;
       align-items:center;
       gap:10px;
-
+      justify-content:flex-end;
+      min-width: 230px;
+    }
+    .nav-btn{
+      height:42px;
+      padding:0 14px;
+      border-radius:12px;
+      font-weight:900;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border: 1px solid rgba(15,23,42,.10);
       background:#fff;
-      border:1px solid var(--border);
-      border-radius: 12px;
-      padding: 8px 10px;
-      box-shadow: 0 10px 20px rgba(15,23,42,.10);
-    }
-    .miniSelectWrap{
-      position: relative;
-      width: 175px;
-    }
-    .miniSelect{
-      width:100%;
-      height:34px;
-      border:2px solid #111827;
-      border-radius: 10px;
-      padding: 0 34px 0 12px;
-      font-weight: 600;
-      background:#fff;
-      outline:none;
-      appearance:none;
-      -webkit-appearance:none;
-      -moz-appearance:none;
-    }
-    .miniChevron{
-      position:absolute;
-      right:10px; top:50%;
-      transform: translateY(-50%);
-      pointer-events:none;
-      width:18px; height:18px;
-      color:#111827;
-      opacity:.9;
-    }
-
-    .miniBtn{
-      width: 34px;
-      height: 34px;
-      display:grid;
-      place-items:center;
-      border: 2px solid #111827;
-      background:#fff;
-      border-radius: 10px;
+      color: var(--ink);
       cursor:pointer;
-      transition: transform .05s ease, background .2s ease;
-    }
-    .miniBtn:active{ transform: scale(.98); }
-    .miniBtn svg{ width:18px; height:18px; }
-    .miniBtn:hover{ background:#f3f4f6; }
-
-    .tooltip{
-      position: fixed;
-      z-index: 9999;
-      padding: 10px 12px;
-      border-radius: 10px;
-      background: rgba(17,24,39,.92);
-      color:#fff;
-      font-size: 12px;
-      font-weight: 600;
-      transform: translate(-50%, -120%);
-      opacity: 0;
-      pointer-events:none;
-      transition: opacity .15s ease;
+      transition: .15s ease;
       white-space: nowrap;
     }
-    .tooltip.show{ opacity: 1; }
+    .nav-btn:hover{ background: rgba(15,23,42,.04); }
+    .nav-btn.primary{
+      background:#0b1220;
+      border-color:#0b1220;
+      color:#fff;
+    }
+    .nav-btn.primary:hover{ filter: brightness(1.05); }
 
-    /* ===== page layout ===== */
+    .nav-toggle{
+      display:none;
+      width:44px;height:44px;
+      border-radius:14px;
+      border:1px solid rgba(15,23,42,.10);
+      background:#fff;
+      cursor:pointer;
+    }
+    .nav-toggle span{
+      display:block;
+      width:18px;height:2px;
+      background:#0b1220;
+      margin:4px auto;
+      border-radius:99px;
+    }
+
+    .nav-mobile{
+      display:none;
+      border-top:1px solid rgba(226,232,240,.9);
+      background: rgba(255,255,255,.92);
+    }
+    .nav-mobile .nav-mobile-inner{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 18px 14px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .nav-mobile a{
+      font-weight:900;
+      font-size:14px;
+      padding:12px 12px;
+      border-radius:14px;
+      background: rgba(15,23,42,.04);
+      border: 1px solid rgba(15,23,42,.06);
+    }
+    .nav-mobile a.active{
+      background: rgba(52,211,153,.18);
+      border-color: rgba(52,211,153,.40);
+      color:#065f46;
+    }
+    .nav-mobile .row{
+      display:flex;
+      gap:10px;
+      margin-top:6px;
+    }
+    .nav-mobile .row .nav-btn{
+      flex:1;
+      height:46px;
+      border-radius:14px;
+    }
+
+    @media (max-width: 980px){
+      .nav-links{ display:none; }
+      .nav-actions{ display:none; }
+      .nav-toggle{ display:block; margin-left:auto; }
+      .nav-brand{ min-width: unset; }
+      .top-nav .nav-inner{ padding: 12px 16px; }
+      .nav-mobile{ display:block; }
+      .nav-mobile[hidden]{ display:none; }
+    }
+    @media (max-width: 560px){
+      .top-nav{ display:none; }
+    }
+
+    /* ===================== SIMULATOR UI ===================== */
     .page{
       width: min(1100px, calc(100% - 40px));
       margin: 0 auto;
-      padding: 92px 0 80px;
+      padding: 120px 0 80px;
     }
 
     .topIcon{
@@ -151,7 +295,7 @@
       font-size: 18px;
       line-height: 1.5;
       margin: 0 auto 34px;
-      max-width: 680px;
+      max-width: 720px;
     }
 
     .chooserCard{
@@ -190,16 +334,12 @@
       justify-content:center;
       text-align:center;
     }
-    .diff:hover{
-      box-shadow: var(--shadow2);
-      transform: translateY(-1px);
-    }
+    .diff:hover{ box-shadow: var(--shadow2); transform: translateY(-1px); }
     .diff.selected{
       border-color: var(--danger);
       background: var(--dangerSoft);
       box-shadow: 0 12px 30px rgba(225,29,72,.10);
     }
-
     .diffIcon{
       width: 44px;
       height: 44px;
@@ -209,36 +349,28 @@
       margin-bottom: 12px;
     }
     .diffIcon svg{ width:22px; height:22px; color:#fff; }
-
     .diffIcon.green{ background: var(--green); }
     .diffIcon.amber{ background: var(--amber); }
-    .diffIcon.red{ background: var(--red); }
+    .diffIcon.red{ background: var(--danger); }
 
-    .diffName{
-      font-weight: 800;
-      font-size: 18px;
-      margin-bottom: 6px;
-    }
-    .diffDesc{
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.35;
-      max-width: 240px;
-    }
+    .diffName{ font-weight: 800; font-size: 18px; margin-bottom: 6px; }
+    .diffDesc{ color: var(--muted); font-size: 13px; line-height: 1.35; max-width: 240px; }
 
     .startRow{
       display:flex;
       justify-content:center;
       margin-top: 20px;
+      gap:12px;
+      flex-wrap:wrap;
     }
     .startBtn{
       border: none;
       background: var(--danger);
       color:#fff;
-      font-weight: 800;
+      font-weight: 900;
       font-size: 14px;
       padding: 12px 24px;
-      border-radius: 10px;
+      border-radius: 12px;
       cursor:pointer;
       box-shadow: 0 12px 26px rgba(225,29,72,.18);
       display:flex;
@@ -248,7 +380,22 @@
     }
     .startBtn:hover{ filter: brightness(.98); }
     .startBtn:active{ transform: scale(.99); }
-    .startBtn svg{ width: 18px; height: 18px; }
+
+    .secondaryBtn{
+      border: 1px solid rgba(15,23,42,.10);
+      background:#fff;
+      color:#0b1220;
+      font-weight: 900;
+      font-size: 14px;
+      padding: 12px 18px;
+      border-radius: 12px;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      transition: .15s ease;
+    }
+    .secondaryBtn:hover{ background: rgba(15,23,42,.04); }
 
     .features{
       margin-top: 26px;
@@ -274,17 +421,8 @@
       place-items:center;
     }
     .featureIcon svg{ width: 22px; height: 22px; }
-    .featureTitle{
-      font-weight: 800;
-      margin: 6px 0 6px;
-    }
-    .featureText{
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.35;
-      margin: 0;
-    }
-
+    .featureTitle{ font-weight: 900; margin: 6px 0 6px; }
+    .featureText{ color: var(--muted); font-size: 13px; line-height: 1.35; margin: 0; }
     .fi1{ background:#dbeafe; }
     .fi1 svg{ color:#2563eb; }
     .fi2{ background:#dcfce7; }
@@ -292,54 +430,233 @@
     .fi3{ background:#ede9fe; }
     .fi3 svg{ color:#7c3aed; }
 
-    /* mobile */
-    body.mobileView .page{
-      width: min(780px, calc(100% - 30px));
-      padding-top: 84px;
+    /* Simulator play area */
+    .playWrap{
+      display:none;
+      margin-top: 22px;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
     }
+    .playHeader{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom: 14px;
+    }
+    .badgeRow{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      border:1px solid rgba(15,23,42,.10);
+      background: rgba(15,23,42,.03);
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 12px;
+      color:#0b1220;
+      white-space:nowrap;
+    }
+    .pill.green{ background: var(--greenSoft); border-color: rgba(22,163,74,.25); color:#065f46; }
+    .pill.amber{ background: var(--amberSoft); border-color: rgba(234,179,8,.30); color:#713f12; }
+    .pill.red{ background: var(--dangerSoft); border-color: rgba(225,29,72,.30); color:#9f1239; }
+    .pill.blue{ background: var(--blueSoft); border-color: rgba(37,99,235,.25); color:#1e3a8a; }
+
+    .scenarioBox{
+      border: 1px solid rgba(15,23,42,.10);
+      border-radius: 14px;
+      padding: 16px 16px;
+      background: rgba(246,247,251,.65);
+      margin-top: 8px;
+    }
+    .scenarioTitle{
+      font-weight: 900;
+      margin: 0 0 6px;
+      font-size: 16px;
+      letter-spacing:-.01em;
+    }
+    .scenarioMeta{
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 12px;
+      margin: 0 0 12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .scenarioText{
+      white-space: pre-wrap;
+      margin: 0;
+      color:#0b1220;
+      line-height: 1.6;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .answerRow{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .ansBtn{
+      border: 1px solid rgba(15,23,42,.12);
+      background:#fff;
+      border-radius: 14px;
+      padding: 12px 12px;
+      cursor:pointer;
+      font-weight: 900;
+      font-size: 14px;
+      transition: .15s ease;
+    }
+    .ansBtn:hover{ background: rgba(15,23,42,.04); }
+    .ansBtn:disabled{ opacity:.55; cursor:not-allowed; }
+
+    .ansBtn.scam{ border-color: rgba(225,29,72,.25); }
+    .ansBtn.legit{ border-color: rgba(22,163,74,.25); }
+    .ansBtn.more{ border-color: rgba(37,99,235,.25); }
+
+    .feedback{
+      margin-top: 14px;
+      border-radius: 14px;
+      border:1px solid rgba(15,23,42,.10);
+      padding: 14px 14px;
+      display:none;
+      background: rgba(246,247,251,.55);
+    }
+    .feedback.ok{ background: var(--greenSoft); border-color: rgba(22,163,74,.28); }
+    .feedback.no{ background: var(--dangerSoft); border-color: rgba(225,29,72,.28); }
+    .feedback.more{ background: var(--blueSoft); border-color: rgba(37,99,235,.28); }
+
+    .feedback h3{
+      margin:0 0 8px;
+      font-size: 16px;
+      letter-spacing:-.01em;
+    }
+    .feedback p{
+      margin: 0 0 10px;
+      color:#0b1220;
+      line-height:1.55;
+      font-weight:600;
+      font-size: 13px;
+    }
+    .listTitle{
+      margin: 10px 0 6px;
+      font-weight: 900;
+      font-size: 12px;
+      color:#0b1220;
+      text-transform: uppercase;
+      letter-spacing:.08em;
+    }
+    ul.flags{
+      margin: 0 0 6px 18px;
+      padding: 0;
+      color:#0b1220;
+      font-weight: 650;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .nextRow{
+      display:flex;
+      gap:12px;
+      margin-top: 12px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    /* responsive */
     @media (max-width: 900px){
       .diffGrid{ grid-template-columns: 1fr; }
       .features{ grid-template-columns: 1fr; }
+      .answerRow{ grid-template-columns: 1fr; }
       h1{ font-size: 36px; }
+    }
+    body.mobileView .page{
+      width: min(780px, calc(100% - 30px));
+      padding-top: 110px;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- MINI BAR (paste this whole block right after <body> on every page) -->
-  <div class="miniBar" aria-label="Page switcher">
-    <div class="miniSelectWrap">
-      <select id="pageSelect" class="miniSelect" aria-label="Switch page">
-        <option value="index.html">Home</option>
-        <option value="scamanalyzer.html">ScamAnalyzer</option>
-        <option value="courses.html">Courses</option>
-        <option value="trustedContacts.html">TrustedContacts</option>
-        <option value="alerts.html">Alerts</option>
-        <option value="simulator.html" selected>Simulator</option>
-        <option value="report.html">Report</option>
-      </select>
-      <svg class="miniChevron" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+  <!-- Mobile mini switcher -->
+  <div class="mini-bar">
+    <select id="pageSelect" onchange="switchPage(this.value)">
+      <option value="index.html">Home</option>
+      <option value="scamanalyzer.html">ScamAnalyzer</option>
+      <option value="courses.html">Courses</option>
+      <option value="alerts.html">Alerts</option>
+      <option value="simulator.html" selected>Simulator</option>
+      <option value="report.html">Report</option>
+    </select>
+
+    <button onclick="toggleMobileView()" title="Mobile view">📱</button>
+    <button onclick="location.reload()" title="Refresh">⟳</button>
+  </div>
+
+  <!-- Desktop nav -->
+  <header class="top-nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="javascript:void(0)" onclick="switchPage('index.html')">
+        <div class="nav-logo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l7 4v7c0 5-3.5 9-7 9s-7-4-7-9V6l7-4z" stroke="currentColor" stroke-width="2"/>
+            <path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="nav-title">
+          <strong>Guardian AI</strong>
+          <span>Scam Protection</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
+        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Deepfake Detector</a>
+        <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
+        <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedContacts.html">Trusted Contacts</a>
+        <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
+        <a href="javascript:void(0)" onclick="switchPage('simulator.html')" data-page="simulator.html" class="active">Simulator</a>
+        <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
+        <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Scam</button>
+      </div>
+
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
     </div>
 
-    <button class="miniBtn" id="mobileBtn" type="button" data-tip="Switch to mobile view" aria-label="Switch to mobile view">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M9 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" stroke="currentColor" stroke-width="2"/>
-        <path d="M11 18h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-    </button>
-
-    <button class="miniBtn" id="refreshBtn" type="button" data-tip="Refresh" aria-label="Refresh">
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <path d="M20 12a8 8 0 1 1-2.34-5.66" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        <path d="M20 4v6h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-  </div>
-  <div id="tooltip" class="tooltip" role="tooltip"></div>
-  <!-- /MINI BAR -->
+    <div class="nav-mobile" id="navMobile" hidden>
+      <div class="nav-mobile-inner">
+        <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
+        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Scam Analyzer</a>
+        <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
+        <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedContacts.html">Trusted Contacts</a>
+        <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
+        <a href="javascript:void(0)" onclick="switchPage('simulator.html')" data-page="simulator.html" class="active">Simulator</a>
+        <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
+        <div class="row">
+          <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
+          <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Scam</button>
+        </div>
+      </div>
+    </div>
+  </header>
 
   <main class="page">
 
@@ -354,10 +671,11 @@
 
     <h1>Scam Simulator</h1>
     <p class="subtitle">
-      Practice identifying scams in a safe environment with AI-generated realistic scenarios.
+      Pick a difficulty and train on realistic AI-generated scenarios.
     </p>
 
-    <section class="chooserCard">
+    <!-- Choose difficulty -->
+    <section class="chooserCard" id="chooser">
       <div class="chooserTitle">Choose Your Difficulty</div>
 
       <div class="diffGrid" role="radiogroup" aria-label="Difficulty">
@@ -394,20 +712,61 @@
             </svg>
           </div>
           <div class="diffName">Advanced</div>
-          <div class="diffDesc">AI-enhanced, sophisticated scams</div>
+          <div class="diffDesc">Sophisticated, realistic impersonation tactics</div>
         </button>
       </div>
 
       <div class="startRow">
         <button class="startBtn" type="button" id="startBtn">
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M8 5l12 7-12 7V5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-          </svg>
           Start Training
+        </button>
+        <button class="secondaryBtn" type="button" id="resetBtn" title="Reshuffle scenarios and start fresh">
+          Reset Scenario Bank
         </button>
       </div>
     </section>
 
+    <!-- Play area -->
+    <section class="playWrap" id="playWrap" aria-live="polite">
+      <div class="playHeader">
+        <div class="badgeRow">
+          <span class="pill blue" id="modePill">Mode: Training</span>
+          <span class="pill" id="diffPill">Difficulty: Beginner</span>
+          <span class="pill" id="countPill">Scenario: 1 / 1</span>
+        </div>
+        <button class="secondaryBtn" type="button" id="backBtn">Back</button>
+      </div>
+
+      <div class="scenarioBox">
+        <p class="scenarioTitle" id="scTitle">Scenario title</p>
+        <div class="scenarioMeta" id="scMeta"></div>
+        <p class="scenarioText" id="scText"></p>
+      </div>
+
+      <div class="answerRow" id="answerRow">
+        <button class="ansBtn scam" type="button" data-answer="scam">This is a scam</button>
+        <button class="ansBtn legit" type="button" data-answer="legit">This is legit</button>
+        <button class="ansBtn more" type="button" data-answer="more">Need more info / verify</button>
+      </div>
+
+      <div class="feedback" id="feedback">
+        <h3 id="fbTitle"></h3>
+        <p id="fbWhy"></p>
+
+        <div class="listTitle">Red flags</div>
+        <ul class="flags" id="fbFlags"></ul>
+
+        <div class="listTitle">Safer next step</div>
+        <p id="fbNext"></p>
+
+        <div class="nextRow">
+          <button class="secondaryBtn" type="button" id="revealBtn" style="display:none;">Reveal Answer</button>
+          <button class="startBtn" type="button" id="nextBtn">Next Scenario</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feature cards (kept) -->
     <section class="features" aria-label="Simulator features">
       <div class="featureCard">
         <div class="featureIcon fi1" aria-hidden="true">
@@ -416,8 +775,8 @@
                   stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
           </svg>
         </div>
-        <div class="featureTitle">Realistic Scenarios</div>
-        <p class="featureText">Practice with AI-generated scams that mirror real threats</p>
+        <div class="featureTitle">Scenario Bank</div>
+        <p class="featureText">Stored scenarios randomized so they feel new</p>
       </div>
 
       <div class="featureCard">
@@ -427,8 +786,8 @@
                   stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
           </svg>
         </div>
-        <div class="featureTitle">Safe Environment</div>
-        <p class="featureText">Make mistakes without real consequences</p>
+        <div class="featureTitle">Safe Practice</div>
+        <p class="featureText">Learn to verify before you respond</p>
       </div>
 
       <div class="featureCard">
@@ -438,64 +797,415 @@
             <path d="M8 8h8M8 12h8M8 16h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </div>
-        <div class="featureTitle">Learn as You Go</div>
-        <p class="featureText">Get detailed explanations for each scenario</p>
+        <div class="featureTitle">Explain + Next Steps</div>
+        <p class="featureText">Shows why it’s risky and what to do instead</p>
       </div>
     </section>
 
   </main>
 
   <script>
-    // ===== mini bar behavior =====
-    const pageSelect = document.getElementById('pageSelect');
-    const mobileBtn = document.getElementById('mobileBtn');
-    const refreshBtn = document.getElementById('refreshBtn');
-    const tooltip = document.getElementById('tooltip');
-
-    pageSelect.addEventListener('change', () => {
-      window.location.href = pageSelect.value;
-    });
-
-    refreshBtn.addEventListener('click', () => window.location.reload());
-
-    mobileBtn.addEventListener('click', () => {
-      document.body.classList.toggle('mobileView');
-    });
-
-    // tooltips
-    function showTip(el, text){
-      tooltip.textContent = text;
-      const r = el.getBoundingClientRect();
-      tooltip.style.left = (r.left + r.width/2) + 'px';
-      tooltip.style.top  = (r.top) + 'px';
-      tooltip.classList.add('show');
+    // ---------------- NAV JS ----------------
+    function getBaseDir() {
+      const path = window.location.pathname;
+      const parts = path.split("/");
+      const last = parts[parts.length - 1];
+      if (!last || last.includes(".html")) parts.pop();
+      const base = parts.join("/") + (parts.length > 1 ? "/" : "/");
+      return base;
     }
-    function hideTip(){ tooltip.classList.remove('show'); }
+    function switchPage(page) {
+      if (!page) return;
+      if (/^https?:\/\//i.test(page)) { window.location.href = page; return; }
+      window.location.href = getBaseDir() + page;
+    }
+    function toggleMobileView() {
+      const meta = document.querySelector('meta[name="viewport"]');
+      if (!meta) return;
+      if (meta.content.includes("width=375")) meta.content = "width=device-width, initial-scale=1";
+      else meta.content = "width=375, initial-scale=1";
+    }
+    (function syncDropdownToPage(){
+      const sel = document.getElementById("pageSelect");
+      if (!sel) return;
+      const file = window.location.pathname.split("/").pop();
+      sel.value = (file && file.includes(".html")) ? file : "index.html";
+    })();
+    (function highlightActiveNav(){
+      const file = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
+      document.querySelectorAll('[data-page]').forEach(a => {
+        a.classList.toggle('active', (a.getAttribute('data-page') || '').toLowerCase() === file);
+      });
+    })();
+    (function navToggle(){
+      const btn = document.getElementById("navToggle");
+      const panel = document.getElementById("navMobile");
+      if (!btn || !panel) return;
+      btn.addEventListener("click", () => {
+        const open = !panel.hasAttribute("hidden");
+        if (open) {
+          panel.setAttribute("hidden", "");
+          btn.setAttribute("aria-expanded", "false");
+        } else {
+          panel.removeAttribute("hidden");
+          btn.setAttribute("aria-expanded", "true");
+        }
+      });
+    })();
 
-    document.querySelectorAll('[data-tip]').forEach(btn => {
-      btn.addEventListener('mouseenter', () => showTip(btn, btn.getAttribute('data-tip')));
-      btn.addEventListener('mouseleave', hideTip);
-      btn.addEventListener('focus', () => showTip(btn, btn.getAttribute('data-tip')));
-      btn.addEventListener('blur', hideTip);
-    });
+    // ---------------- SIMULATOR BANK ----------------
+    // Tip: Add more scenarios by copying objects below. Keep ids unique.
+    const SCENARIOS = [
+      // BEGINNER
+      {
+        id: "b1",
+        diff: "beginner",
+        channel: "Text message",
+        title: "Package delivery problem",
+        message:
+`USPS: Your package is on hold due to an address issue.
+Confirm now to avoid return: http://usps-track.example/confirm`,
+        correct: "scam",
+        why: "Delivery services do not require you to “confirm” via random links. This is a common phishing pattern.",
+        flags: ["Unexpected message", "Urgency (avoid return)", "Suspicious link / domain", "Asks you to click instead of using the official site"],
+        next: "Do not click. Go to the official carrier website by typing it yourself, or check tracking in your original order email."
+      },
+      {
+        id: "b2",
+        diff: "beginner",
+        channel: "Email",
+        title: "Password reset you did not request",
+        message:
+`Subject: Reset your account password
+We received a request to reset your password. Click here to reset now.`,
+        correct: "more",
+        why: "It could be legit if you requested it, but if you did not, it may be a phishing attempt. You should verify safely.",
+        flags: ["You did not request it", "Email wants you to click a link", "No context on which account"],
+        next: "Do not use the email link. Open the real website/app directly and check security notifications. Change password from the official account settings if needed."
+      },
+      {
+        id: "b3",
+        diff: "beginner",
+        channel: "Phone call",
+        title: "“Bank fraud department” urgency",
+        message:
+`Caller: “This is your bank’s fraud department. Your account was hacked. Move your money now to a safe account. Read me the code we texted you.”`,
+        correct: "scam",
+        why: "Banks do not ask you to move money to a “safe account” or to share verification codes. That is a takeover tactic.",
+        flags: ["Pressure to act immediately", "Requests verification code", "Asks you to move money", "Creates panic"],
+        next: "Hang up. Call the bank using the number on the back of your card or the official website. Never share one-time codes."
+      },
+      {
+        id: "b4",
+        diff: "beginner",
+        channel: "Text message",
+        title: "Gift card payment request",
+        message:
+`Hi. I’m stuck and need help fast. Can you buy $200 in gift cards and send the codes? I’ll pay you back later.`,
+        correct: "scam",
+        why: "Gift card codes are a classic scam payment method because they are hard to recover.",
+        flags: ["Gift card payment", "Urgency", "Unusual request", "Requests codes over text"],
+        next: "Do not buy gift cards. Verify the person through a second channel (call them directly or ask a question only they’d know)."
+      },
 
-    // ===== difficulty selection =====
-    const diffBtns = document.querySelectorAll('.diff');
+      // INTERMEDIATE
+      {
+        id: "i1",
+        diff: "intermediate",
+        channel: "Email",
+        title: "Invoice from a vendor you don’t use",
+        message:
+`Subject: Past-due invoice #48291
+Your invoice is past due. Download the invoice PDF and pay within 24 hours.`,
+        correct: "more",
+        why: "Some invoices are legitimate, but unexpected invoices are often used to deliver malware or trick you into paying.",
+        flags: ["You don’t recognize the vendor", "Pressure (24 hours)", "Attachment download", "Generic billing language"],
+        next: "Do not open attachments. Verify by searching your records and contacting the vendor using a known official number/email (not the email thread)."
+      },
+      {
+        id: "i2",
+        diff: "intermediate",
+        channel: "Phone call",
+        title: "“Tech support” pop-up follow-up",
+        message:
+`You saw a browser pop-up that said your computer is infected. Now someone calls claiming to be “Microsoft Support” and asks you to install remote access software.`,
+        correct: "scam",
+        why: "Legitimate companies do not call because of a browser pop-up, and remote access requests are a major red flag.",
+        flags: ["Unsolicited call", "Remote access request", "Pop-up scare tactic", "Authority impersonation"],
+        next: "Close the tab, restart your browser, and run a trusted antivirus scan. If needed, contact support through the official website."
+      },
+      {
+        id: "i3",
+        diff: "intermediate",
+        channel: "Text message",
+        title: "“Account locked” with a short link",
+        message:
+`Security Alert: Your account will be locked today. Verify immediately: bit.ly/3XyZ...`,
+        correct: "scam",
+        why: "Short links hide the real destination and are frequently used for phishing.",
+        flags: ["Shortened link", "Urgency / deadline", "Generic “account” wording", "Threat of lockout"],
+        next: "Do not click. Open the service by typing the site/app yourself and check your account/security center."
+      },
+      {
+        id: "i4",
+        diff: "intermediate",
+        channel: "Email",
+        title: "Look-alike domain impersonation",
+        message:
+`From: support@paypaI.com
+We noticed suspicious activity. Login to verify your identity.`,
+        correct: "scam",
+        why: "The domain uses a look-alike character (uppercase i vs lowercase L). That’s a classic impersonation trick.",
+        flags: ["Look-alike domain", "Login request via email", "Urgency language", "Impersonation of a major brand"],
+        next: "Do not click. Manually navigate to the real site/app. Report the message as phishing."
+      },
+
+      // ADVANCED
+      {
+        id: "a1",
+        diff: "advanced",
+        channel: "Phone call",
+        title: "Relative emergency story",
+        message:
+`Caller: “It’s me. I’m in trouble and can’t talk long. I need you to send money right now. Please don’t tell anyone.”`,
+        correct: "more",
+        why: "Could be a real emergency, but scammers rely on panic and secrecy. You must verify identity first.",
+        flags: ["Secrecy request", "High urgency", "Unusual payment demand", "Won’t let you call back normally"],
+        next: "Pause and verify: call the person back using a saved number, contact another family member, or ask a personal verification question."
+      },
+      {
+        id: "a2",
+        diff: "advanced",
+        channel: "Email",
+        title: "Job offer with quick onboarding",
+        message:
+`Subject: Offer Letter Attached
+We are excited to hire you. Please complete onboarding today and provide bank details for payroll.`,
+        correct: "more",
+        why: "Some offers are real, but scams often push same-day onboarding and ask for sensitive info early.",
+        flags: ["Rushed timeline", "Sensitive data request", "Attachment", "No interview / unclear context"],
+        next: "Verify the company via official website/phone. Confirm the recruiter’s identity through a known channel before sharing any personal or banking info."
+      },
+      {
+        id: "a3",
+        diff: "advanced",
+        channel: "Text message",
+        title: "Two-step phishing with real details",
+        message:
+`Hi, this is Alex from your pharmacy. Your prescription is ready but insurance needs verification. Reply YES to receive the verification link.`,
+        correct: "more",
+        why: "It includes plausible context, but the “reply YES for a link” pattern is used to move you into phishing.",
+        flags: ["Asks you to reply to trigger a link", "Verification link instead of official app/phone", "Unclear which pharmacy/location"],
+        next: "Call your pharmacy using the number on your prescription bottle or official website. Do not verify through unknown links."
+      },
+      {
+        id: "a4",
+        diff: "advanced",
+        channel: "Email",
+        title: "Shared document access request",
+        message:
+`Subject: Shared Document: “Tax Summary”
+You have been invited to view a document. Sign in to access.`,
+        correct: "more",
+        why: "Shared-doc invites can be legitimate, but phishing uses fake sign-in pages. Verification is required.",
+        flags: ["Unexpected invite", "Sign-in prompt", "No clear sender relationship", "Common lure topic (tax)"],
+        next: "Do not sign in from the email. Open your cloud drive directly and check notifications/shared items there."
+      }
+    ];
+
+    // ---------------- SIMULATOR LOGIC ----------------
+    const chooser = document.getElementById("chooser");
+    const playWrap = document.getElementById("playWrap");
+
+    const diffPill = document.getElementById("diffPill");
+    const countPill = document.getElementById("countPill");
+
+    const scTitle = document.getElementById("scTitle");
+    const scMeta = document.getElementById("scMeta");
+    const scText = document.getElementById("scText");
+
+    const feedback = document.getElementById("feedback");
+    const fbTitle = document.getElementById("fbTitle");
+    const fbWhy = document.getElementById("fbWhy");
+    const fbFlags = document.getElementById("fbFlags");
+    const fbNext = document.getElementById("fbNext");
+
+    const nextBtn = document.getElementById("nextBtn");
+    const backBtn = document.getElementById("backBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const startBtn = document.getElementById("startBtn");
+
+    const diffBtns = document.querySelectorAll(".diff");
+    const ansBtns = document.querySelectorAll(".ansBtn");
+
     let selectedDiff = "beginner";
+    let queue = [];        // shuffled scenario ids for current difficulty
+    let idx = 0;           // pointer into queue
+    let current = null;    // current scenario object
 
-    diffBtns.forEach(b => {
-      b.addEventListener('click', () => {
-        diffBtns.forEach(x => { x.classList.remove('selected'); x.setAttribute('aria-checked','false'); });
-        b.classList.add('selected');
-        b.setAttribute('aria-checked','true');
-        selectedDiff = b.dataset.diff;
+    function shuffle(arr){
+      for(let i = arr.length - 1; i > 0; i--){
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function buildQueue(diff){
+      const items = SCENARIOS.filter(s => s.diff === diff).map(s => s.id);
+      shuffle(items);
+      return items;
+    }
+
+    function getScenarioById(id){
+      return SCENARIOS.find(s => s.id === id) || null;
+    }
+
+    function setDifficultyPill(diff){
+      const label = diff.charAt(0).toUpperCase() + diff.slice(1);
+      diffPill.textContent = "Difficulty: " + label;
+      diffPill.className = "pill " + (diff === "beginner" ? "green" : diff === "intermediate" ? "amber" : "red");
+    }
+
+    function setCountPill(){
+      countPill.textContent = "Scenario: " + Math.min(idx + 1, queue.length) + " / " + queue.length;
+    }
+
+    function renderScenario(s){
+      current = s;
+
+      scTitle.textContent = s.title;
+
+      scMeta.innerHTML = "";
+      const ch = document.createElement("span");
+      ch.textContent = "Channel: " + s.channel;
+      const id = document.createElement("span");
+      id.textContent = "ID: " + s.id.toUpperCase();
+      scMeta.appendChild(ch);
+      scMeta.appendChild(id);
+
+      scText.textContent = s.message;
+
+      // reset UI state
+      feedback.style.display = "none";
+      feedback.className = "feedback";
+      ansBtns.forEach(b => (b.disabled = false));
+
+      // make sure play area is visible
+      playWrap.style.display = "block";
+      chooser.style.display = "none";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function showFeedback(userAnswer){
+      if(!current) return;
+
+      const correct = current.correct; // "scam" | "legit" | "more"
+      const isRight = userAnswer === correct;
+
+      // pick style
+      if(isRight){
+        feedback.classList.add("ok");
+        fbTitle.textContent = "Correct";
+      }else{
+        // If user chose "more" but correct is scam/legit, that's often a safe instinct.
+        if(userAnswer === "more" && correct !== "more"){
+          feedback.classList.add("more");
+          fbTitle.textContent = "Not the exact answer, but good instinct to verify";
+        }else{
+          feedback.classList.add("no");
+          fbTitle.textContent = "Not quite";
+        }
+      }
+
+      const correctLabel = (correct === "scam" ? "Scam" : correct === "legit" ? "Legit" : "Need more info / verify");
+      fbWhy.textContent = "Correct answer: " + correctLabel + ". " + current.why;
+
+      fbFlags.innerHTML = "";
+      current.flags.forEach(f => {
+        const li = document.createElement("li");
+        li.textContent = f;
+        fbFlags.appendChild(li);
+      });
+
+      fbNext.textContent = current.next;
+
+      feedback.style.display = "block";
+      ansBtns.forEach(b => (b.disabled = true));
+    }
+
+    function nextScenario(){
+      if(queue.length === 0){
+        queue = buildQueue(selectedDiff);
+        idx = 0;
+      }
+
+      // If we've used them all, reshuffle and start over (no repeats until this point)
+      if(idx >= queue.length){
+        queue = buildQueue(selectedDiff);
+        idx = 0;
+      }
+
+      const s = getScenarioById(queue[idx]);
+      setCountPill();
+      renderScenario(s);
+      idx += 1;
+      setCountPill();
+    }
+
+    function startTraining(){
+      // new run for current difficulty
+      queue = buildQueue(selectedDiff);
+      idx = 0;
+      setDifficultyPill(selectedDiff);
+      nextScenario();
+    }
+
+    function resetBank(){
+      queue = buildQueue(selectedDiff);
+      idx = 0;
+      if(playWrap.style.display === "block"){
+        nextScenario();
+      }
+    }
+
+    // Difficulty selection
+    diffBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        diffBtns.forEach(x => { x.classList.remove("selected"); x.setAttribute("aria-checked", "false"); });
+        btn.classList.add("selected");
+        btn.setAttribute("aria-checked", "true");
+        selectedDiff = btn.dataset.diff;
+        // If already playing, rebuild for new diff
+        if(playWrap.style.display === "block"){
+          setDifficultyPill(selectedDiff);
+          startTraining();
+        }
       });
     });
 
-    document.getElementById('startBtn').addEventListener('click', () => {
-      // placeholder action (you can route to a scenario page later)
-      alert("Starting training: " + selectedDiff);
+    // Answer buttons
+    ansBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const ans = btn.dataset.answer;
+        showFeedback(ans);
+      });
     });
+
+    // Controls
+    startBtn.addEventListener("click", startTraining);
+    resetBtn.addEventListener("click", resetBank);
+    nextBtn.addEventListener("click", nextScenario);
+    backBtn.addEventListener("click", () => {
+      playWrap.style.display = "none";
+      chooser.style.display = "block";
+      feedback.style.display = "none";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Initialize pills
+    setDifficultyPill(selectedDiff);
+
   </script>
 </body>
 </html>

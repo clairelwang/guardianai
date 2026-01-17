@@ -422,7 +422,7 @@
       border-radius:12px;
       font-weight:950;
       font-size:13px;
-      ;
+      cursor:not-allowed;
       display:inline-flex;
       align-items:center;
       gap:10px;
@@ -1151,7 +1151,7 @@
         <h2>${data.title}</h2>
         ${data.body}
         ${renderLessonQuiz(n)}
-        
+        ${renderAssistantBox()}
       `;
 
       attachLessonQuizHandlers(n);
@@ -1165,7 +1165,23 @@
       renderTopStatus();
     }
 
+    function renderAssistantBox(){
+      return `
+        <div class="assistant">
+          <div class="assistantHead">
+            <div class="badge" aria-hidden="true">✨</div>
+            <span>AI Learning Assistant</span>
+          </div>
 
+          <button class="assistantBtn" type="button" aria-disabled="true" title="Not functional in this build">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M4 6h16M4 12h16M4 18h10" stroke="#be123c" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Explain this in simpler terms
+          </button>
+        </div>
+      `;
+    }
 
     function renderLessonQuiz(lessonNumber){
       const idx = lessonNumber - 1;
@@ -1488,6 +1504,5 @@
     renderTopStatus();
     renderLesson(state.current);
   </script>
-  <script src="shared/assistant.js"></script>
 </body>
 </html>

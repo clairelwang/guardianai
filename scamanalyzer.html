@@ -585,6 +585,8 @@
       filter:none;
     }
     .btn .btn-ico{ width:18px;height:18px; display:grid; place-items:center; }
+/* Smooth progress animation (NO JS/function changes) */
+
 
     /* ===== Progress ===== */
     .progressWrap{
@@ -615,13 +617,51 @@
       border-radius:999px;
       overflow:hidden;
     }
-    .progressBar{
-      height:10px;
-      width:0%;
-      background: linear-gradient(90deg, #34d399, #22c55e);
-      border-radius:999px;
-      box-shadow: 0 10px 22px rgba(34,197,94,.18);
-    }
+    
+    .progressTrack{ position: relative; }
+
+    /* ===== Progress: continuous motion (NO JS changes) ===== */
+/* ===== Continuous indeterminate progress (NO JS CHANGES) ===== */
+/* ===== Back-and-forth loader while analyzing (CSS-only) ===== */
+/* ===== Indeterminate back-and-forth loader (CSS-only) ===== */
+.progressBar{
+  position:absolute;         /* sits inside .progressTrack */
+  top:0; bottom:0;
+  left:0;
+  width:38%;                 /* the moving block width */
+  border-radius:999px;
+  background: linear-gradient(90deg, #34d399, #22c55e);
+  box-shadow: 0 10px 22px rgba(34,197,94,.18);
+  animation: bounceBar .75s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Optional: glossy sweep on top of the moving block */
+.progressBar::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:999px;
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,.12) 0%,
+    rgba(255,255,255,.45) 50%,
+    rgba(255,255,255,.12) 100%
+  );
+}
+
+/* Bounce across the track width */
+@keyframes bounceBar{
+  from { transform: translateX(0%); }
+  to   { transform: translateX(calc(100% * (1 / .38) - 100%)); }
+}
+
+
+
+
+/* Hide percent number (JS can still write to it, but user won't see it) */
+.progressPct{ display:none; }
+
 
     /* ===== Preview ===== */
     .preview{
@@ -844,6 +884,8 @@
       <option value="index.html">Home</option>
       <option value="scamanalyzer.html">Deepfake Detector</option>
        <option value="courses.html">Courses</option>
+              <option value="trustedContacts.html">Trusted Contacts</option>
+
       <option value="alerts.html">Alerts</option>
       <option value="report.html">Report</option>
     </select>
@@ -873,7 +915,10 @@
         <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Deepfake Detector</a>
     
         <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
+         <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedContacts.html">Trusted Contacts</a>
         <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
+                <a href="javascript:void(0)" onclick="switchPage('simulator.html')" data-page="simulator.html">Simulator</a>
+
         <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
       </nav>
 
@@ -1423,4 +1468,3 @@
   </script>
 </body>
 </html>
-
