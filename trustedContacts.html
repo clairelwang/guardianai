@@ -17,7 +17,6 @@
       --bg:#f8fafc;
       --card:#ffffff;
       --shadow:0 14px 30px rgba(15,23,42,.06);
-      --radius:18px;
 
       --green:#16a34a;
       --green-bg:#ecfdf5;
@@ -26,10 +25,6 @@
       --blue:#2563eb;
       --blue-bg:#eff6ff;
       --blue-line:#bfdbfe;
-
-      --purple:#7c3aed;
-      --purple-bg:#f5f3ff;
-      --purple-line:#ddd6fe;
 
       --btn:#0f8f5a;
       --btn-hover:#0b7a4c;
@@ -296,7 +291,7 @@
 
     @media (max-width: 560px){
       .mini-bar{ display:flex; }
-      .container{ padding-top: 96px; } /* leave room for mini-bar */
+      .container{ padding-top: 96px; }
     }
 
     .container{
@@ -308,7 +303,7 @@
     /* Header */
     .head{
       text-align:center;
-      margin-bottom:44px;
+      margin-bottom:38px;
     }
     .headIcon{
       width:56px;
@@ -327,7 +322,7 @@
       letter-spacing:-.03em;
     }
     .sub{
-      max-width:820px;
+      max-width:860px;
       margin:0 auto;
       color:var(--muted);
       font-size:16px;
@@ -335,41 +330,47 @@
       font-weight:500;
     }
 
-    /* Feature cards */
+    /* “How it works” cards */
     .featureRow{
       display:grid;
       grid-template-columns:repeat(3, 1fr);
       gap:22px;
-      margin:52px 0 26px;
+      margin:42px 0 22px;
       align-items:stretch;
     }
     .feature{
       background:var(--card);
       border:1px solid var(--line);
       border-radius:16px;
-      padding:26px 20px;
-      text-align:center;
+      padding:22px 18px;
+      text-align:left;
       box-shadow:var(--shadow);
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
     }
-    .feature.green{ background:var(--green-bg); border-color:var(--green-line); }
-    .feature.blue{ background:var(--blue-bg); border-color:var(--blue-line); }
-    .feature.purple{ background:var(--purple-bg); border-color:var(--purple-line); }
-
-    .featIcon{
-      width:44px;height:44px;
-      margin:0 auto 14px;
+    .feature .dot{
+      width:40px;height:40px;
+      border-radius:14px;
       display:grid;
       place-items:center;
-      color:currentColor;
+      font-weight:1000;
+      flex:0 0 auto;
+      border:1px solid transparent;
     }
-    .feature.green .featIcon{ color:var(--green); }
-    .feature.blue .featIcon{ color:var(--blue); }
-    .feature.purple .featIcon{ color:var(--purple); }
+    .feature.green{ background:var(--green-bg); border-color:var(--green-line); }
+    .feature.green .dot{ background:#dcfce7; color:#166534; border-color:rgba(22,101,52,.12); }
+
+    .feature.blue{ background:var(--blue-bg); border-color:var(--blue-line); }
+    .feature.blue .dot{ background:#dbeafe; color:#1d4ed8; border-color:rgba(29,78,216,.14); }
+
+    .feature.amber{ background:var(--amber-bg); border-color:var(--amber-line); }
+    .feature.amber .dot{ background:#fef3c7; color:#92400e; border-color:rgba(146,64,14,.14); }
 
     .feature h3{
       margin:0 0 6px;
       font-size:14px;
-      font-weight:800;
+      font-weight:900;
       letter-spacing:.01em;
     }
     .feature p{
@@ -377,16 +378,16 @@
       font-size:13px;
       line-height:1.55;
       color:#475569;
-      font-weight:600;
+      font-weight:650;
     }
 
     /* Main layout */
     .layout{
       display:grid;
-      grid-template-columns: 1.08fr .92fr;
+      grid-template-columns: 1.1fr .9fr;
       gap:22px;
       align-items:start;
-      margin-top:18px;
+      margin-top:10px;
     }
 
     /* Card */
@@ -426,15 +427,16 @@
       display:flex;
       justify-content:flex-end;
       gap:10px;
+      flex-wrap:wrap;
     }
     .btn{
       height:38px;
       padding:0 16px;
-      border-radius:8px;
+      border-radius:10px;
       border:1px solid rgba(0,0,0,.08);
       background:var(--btn);
       color:#fff;
-      font-weight:800;
+      font-weight:900;
       font-size:13px;
       display:inline-flex;
       align-items:center;
@@ -452,7 +454,6 @@
       box-shadow:none;
     }
     .btn.ghost:hover{ background:#e5e7eb; }
-    .btn svg{ display:block; }
 
     /* Contacts list */
     .contactsWrap{ padding:16px 16px 18px; }
@@ -518,9 +519,7 @@
       font-weight:900;
       flex:0 0 auto;
     }
-    .info{
-      min-width:0;
-    }
+    .info{ min-width:0; }
     .cname{
       margin:0;
       font-size:14px;
@@ -558,8 +557,7 @@
     .tag.primary{ background:var(--green-bg); color:#166534; border-color:rgba(22,101,52,.15); }
     .tag.verify{ background:var(--blue-bg); color:#1d4ed8; border-color:rgba(29,78,216,.18); }
     .tag.emergency{ background:var(--danger-bg); color:#991b1b; border-color:rgba(153,27,27,.18); }
-    .tag.sms{ background:#fff7ed; color:#9a3412; border-color:#fed7aa; }
-    .tag.call{ background:#f0f9ff; color:#075985; border-color:#bae6fd; }
+    .tag.method{ background:#f0f9ff; color:#075985; border-color:#bae6fd; }
     .tag.email{ background:#eef2ff; color:#3730a3; border-color:#c7d2fe; }
 
     .actions{
@@ -592,76 +590,85 @@
     }
     .smallBtn.danger:hover{ background:#ffe4e6; }
 
-    .quickRow{
-      display:flex;
-      gap:8px;
-      justify-content:flex-end;
-      flex-wrap:wrap;
-    }
-    .chipBtn{
-      height:32px;
-      padding:0 10px;
-      border-radius:999px;
-      border:1px solid rgba(15,23,42,.10);
-      background:#fff;
-      font-weight:900;
-      font-size:12px;
-      cursor:pointer;
-      color:#0f172a;
-    }
-    .chipBtn:hover{ background:#f8fafc; }
-
-    /* AI Assist Card (mock) */
-    .aiWrap{ padding:16px 16px 18px; }
-    .aiBanner{
+    /* Templates card */
+    .tplWrap{ padding:16px 16px 18px; }
+    .banner{
+      border:1px solid #dbeafe;
+      background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
+      border-radius:14px;
+      padding:14px 14px;
       display:flex;
       gap:12px;
       align-items:flex-start;
-      padding:14px 14px;
-      border-radius:14px;
-      background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
-      border:1px solid #c7ddff;
     }
-    .aiIcon{
+    .bannerIcon{
       width:42px;height:42px;
       border-radius:14px;
       display:grid;
       place-items:center;
-      background:#eaf2ff;
-      color:#2563eb;
+      background:#dbeafe;
       border:1px solid #bfdbfe;
+      color:#1d4ed8;
+      font-weight:1000;
       flex:0 0 auto;
-      font-weight:900;
     }
-    .aiBanner h3{
+    .banner h3{
       margin:0;
       font-size:14px;
-      font-weight:900;
+      font-weight:1000;
       color:#0f172a;
     }
-    .aiBanner p{
+    .banner p{
       margin:6px 0 0;
       color:#475569;
-      font-weight:700;
+      font-weight:650;
       font-size:12.8px;
       line-height:1.55;
     }
 
-    .aiBox{
+    .controls{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+    .ctrl label{
+      display:block;
+      font-size:12px;
+      font-weight:1000;
+      color:#0f172a;
+      margin-bottom:6px;
+    }
+    .ctrl select{
+      width:100%;
+      height:42px;
+      border-radius:12px;
+      border:1px solid #e5e7eb;
+      padding:0 12px;
+      font-weight:800;
+      outline:none;
+      background:#fff;
+    }
+    .ctrl select:focus{
+      border-color:#93c5fd;
+      box-shadow:0 0 0 4px rgba(37,99,235,.12);
+    }
+
+    .preview{
       margin-top:12px;
       border:1px solid #e5e7eb;
       border-radius:14px;
-      background:#ffffff;
       overflow:hidden;
+      background:#fff;
     }
-    .aiBoxHead{
-      padding:12px 12px;
+    .previewHead{
+      padding:10px 12px;
       border-bottom:1px solid #e5e7eb;
+      background:#f8fafc;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      background:#f8fafc;
       flex-wrap:wrap;
     }
     .pill{
@@ -671,74 +678,38 @@
       padding:6px 10px;
       border-radius:999px;
       font-size:12px;
-      font-weight:900;
+      font-weight:1000;
       border:1px solid rgba(15,23,42,.08);
       background:#f1f5f9;
       color:#0f172a;
       white-space:nowrap;
     }
-    .pill.mock{
-      background:#fffbeb;
-      border-color:var(--amber-line);
-      color:#92400e;
+    .pill.live{
+      background:var(--green-bg);
+      border-color:rgba(22,101,52,.15);
+      color:#166534;
     }
-    .aiChat{
-      padding:12px 12px 12px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      max-height: 280px;
-      overflow:auto;
-    }
-    .msg{
-      max-width:92%;
-      padding:10px 12px;
-      border-radius:14px;
-      border:1px solid #e5e7eb;
-      background:#ffffff;
-      font-weight:700;
+    textarea{
+      width:100%;
+      min-height:220px;
+      resize:vertical;
+      border:0;
+      outline:none;
+      padding:12px;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       font-size:13px;
       line-height:1.55;
+      font-weight:650;
       color:#0f172a;
-      white-space:pre-wrap;
-    }
-    .msg.ai{
-      background:#eff6ff;
-      border-color:#bfdbfe;
-    }
-    .msg.me{
-      margin-left:auto;
-      background:#f1f5f9;
-    }
-    .aiInputRow{
-      display:flex;
-      gap:10px;
-      padding:12px 12px;
-      border-top:1px solid #e5e7eb;
-      background:#ffffff;
-    }
-    .aiInput{
-      flex:1;
-      height:40px;
-      border-radius:12px;
-      border:1px solid #e5e7eb;
-      padding:0 12px;
-      font-weight:700;
-      outline:none;
       background:#fff;
     }
-    .sendBtn{
-      height:40px;
-      padding:0 14px;
-      border-radius:12px;
-      border:1px solid rgba(0,0,0,.08);
-      background:#0f172a;
-      color:#fff;
-      font-weight:900;
-      cursor:pointer;
-      white-space:nowrap;
+
+    .tplActions{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
     }
-    .sendBtn:hover{ background:#111827; }
 
     /* Help box */
     .help{
@@ -763,7 +734,7 @@
     .help h5{
       margin:0 0 10px;
       font-size:14px;
-      font-weight:900;
+      font-weight:1000;
       color:#0f172a;
     }
     .help ul{
@@ -774,7 +745,7 @@
       flex-direction:column;
       gap:10px;
       color:#0f172a;
-      font-weight:600;
+      font-weight:650;
       font-size:13.5px;
       line-height:1.55;
     }
@@ -786,7 +757,7 @@
     }
     .tick{
       color:#0ea5e9;
-      font-weight:900;
+      font-weight:1000;
       margin-top:1px;
     }
 
@@ -821,7 +792,7 @@
     .modalHead h3{
       margin:0;
       font-size:14px;
-      font-weight:900;
+      font-weight:1000;
     }
     .xBtn{
       width:38px;height:38px;
@@ -829,7 +800,7 @@
       border:1px solid #e5e7eb;
       background:#fff;
       cursor:pointer;
-      font-weight:900;
+      font-weight:1000;
     }
     .xBtn:hover{ background:#eef2f7; }
 
@@ -839,24 +810,24 @@
       grid-template-columns:1fr 1fr;
       gap:12px;
     }
-    label{
+    .mLabel{
       display:block;
       font-size:12px;
-      font-weight:900;
+      font-weight:1000;
       color:#0f172a;
       margin-bottom:6px;
     }
-    input, select{
+    .modalBody input, .modalBody select{
       width:100%;
       height:42px;
       border-radius:12px;
       border:1px solid #e5e7eb;
       padding:0 12px;
-      font-weight:700;
+      font-weight:800;
       outline:none;
       background:#fff;
     }
-    input:focus, select:focus{
+    .modalBody input:focus, .modalBody select:focus{
       border-color:#93c5fd;
       box-shadow:0 0 0 4px rgba(37,99,235,.12);
     }
@@ -880,7 +851,7 @@
       border-radius:999px;
       padding:8px 10px;
       font-size:12px;
-      font-weight:900;
+      font-weight:1000;
       cursor:pointer;
       display:inline-flex;
       align-items:center;
@@ -907,7 +878,7 @@
       border-radius:10px;
       border:1px solid #e5e7eb;
       background:#fff;
-      font-weight:900;
+      font-weight:1000;
       cursor:pointer;
     }
     .btnLite:hover{ background:#eef2f7; }
@@ -918,7 +889,7 @@
       border:1px solid rgba(0,0,0,.08);
       background:var(--btn);
       color:#fff;
-      font-weight:900;
+      font-weight:1000;
       cursor:pointer;
     }
     .btnPrimary:hover{ background:var(--btn-hover); }
@@ -943,7 +914,7 @@
       <span class="mini-pill">Guardian AI</span>
       <select id="pageSelect" aria-label="Choose a page">
         <option value="index.html">Home</option>
-        <option value="scamanalyzer.html">Deepfake Analyzer</option>
+        <option value="scamanalyzer.html">Scam Analyzer</option>
         <option value="courses.html">Courses</option>
         <option value="trustedContacts.html">Trusted Contacts</option>
         <option value="alerts.html">Alerts</option>
@@ -972,7 +943,7 @@
 
       <nav class="nav-links" aria-label="Primary">
         <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
-        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Deepfake Analyzer</a>
+        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Scam Analyzer</a>
         <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
         <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedContacts.html">Trusted Contacts</a>
         <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
@@ -982,7 +953,7 @@
 
       <div class="nav-actions">
         <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
-        <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Deepfake</button>
+        <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Scam</button>
       </div>
 
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" id="navToggle">
@@ -993,7 +964,7 @@
     <div class="nav-mobile" id="navMobile" hidden>
       <div class="nav-mobile-inner">
         <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
-        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Deepfake Analyzer</a>
+        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Scam Analyzer</a>
         <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
         <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedContacts.html">Trusted Contacts</a>
         <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
@@ -1001,7 +972,7 @@
         <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
         <div class="row">
           <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
-          <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Deepfake</button>
+          <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Scam</button>
         </div>
       </div>
     </div>
@@ -1020,42 +991,32 @@
 
       <h1>Trusted Contacts</h1>
       <p class="sub">
-        Add 2–3 people you trust. When a scam feels urgent, you can copy a ready-to-send verification message and follow a clear “pause + verify” plan.
+        Add 2–3 people you trust. When something feels urgent, use the templates to copy a message and contact them yourself.
         Everything saves locally in your browser (no account needed).
       </p>
     </div>
 
     <div class="featureRow">
       <div class="feature green">
-        <div class="featIcon" aria-hidden="true">
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-            <path d="M12 3l7 4v6c0 5-3.1 8-7 9-3.9-1-7-4-7-9V7l7-4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-          </svg>
+        <div class="dot">1</div>
+        <div>
+          <h3>Add 2–3 trusted people</h3>
+          <p>Pick one Primary, one Verifier, and (optional) one Emergency contact.</p>
         </div>
-        <h3>Feasible Verification</h3>
-        <p>Copy a pre-written “verify this” message instead of guessing what to say.</p>
       </div>
-
       <div class="feature blue">
-        <div class="featIcon" aria-hidden="true">
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-            <path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-            <path d="M10 18a2 2 0 004 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          </svg>
+        <div class="dot">2</div>
+        <div>
+          <h3>Copy a message template</h3>
+          <p>Select a scenario → copy → paste into text/email/notes. Nothing is sent automatically.</p>
         </div>
-        <h3>Share What Happened</h3>
-        <p>Copy a “verification plan” and share it for a second opinion.</p>
       </div>
-
-      <div class="feature purple">
-        <div class="featIcon" aria-hidden="true">
-          <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-            <path d="M12 2l1.2 4.3L17 8l-3.8 1.7L12 14l-1.2-4.3L7 8l3.8-1.7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-            <path d="M19 13l.7 2.5L22 16l-2.3.5L19 19l-.7-2.5L16 16l2.3-.5L19 13Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round" opacity=".7"/>
-          </svg>
+      <div class="feature amber">
+        <div class="dot">3</div>
+        <div>
+          <h3>Follow the verification plan</h3>
+          <p>Call back using official numbers. Never use links or numbers from the message.</p>
         </div>
-        <h3>AI Draft Helper (Mock)</h3>
-        <p>Type what happened to generate a clean message template you can copy.</p>
       </div>
     </div>
 
@@ -1066,36 +1027,23 @@
           <div>
             <h2>Your Trusted Contacts</h2>
             <p>
-              Tip: choose one <strong>Primary</strong> (first call), one <strong>Verifier</strong> (checks official numbers),
-              and one <strong>Emergency</strong> (if money/info was shared).
+              Tip: Primary = first person you reach out to. Verifier = helps check official numbers. Emergency = if money/info was shared.
             </p>
           </div>
 
           <div class="btnRow">
             <button class="btn secondary" type="button" id="copyPlanBtn" title="Copy a verification plan">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M9 9h10v10H9V9Z" stroke="#fff" stroke-width="2" />
-                <path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-              </svg>
               Copy Verification Plan
             </button>
 
-            <button class="btn" type="button" id="addBtn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M15 20c0-3-3-5-6-5s-6 2-6 5" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-                <path d="M9 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" stroke="#fff" stroke-width="2"/>
-                <path d="M19 8v6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-                <path d="M16 11h6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-              Add Contact
-            </button>
+            <button class="btn" type="button" id="addBtn">Add Contact</button>
           </div>
         </div>
 
         <div class="contactsWrap">
           <div id="emptyState" class="empty">
             <div class="emptyTitle">No contacts yet</div>
-            <div class="emptyHint">Add someone you trust (family, friend, neighbor). Then you can copy a ready-to-send verification message in one click.</div>
+            <div class="emptyHint">Add someone you trust. Then you can copy a ready-to-send verification message in one click.</div>
             <div class="emptyActions">
               <button class="btn" type="button" id="emptyAddBtn">Add your first contact</button>
               <button class="btn ghost" type="button" id="demoContactBtn">Add example contact</button>
@@ -1106,48 +1054,58 @@
         </div>
       </div>
 
-      <!-- AI DRAFT (mock UI but page works) -->
+      <!-- TEMPLATES (NO AI) -->
       <div class="card">
         <div class="cardHead">
           <div>
-            <h2>Message Draft (Mock)</h2>
+            <h2>Message Templates</h2>
             <p>
-              This does not contact anyone. It only creates a message template you can copy and send yourself.
+              Choose a contact and scenario. You’ll see a preview, then copy and send it yourself.
             </p>
           </div>
-          <span class="pill mock">Mock</span>
+          <span class="pill live">Copy-only</span>
         </div>
 
-        <div class="aiWrap">
-          <div class="aiBanner">
-            <div class="aiIcon"></div>
+        <div class="tplWrap">
+          <div class="banner">
+            <div class="bannerIcon">✉</div>
             <div>
-              <h3>Draft a verification message</h3>
-              <p>Include who contacted you, what they asked for, and why it felt urgent. You’ll get a short, clear message to copy.</p>
+              <h3>One-click, ready-to-send messages</h3>
+              <p>These templates stay on your device. No calling, texting, or emailing happens from this page.</p>
             </div>
           </div>
 
-          <div class="aiBox" aria-label="Mock AI chat">
-            <div class="aiBoxHead">
-              <span class="pill">Example prompt</span>
-              <button class="btn ghost" type="button" id="insertPromptBtn">Insert</button>
+          <div class="controls">
+            <div class="ctrl">
+              <label for="tplContactSelect">Send to (optional)</label>
+              <select id="tplContactSelect">
+                <option value="">No specific contact</option>
+              </select>
             </div>
 
-            <div class="aiChat" id="chat">
-              <div class="msg ai" id="greetingMsg">
-                Paste what happened (who contacted you, what they asked for, how urgent it felt). I’ll draft a short message to send to a trusted contact.
-              </div>
-            </div>
-
-            <div class="aiInputRow">
-              <input class="aiInput" id="aiInput" placeholder="Example: 'A caller said they were my bank and told me to move money now...'" />
-              <button class="sendBtn" type="button" id="mockSendBtn">Create Draft</button>
+            <div class="ctrl">
+              <label for="tplScenarioSelect">Scenario</label>
+              <select id="tplScenarioSelect">
+                <option value="verify">Verify before I respond</option>
+                <option value="bank">Possible bank / payment scam</option>
+                <option value="family">Family emergency / impersonation</option>
+                <option value="tech">Tech support / remote access</option>
+                <option value="money">I already shared money/info</option>
+              </select>
             </div>
           </div>
 
-          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
-            <button class="smallBtn" type="button" id="copyDraftBtn">Copy Latest Draft</button>
-            <button class="smallBtn" type="button" id="clearChatBtn">Clear</button>
+          <div class="preview">
+            <div class="previewHead">
+              <span class="pill" id="previewLabel">Template Preview</span>
+              <button class="smallBtn" type="button" id="copyTemplateBtn">Copy This Template</button>
+            </div>
+            <textarea id="tplPreview" readonly></textarea>
+          </div>
+
+          <div class="tplActions">
+            <button class="smallBtn" type="button" id="copyShortBtn">Copy Short Version</button>
+            <button class="smallBtn" type="button" id="resetTemplateBtn">Reset</button>
           </div>
         </div>
       </div>
@@ -1163,12 +1121,12 @@
       </div>
 
       <div>
-        <h5>How to use this fast</h5>
+        <h5>Fast checklist</h5>
         <ul>
-          <li><span class="tick">✓</span><span>Add one <strong>Primary</strong> and one <strong>Verifier</strong>.</span></li>
-          <li><span class="tick">✓</span><span>When something feels urgent, click <strong>Copy Verify Message</strong> and send it.</span></li>
-          <li><span class="tick">✓</span><span>Always call back using <strong>official numbers</strong> (website, card, saved contact).</span></li>
-          <li><span class="tick">✓</span><span>Optional: set a <strong>family code word</strong> for identity checks.</span></li>
+          <li><span class="tick">✓</span><span>Pause. Don’t act while you feel rushed.</span></li>
+          <li><span class="tick">✓</span><span>Verify using official numbers (website, card, saved contact).</span></li>
+          <li><span class="tick">✓</span><span>Never share passwords, 2FA codes, gift card numbers, or remote access.</span></li>
+          <li><span class="tick">✓</span><span>If money/info was shared: contact the bank/provider immediately and tell a trusted contact.</span></li>
         </ul>
       </div>
     </div>
@@ -1185,43 +1143,44 @@
       <div class="modalBody">
         <div class="grid2">
           <div>
-            <label for="nameInput">Name (required)</label>
+            <label class="mLabel" for="nameInput">Name (required)</label>
             <input id="nameInput" placeholder="Example: Maria Chen" autocomplete="name" />
           </div>
           <div>
-            <label for="relationInput">Relationship</label>
+            <label class="mLabel" for="relationInput">Relationship</label>
             <input id="relationInput" placeholder="Example: Daughter, Friend, Neighbor" />
           </div>
         </div>
 
         <div class="grid2" style="margin-top:12px;">
           <div>
-            <label for="phoneInput">Phone (optional)</label>
-            <input id="phoneInput" placeholder="Example: (555) 123-4567" inputmode="tel" autocomplete="tel" />
-            <div class="hint">If you add a phone number, quick “Call/Text” buttons will appear.</div>
-          </div>
-          <div>
-            <label for="methodSelect">Preferred Method</label>
+            <label class="mLabel" for="methodSelect">Preferred method (label only)</label>
             <select id="methodSelect">
-              <option value="Call">Call</option>
+              <option value="Phone">Phone</option>
               <option value="Text">Text</option>
               <option value="Email">Email</option>
             </select>
+            <div class="hint">This is just a reminder. This page won’t call/text/email anyone.</div>
+          </div>
+          <div>
+            <label class="mLabel" for="contactInfoInput">Contact info (optional)</label>
+            <input id="contactInfoInput" placeholder="Example: (555) 123-4567 or maria@email.com" autocomplete="off" />
+            <div class="hint">Stored for your reference.</div>
           </div>
         </div>
 
         <div class="row">
-          <label>Roles (choose any)</label>
+          <label class="mLabel">Roles (choose any)</label>
           <div class="toggleRow">
             <button class="toggle" type="button" data-role="Primary">Primary Contact</button>
             <button class="toggle" type="button" data-role="Verifier">Verifier</button>
             <button class="toggle" type="button" data-role="Emergency">Emergency</button>
           </div>
-          <div class="hint">If you’re not sure, pick <strong>Primary</strong> for one person and <strong>Verifier</strong> for another.</div>
+          <div class="hint">If you’re not sure: set one person as <strong>Primary</strong> and another as <strong>Verifier</strong>.</div>
         </div>
 
         <div class="row">
-          <label for="notesInput">Notes (optional)</label>
+          <label class="mLabel" for="notesInput">Notes (optional)</label>
           <input id="notesInput" placeholder="Example: ‘Knows my bank; can help call them back’" />
         </div>
 
@@ -1300,8 +1259,8 @@
       });
     })();
 
-    /* ---------------- TRUSTED CONTACTS (WORKING) ---------------- */
-    const STORAGE_KEY = "guardian_trusted_contacts_v2";
+    /* ---------------- TRUSTED CONTACTS (LOCAL ONLY) ---------------- */
+    const STORAGE_KEY = "guardian_trusted_contacts_v4";
 
     const addBtn = document.getElementById("addBtn");
     const emptyAddBtn = document.getElementById("emptyAddBtn");
@@ -1318,11 +1277,19 @@
 
     const nameInput = document.getElementById("nameInput");
     const relationInput = document.getElementById("relationInput");
-    const phoneInput = document.getElementById("phoneInput");
     const methodSelect = document.getElementById("methodSelect");
+    const contactInfoInput = document.getElementById("contactInfoInput");
     const notesInput = document.getElementById("notesInput");
     const editId = document.getElementById("editId");
     const roleBtns = Array.from(document.querySelectorAll(".toggle[data-role]"));
+
+    // templates UI
+    const tplContactSelect = document.getElementById("tplContactSelect");
+    const tplScenarioSelect = document.getElementById("tplScenarioSelect");
+    const tplPreview = document.getElementById("tplPreview");
+    const copyTemplateBtn = document.getElementById("copyTemplateBtn");
+    const copyShortBtn = document.getElementById("copyShortBtn");
+    const resetTemplateBtn = document.getElementById("resetTemplateBtn");
 
     function loadContacts(){
       try{
@@ -1353,8 +1320,8 @@
         editId.value = contact.id;
         nameInput.value = contact.name || "";
         relationInput.value = contact.relationship || "";
-        phoneInput.value = contact.phone || "";
-        methodSelect.value = contact.method || "Call";
+        methodSelect.value = contact.method || "Phone";
+        contactInfoInput.value = contact.contactInfo || "";
         notesInput.value = contact.notes || "";
         (contact.roles || []).forEach(r => {
           const btn = roleBtns.find(x => x.dataset.role === r);
@@ -1364,8 +1331,8 @@
         editId.value = "";
         nameInput.value = "";
         relationInput.value = "";
-        phoneInput.value = "";
-        methodSelect.value = "Call";
+        methodSelect.value = "Phone";
+        contactInfoInput.value = "";
         notesInput.value = "";
       }
 
@@ -1390,8 +1357,8 @@
         id: String(Date.now()) + "_demo",
         name: "Maria Chen",
         relationship: "Daughter",
-        phone: "(555) 123-4567",
-        method: "Call",
+        method: "Phone",
+        contactInfo: "(555) 123-4567",
         roles: ["Primary", "Verifier"],
         notes: "Can help call bank using official number"
       });
@@ -1404,189 +1371,6 @@
     cancelBtn.addEventListener("click", closeModal);
     modalOverlay.addEventListener("click", (e) => { if(e.target === modalOverlay) closeModal(); });
     document.addEventListener("keydown", (e) => { if(e.key === "Escape" && modalOverlay.style.display === "flex") closeModal(); });
-
-    function normalizePhone(phone){
-      const digits = String(phone || "").replace(/[^\d+]/g, "");
-      return digits;
-    }
-
-    function render(){
-      const contacts = loadContacts();
-      if(!contacts.length){
-        emptyState.style.display = "block";
-        listEl.style.display = "none";
-        listEl.innerHTML = "";
-        return;
-      }
-      emptyState.style.display = "none";
-      listEl.style.display = "flex";
-      listEl.innerHTML = "";
-
-      contacts.forEach(c => {
-        const card = document.createElement("div");
-        card.className = "contact";
-
-        const left = document.createElement("div");
-        left.className = "left";
-
-        const av = document.createElement("div");
-        av.className = "avatar";
-        av.textContent = initials(c.name);
-
-        const info = document.createElement("div");
-        info.className = "info";
-
-        const title = document.createElement("p");
-        title.className = "cname";
-        title.textContent = c.name || "Unnamed Contact";
-
-        const meta = document.createElement("p");
-        meta.className = "cmeta";
-
-        const parts = [];
-        parts.push(c.method || "Call");
-        if (c.relationship) parts.push(c.relationship);
-        if (c.phone) parts.push(c.phone);
-        meta.textContent = parts.join(" • ");
-
-        const tags = document.createElement("div");
-        tags.className = "tags";
-
-        const roles = Array.isArray(c.roles) ? c.roles : [];
-        if(roles.includes("Primary")){
-          const t = document.createElement("span");
-          t.className = "tag primary";
-          t.textContent = "Primary";
-          tags.appendChild(t);
-        }
-        if(roles.includes("Verifier")){
-          const t = document.createElement("span");
-          t.className = "tag verify";
-          t.textContent = "Verifier";
-          tags.appendChild(t);
-        }
-        if(roles.includes("Emergency")){
-          const t = document.createElement("span");
-          t.className = "tag emergency";
-          t.textContent = "Emergency";
-          tags.appendChild(t);
-        }
-
-        const m = (c.method || "Call").toLowerCase();
-        const methodTag = document.createElement("span");
-        methodTag.className = "tag " + (m === "text" ? "sms" : (m === "email" ? "email" : "call"));
-        methodTag.textContent = (c.method || "Call");
-        tags.appendChild(methodTag);
-
-        if(c.notes){
-          const noteTag = document.createElement("span");
-          noteTag.className = "tag";
-          noteTag.textContent = "Notes";
-          noteTag.title = c.notes;
-          tags.appendChild(noteTag);
-        }
-
-        info.appendChild(title);
-        info.appendChild(meta);
-        info.appendChild(tags);
-
-        left.appendChild(av);
-        left.appendChild(info);
-
-        const actions = document.createElement("div");
-        actions.className = "actions";
-
-        // Quick actions (only if phone exists)
-        if (c.phone){
-          const quick = document.createElement("div");
-          quick.className = "quickRow";
-
-          const phone = normalizePhone(c.phone);
-
-          const call = document.createElement("button");
-          call.className = "chipBtn";
-          call.type = "button";
-          call.textContent = "Call";
-          call.addEventListener("click", () => {
-            window.location.href = "tel:" + phone;
-          });
-
-          const text = document.createElement("button");
-          text.className = "chipBtn";
-          text.type = "button";
-          text.textContent = "Text";
-          text.addEventListener("click", () => {
-            window.location.href = "sms:" + phone;
-          });
-
-          quick.appendChild(call);
-          quick.appendChild(text);
-          actions.appendChild(quick);
-        }
-
-        const verifyBtn = document.createElement("button");
-        verifyBtn.className = "smallBtn";
-        verifyBtn.type = "button";
-        verifyBtn.textContent = "Copy Verify Message";
-        verifyBtn.addEventListener("click", () => {
-          const text = buildVerifyMessage(c);
-          copyText(text);
-          toast("Copied verification message.");
-        });
-
-        const editBtn = document.createElement("button");
-        editBtn.className = "smallBtn";
-        editBtn.type = "button";
-        editBtn.textContent = "Edit";
-        editBtn.addEventListener("click", () => openModal("edit", c));
-
-        const delBtn = document.createElement("button");
-        delBtn.className = "smallBtn danger";
-        delBtn.type = "button";
-        delBtn.textContent = "Remove";
-        delBtn.addEventListener("click", () => {
-          const ok = confirm(`Remove ${c.name || "this contact"}?`);
-          if(!ok) return;
-          const contactsNow = loadContacts().filter(x => x.id !== c.id);
-          saveContacts(contactsNow);
-          render();
-          toast("Contact removed.");
-        });
-
-        actions.appendChild(verifyBtn);
-        actions.appendChild(editBtn);
-        actions.appendChild(delBtn);
-
-        card.appendChild(left);
-        card.appendChild(actions);
-
-        listEl.appendChild(card);
-      });
-    }
-
-    function buildVerifyMessage(contact){
-      const name = contact.name || "there";
-      const method = contact.method || "Call";
-      const roles = (contact.roles || []).join(", ");
-
-      return (
-`Hi ${name} — quick check: I just got something suspicious.
-Can you help me verify it before I respond?
-
-What happened:
-• Type: (call/text/email)
-• Who they claimed to be:
-• What they asked for:
-• Why it felt urgent:
-
-My plan:
-1) I will NOT click links or share codes.
-2) I will call back using an official number (not the one provided).
-3) If it involves money/info, I’ll pause and verify with you.
-
-Your role: ${roles || "Trusted Contact"} • Preferred method: ${method}`
-      );
-    }
 
     function collectRolesFromUI(){
       return roleBtns.filter(b => b.classList.contains("active")).map(b => b.dataset.role);
@@ -1604,8 +1388,8 @@ Your role: ${roles || "Trusted Contact"} • Preferred method: ${method}`
         id: editId.value || String(Date.now()) + "_" + Math.random().toString(16).slice(2),
         name,
         relationship: relationInput.value.trim(),
-        phone: phoneInput.value.trim(),
         method: methodSelect.value,
+        contactInfo: contactInfoInput.value.trim(),
         roles: collectRolesFromUI(),
         notes: notesInput.value.trim()
       };
@@ -1641,83 +1425,299 @@ Tip: Set a family code word for emergencies.`;
       toast("Copied verification plan.");
     });
 
-    /* ---------------- MOCK AI (template generator) ---------------- */
-    const chat = document.getElementById("chat");
-    const aiInput = document.getElementById("aiInput");
-    const mockSendBtn = document.getElementById("mockSendBtn");
-    const insertPromptBtn = document.getElementById("insertPromptBtn");
-    const copyDraftBtn = document.getElementById("copyDraftBtn");
-    const clearChatBtn = document.getElementById("clearChatBtn");
-    const greetingMsg = document.getElementById("greetingMsg");
+    function buildVerifyMessage(contact){
+      const name = contact.name || "there";
+      const method = contact.method || "Phone";
+      const roles = (contact.roles || []).join(", ");
+      const info = contact.contactInfo ? `\nContact info saved: ${contact.contactInfo}` : "";
 
-    let latestDraft = "";
-
-    insertPromptBtn.addEventListener("click", () => {
-      aiInput.value = "A caller said they were my bank. They told me my account was hacked and I need to move money now. They asked for a code they texted me.";
-      aiInput.focus();
-    });
-
-    function addMsg(text, cls){
-      const div = document.createElement("div");
-      div.className = "msg " + cls;
-      div.textContent = text;
-      chat.appendChild(div);
-      chat.scrollTop = chat.scrollHeight;
-    }
-
-    function makeMockDraft(userText){
-      const trimmed = String(userText || "").trim();
-      const summary = trimmed ? trimmed.slice(0, 220) + (trimmed.length > 220 ? "…" : "") : "(no details provided)";
       return (
-`Draft message to send:
+`Hi ${name} — quick check: I just got something suspicious.
+Can you help me verify it before I respond?
 
-“Hi — I received something suspicious and I want a second opinion before I respond.
-Summary: ${summary}
+What happened:
+• Type: (call/text/email)
+• Who they claimed to be:
+• What they asked for:
+• Why it felt urgent:
 
-Can you help me verify:
-1) Who this is really from (call back using official numbers)?
-2) Whether I should ignore/report it?
+My plan:
+1) I will NOT click links or share codes.
+2) I will call back using an official number (not the one provided).
+3) If it involves money/info, I’ll pause and verify with you.
 
-I will NOT share passwords or verification codes, and I won’t click any links.”`
+Your role: ${roles || "Trusted Contact"} • Preferred method: ${method}${info}`
       );
     }
 
-    function handleSend(){
-      const text = aiInput.value.trim();
-      if(!text){
-        toast("Type what happened first.");
-        aiInput.focus();
-        return;
+    function render(){
+      const contacts = loadContacts();
+
+      // contacts list
+      if(!contacts.length){
+        emptyState.style.display = "block";
+        listEl.style.display = "none";
+        listEl.innerHTML = "";
+      } else {
+        emptyState.style.display = "none";
+        listEl.style.display = "flex";
+        listEl.innerHTML = "";
+
+        contacts.forEach(c => {
+          const card = document.createElement("div");
+          card.className = "contact";
+
+          const left = document.createElement("div");
+          left.className = "left";
+
+          const av = document.createElement("div");
+          av.className = "avatar";
+          av.textContent = initials(c.name);
+
+          const info = document.createElement("div");
+          info.className = "info";
+
+          const title = document.createElement("p");
+          title.className = "cname";
+          title.textContent = c.name || "Unnamed Contact";
+
+          const meta = document.createElement("p");
+          meta.className = "cmeta";
+          const parts = [];
+          parts.push(c.method || "Phone");
+          if (c.relationship) parts.push(c.relationship);
+          if (c.contactInfo) parts.push(c.contactInfo);
+          meta.textContent = parts.join(" • ");
+
+          const tags = document.createElement("div");
+          tags.className = "tags";
+
+          const roles = Array.isArray(c.roles) ? c.roles : [];
+          if(roles.includes("Primary")){
+            const t = document.createElement("span");
+            t.className = "tag primary";
+            t.textContent = "Primary";
+            tags.appendChild(t);
+          }
+          if(roles.includes("Verifier")){
+            const t = document.createElement("span");
+            t.className = "tag verify";
+            t.textContent = "Verifier";
+            tags.appendChild(t);
+          }
+          if(roles.includes("Emergency")){
+            const t = document.createElement("span");
+            t.className = "tag emergency";
+            t.textContent = "Emergency";
+            tags.appendChild(t);
+          }
+
+          const methodTag = document.createElement("span");
+          methodTag.className = "tag " + ((c.method || "").toLowerCase() === "email" ? "email" : "method");
+          methodTag.textContent = c.method || "Phone";
+          tags.appendChild(methodTag);
+
+          if(c.notes){
+            const noteTag = document.createElement("span");
+            noteTag.className = "tag";
+            noteTag.textContent = "Notes";
+            noteTag.title = c.notes;
+            tags.appendChild(noteTag);
+          }
+
+          info.appendChild(title);
+          info.appendChild(meta);
+          info.appendChild(tags);
+
+          left.appendChild(av);
+          left.appendChild(info);
+
+          const actions = document.createElement("div");
+          actions.className = "actions";
+
+          const verifyBtn = document.createElement("button");
+          verifyBtn.className = "smallBtn";
+          verifyBtn.type = "button";
+          verifyBtn.textContent = "Copy Verify Message";
+          verifyBtn.addEventListener("click", () => {
+            copyText(buildVerifyMessage(c));
+            toast("Copied verification message.");
+          });
+
+          const editBtn = document.createElement("button");
+          editBtn.className = "smallBtn";
+          editBtn.type = "button";
+          editBtn.textContent = "Edit";
+          editBtn.addEventListener("click", () => openModal("edit", c));
+
+          const delBtn = document.createElement("button");
+          delBtn.className = "smallBtn danger";
+          delBtn.type = "button";
+          delBtn.textContent = "Remove";
+          delBtn.addEventListener("click", () => {
+            const ok = confirm(`Remove ${c.name || "this contact"}?`);
+            if(!ok) return;
+            const contactsNow = loadContacts().filter(x => x.id !== c.id);
+            saveContacts(contactsNow);
+            render();
+            toast("Contact removed.");
+          });
+
+          actions.appendChild(verifyBtn);
+          actions.appendChild(editBtn);
+          actions.appendChild(delBtn);
+
+          card.appendChild(left);
+          card.appendChild(actions);
+          listEl.appendChild(card);
+        });
       }
-      addMsg(text, "me");
-      latestDraft = makeMockDraft(text);
-      addMsg(latestDraft, "ai");
-      aiInput.value = "";
-      aiInput.focus();
+
+      // templates contact dropdown (keep selection if possible)
+      const prev = tplContactSelect.value || "";
+      tplContactSelect.innerHTML = `<option value="">No specific contact</option>`;
+      contacts.forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c.id;
+        opt.textContent = c.name || "Unnamed Contact";
+        tplContactSelect.appendChild(opt);
+      });
+      // restore previous selection if still exists
+      if ([...tplContactSelect.options].some(o => o.value === prev)) tplContactSelect.value = prev;
+
+      updateTemplatePreview();
     }
 
-    mockSendBtn.addEventListener("click", handleSend);
-    aiInput.addEventListener("keydown", (e) => {
-      if(e.key === "Enter"){
-        e.preventDefault();
-        handleSend();
+    /* ---------------- TEMPLATES ---------------- */
+    const templates = {
+      verify: {
+        title: "Verify before I respond",
+        long: (who) =>
+`Hi${who ? " " + who : ""} — quick check: I received something suspicious and I want a second opinion before I respond.
+
+What happened:
+• Type: (call/text/email)
+• Who they claimed to be:
+• What they asked for:
+• Why it felt urgent:
+
+Can you help me verify:
+1) Who it’s really from (call back using official numbers)?
+2) Whether I should ignore/report it?
+
+I will NOT share passwords or verification codes, and I won’t click any links.`,
+        short: (who) =>
+`Hi${who ? " " + who : ""} — I got something suspicious. Can you help me verify it before I respond? I won’t click links or share codes.`
+      },
+
+      bank: {
+        title: "Possible bank / payment scam",
+        long: (who) =>
+`Hi${who ? " " + who : ""} — I might be dealing with a bank/payment scam. Can you help me verify before I do anything?
+
+Details to confirm:
+• Who they claimed to be:
+• What account/payment they mentioned:
+• What they asked me to do:
+• Any “urgent” deadline:
+
+My plan:
+1) I will NOT share codes, passwords, or account logins.
+2) I will call the bank/payment service using the number on my card/website (not the message).
+3) I’ll send you the official number I find before I call, if you can double-check it.`,
+        short: (who) =>
+`Hi${who ? " " + who : ""} — I think this could be a bank/payment scam. Can you help me verify an official callback number?`
+      },
+
+      family: {
+        title: "Family emergency / impersonation",
+        long: (who) =>
+`Hi${who ? " " + who : ""} — I received an “emergency” message/call that might be impersonation. Can you help me verify?
+
+Before I do anything:
+1) I’m going to contact the person using a saved number (not the message).
+2) I won’t send money/gift cards or share any codes.
+3) If we have a family code word, I’ll use it to confirm identity.
+
+Can you stay on the line / help me think through the safest next step?`,
+        short: (who) =>
+`Hi${who ? " " + who : ""} — I got a possible impersonation “emergency” message. Can you help me verify before I act?`
+      },
+
+      tech: {
+        title: "Tech support / remote access",
+        long: (who) =>
+`Hi${who ? " " + who : ""} — I got a tech support message/call that seems suspicious. Can you help me verify?
+
+Red flags I’m watching for:
+• Asking me to install software or give remote access
+• Asking for gift cards or payment to “fix” something
+• Pressure to act immediately
+
+My plan:
+1) I will NOT install anything or grant remote access.
+2) I will close the message/call.
+3) If needed, I’ll contact the company using the official website/app.`,
+        short: (who) =>
+`Hi${who ? " " + who : ""} — possible tech support scam. Can you help me verify what to do? I won’t install anything or give remote access.`
+      },
+
+      money: {
+        title: "I already shared money/info",
+        long: (who) =>
+`Hi${who ? " " + who : ""} — I think I may have already shared money or personal info with a scam. I need help with next steps.
+
+What I shared (if any):
+• Money / gift card / transfer:
+• Account info / personal details:
+• Codes / passwords:
+
+What I’m doing now:
+1) Contacting the bank/provider immediately using official numbers.
+2) Changing passwords + enabling 2FA (from my account settings).
+3) Saving screenshots/details for a report.
+
+If you can, please help me double-check the steps and stay with me while I contact the bank/provider.`,
+        short: (who) =>
+`Hi${who ? " " + who : ""} — I may have shared money/info with a scam. Can you help me with next steps while I contact my bank/provider?`
       }
+    };
+
+    function getSelectedContactName(){
+      const id = tplContactSelect.value;
+      if (!id) return "";
+      const c = loadContacts().find(x => x.id === id);
+      return c && c.name ? c.name.split(" ")[0] : "";
+    }
+
+    function updateTemplatePreview(){
+      const key = tplScenarioSelect.value || "verify";
+      const who = getSelectedContactName();
+      const t = templates[key] || templates.verify;
+      tplPreview.value = t.long(who);
+    }
+
+    tplContactSelect.addEventListener("change", updateTemplatePreview);
+    tplScenarioSelect.addEventListener("change", updateTemplatePreview);
+
+    copyTemplateBtn.addEventListener("click", () => {
+      copyText(tplPreview.value);
+      toast("Copied template.");
     });
 
-    copyDraftBtn.addEventListener("click", () => {
-      if(!latestDraft){
-        toast("No draft yet. Create one first.");
-        return;
-      }
-      copyText(latestDraft);
-      toast("Copied latest draft.");
+    copyShortBtn.addEventListener("click", () => {
+      const key = tplScenarioSelect.value || "verify";
+      const who = getSelectedContactName();
+      const t = templates[key] || templates.verify;
+      copyText(t.short(who));
+      toast("Copied short version.");
     });
 
-    clearChatBtn.addEventListener("click", () => {
-      chat.innerHTML = "";
-      if (greetingMsg) chat.appendChild(greetingMsg);
-      latestDraft = "";
-      toast("Cleared.");
+    resetTemplateBtn.addEventListener("click", () => {
+      tplContactSelect.value = "";
+      tplScenarioSelect.value = "verify";
+      updateTemplatePreview();
+      toast("Reset.");
     });
 
     /* ---------------- UTILITIES ---------------- */
