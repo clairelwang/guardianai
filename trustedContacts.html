@@ -7,7 +7,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
@@ -29,16 +29,9 @@
       --btn:#0f8f5a;
       --btn-hover:#0b7a4c;
 
-      --info-bg:#eef6ff;
-      --info-line:#cfe3ff;
-
       --danger:#ef4444;
       --danger-bg:#fef2f2;
       --danger-line:#fecaca;
-
-      --amber:#f59e0b;
-      --amber-bg:#fffbeb;
-      --amber-line:#fde68a;
     }
 
     *{ box-sizing:border-box; }
@@ -94,7 +87,7 @@
     .nav-title span{
       font-size:12px;
       color:#64748b;
-      font-weight:700;
+      font-weight:800;
       margin-top:2px;
     }
 
@@ -106,7 +99,7 @@
       justify-content: center;
     }
     .nav-links a{
-      font-weight:800;
+      font-weight:900;
       font-size:13px;
       color:#0b1220;
       padding:10px 12px;
@@ -303,7 +296,7 @@
     /* Header */
     .head{
       text-align:center;
-      margin-bottom:38px;
+      margin-bottom:30px;
     }
     .headIcon{
       width:56px;
@@ -318,79 +311,19 @@
     h1{
       margin:0 0 10px;
       font-size:36px;
-      font-weight:800;
+      font-weight:900;
       letter-spacing:-.03em;
     }
     .sub{
-      max-width:860px;
+      max-width:920px;
       margin:0 auto;
       color:var(--muted);
       font-size:16px;
       line-height:1.65;
-      font-weight:500;
+      font-weight:600;
     }
 
-    /* “How it works” cards */
-    .featureRow{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:22px;
-      margin:42px 0 22px;
-      align-items:stretch;
-    }
-    .feature{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:22px 18px;
-      text-align:left;
-      box-shadow:var(--shadow);
-      display:flex;
-      gap:12px;
-      align-items:flex-start;
-    }
-    .feature .dot{
-      width:40px;height:40px;
-      border-radius:14px;
-      display:grid;
-      place-items:center;
-      font-weight:1000;
-      flex:0 0 auto;
-      border:1px solid transparent;
-    }
-    .feature.green{ background:var(--green-bg); border-color:var(--green-line); }
-    .feature.green .dot{ background:#dcfce7; color:#166534; border-color:rgba(22,101,52,.12); }
-
-    .feature.blue{ background:var(--blue-bg); border-color:var(--blue-line); }
-    .feature.blue .dot{ background:#dbeafe; color:#1d4ed8; border-color:rgba(29,78,216,.14); }
-
-    .feature.amber{ background:var(--amber-bg); border-color:var(--amber-line); }
-    .feature.amber .dot{ background:#fef3c7; color:#92400e; border-color:rgba(146,64,14,.14); }
-
-    .feature h3{
-      margin:0 0 6px;
-      font-size:14px;
-      font-weight:900;
-      letter-spacing:.01em;
-    }
-    .feature p{
-      margin:0;
-      font-size:13px;
-      line-height:1.55;
-      color:#475569;
-      font-weight:650;
-    }
-
-    /* Main layout */
-    .layout{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:22px;
-      align-items:start;
-      margin-top:10px;
-    }
-
-    /* Card */
+    /* Cards */
     .card{
       background:var(--card);
       border:1px solid var(--line);
@@ -410,188 +343,39 @@
     .cardHead h2{
       margin:0;
       font-size:15px;
-      font-weight:900;
+      font-weight:1000;
       letter-spacing:-.01em;
     }
     .cardHead p{
       margin:6px 0 0;
       color:var(--muted);
-      font-weight:600;
-      font-size:13px;
-      line-height:1.55;
-      max-width:740px;
-    }
-
-    /* Buttons */
-    .btnRow{
-      display:flex;
-      justify-content:flex-end;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .btn{
-      height:38px;
-      padding:0 16px;
-      border-radius:10px;
-      border:1px solid rgba(0,0,0,.08);
-      background:var(--btn);
-      color:#fff;
-      font-weight:900;
-      font-size:13px;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      cursor:pointer;
-      box-shadow:0 12px 22px rgba(15,23,42,.08);
-      white-space:nowrap;
-    }
-    .btn:hover{ background:var(--btn-hover); }
-    .btn.secondary{ background:#0f172a; }
-    .btn.secondary:hover{ background:#111827; }
-    .btn.ghost{
-      background:#f1f5f9;
-      color:#0f172a;
-      box-shadow:none;
-    }
-    .btn.ghost:hover{ background:#e5e7eb; }
-
-    /* Contacts list */
-    .contactsWrap{ padding:16px 16px 18px; }
-
-    .empty{
-      border:1px dashed #cbd5e1;
-      border-radius:14px;
-      padding:22px 16px;
-      text-align:center;
-      color:var(--muted);
-      font-weight:700;
-      background:#fbfdff;
-    }
-    .empty .emptyTitle{
-      font-weight:900;
-      color:#0f172a;
-      margin-bottom:8px;
-    }
-    .empty .emptyHint{
       font-weight:650;
       font-size:13px;
       line-height:1.55;
-      margin-bottom:14px;
-    }
-    .empty .emptyActions{
-      display:flex;
-      gap:10px;
-      justify-content:center;
-      flex-wrap:wrap;
+      max-width:900px;
     }
 
-    .list{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      margin-top:10px;
-    }
-    .contact{
-      border:1px solid #e6edf7;
-      border-radius:14px;
-      padding:14px 14px;
-      background:#ffffff;
-      display:flex;
-      gap:12px;
-      align-items:flex-start;
-      justify-content:space-between;
-    }
-    .left{
-      display:flex;
-      gap:12px;
-      align-items:flex-start;
-      min-width:0;
-    }
-    .avatar{
-      width:40px;
-      height:40px;
-      border-radius:12px;
-      display:grid;
-      place-items:center;
-      background:#f1f5f9;
-      border:1px solid #e5e7eb;
-      color:#0f172a;
-      font-weight:900;
-      flex:0 0 auto;
-    }
-    .info{ min-width:0; }
-    .cname{
-      margin:0;
-      font-size:14px;
-      font-weight:900;
-      color:#0f172a;
-      line-height:1.2;
-      word-break:break-word;
-    }
-    .cmeta{
-      margin:6px 0 0;
-      color:#64748b;
-      font-weight:700;
-      font-size:12.5px;
-      line-height:1.45;
-    }
-    .tags{
-      margin-top:8px;
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-    }
-    .tag{
+    .pill{
       display:inline-flex;
       align-items:center;
-      gap:6px;
+      gap:8px;
       padding:6px 10px;
       border-radius:999px;
       font-size:12px;
-      font-weight:900;
+      font-weight:1000;
       border:1px solid rgba(15,23,42,.08);
       background:#f1f5f9;
       color:#0f172a;
       white-space:nowrap;
     }
-    .tag.primary{ background:var(--green-bg); color:#166534; border-color:rgba(22,101,52,.15); }
-    .tag.verify{ background:var(--blue-bg); color:#1d4ed8; border-color:rgba(29,78,216,.18); }
-    .tag.emergency{ background:var(--danger-bg); color:#991b1b; border-color:rgba(153,27,27,.18); }
-    .tag.method{ background:#f0f9ff; color:#075985; border-color:#bae6fd; }
-    .tag.email{ background:#eef2ff; color:#3730a3; border-color:#c7d2fe; }
+    .pill.copyonly{
+      background:var(--green-bg);
+      border-color:rgba(22,101,52,.15);
+      color:#166534;
+    }
 
-    .actions{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      align-items:flex-end;
-      flex:0 0 auto;
-    }
-    .smallBtn{
-      height:34px;
-      padding:0 12px;
-      border-radius:10px;
-      border:1px solid #e5e7eb;
-      background:#f8fafc;
-      color:#0f172a;
-      font-weight:900;
-      font-size:12.5px;
-      cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      white-space:nowrap;
-    }
-    .smallBtn:hover{ background:#eef2f7; }
-    .smallBtn.danger{
-      background:#fff1f2;
-      border-color:#fecdd3;
-      color:#9f1239;
-    }
-    .smallBtn.danger:hover{ background:#ffe4e6; }
+    .wrap{ padding:16px 16px 18px; }
 
-    /* Templates card */
-    .tplWrap{ padding:16px 16px 18px; }
     .banner{
       border:1px solid #dbeafe;
       background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
@@ -630,7 +414,7 @@
       margin-top:12px;
       display:grid;
       grid-template-columns:1fr;
-      gap:10px;
+      gap:12px;
     }
     .ctrl label{
       display:block;
@@ -639,20 +423,76 @@
       color:#0f172a;
       margin-bottom:6px;
     }
-    .ctrl select{
+    .ctrl input, .ctrl select, .ctrl textarea{
       width:100%;
-      height:42px;
       border-radius:12px;
       border:1px solid #e5e7eb;
-      padding:0 12px;
-      font-weight:800;
+      padding:12px 12px;
+      font-weight:700;
       outline:none;
       background:#fff;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      font-size:13.5px;
+      line-height:1.55;
     }
-    .ctrl select:focus{
+    .ctrl input, .ctrl select{ height:44px; padding:0 12px; font-weight:800; }
+    .ctrl textarea{ min-height:140px; resize:vertical; }
+    .ctrl input:focus, .ctrl select:focus, .ctrl textarea:focus{
       border-color:#93c5fd;
       box-shadow:0 0 0 4px rgba(37,99,235,.12);
     }
+    .hint{
+      margin-top:6px;
+      color:#64748b;
+      font-weight:650;
+      font-size:12.5px;
+      line-height:1.45;
+    }
+
+    .rowActions{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    .btn{
+      height:42px;
+      padding:0 16px;
+      border-radius:12px;
+      border:1px solid rgba(0,0,0,.08);
+      background:var(--btn);
+      color:#fff;
+      font-weight:1000;
+      cursor:pointer;
+      white-space:nowrap;
+      box-shadow:0 12px 22px rgba(15,23,42,.08);
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .btn:hover{ background:var(--btn-hover); }
+    .btn.ghost{
+      background:#f1f5f9;
+      color:#0f172a;
+      box-shadow:none;
+      border-color:#e5e7eb;
+    }
+    .btn.ghost:hover{ background:#e5e7eb; }
+
+    .status{
+      margin-top:10px;
+      display:none;
+      border-radius:12px;
+      padding:12px 12px;
+      font-weight:800;
+      font-size:13px;
+      line-height:1.5;
+      border:1px solid transparent;
+    }
+    .status.info{ display:block; background:var(--blue-bg); border-color:var(--blue-line); color:#1d4ed8; }
+    .status.warn{ display:block; background:var(--danger-bg); border-color:var(--danger-line); color:#991b1b; }
 
     .preview{
       margin-top:12px;
@@ -671,238 +511,40 @@
       gap:10px;
       flex-wrap:wrap;
     }
-    .pill{
+    .smallBtn{
+      height:38px;
+      padding:0 14px;
+      border-radius:12px;
+      border:1px solid #e5e7eb;
+      background:#f8fafc;
+      color:#0f172a;
+      font-weight:1000;
+      font-size:12.8px;
+      cursor:pointer;
       display:inline-flex;
       align-items:center;
       gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      font-size:12px;
-      font-weight:1000;
-      border:1px solid rgba(15,23,42,.08);
-      background:#f1f5f9;
-      color:#0f172a;
       white-space:nowrap;
     }
-    .pill.live{
-      background:var(--green-bg);
-      border-color:rgba(22,101,52,.15);
-      color:#166534;
-    }
-    textarea{
+    .smallBtn:hover{ background:#eef2f7; }
+
+    textarea#output{
       width:100%;
-      min-height:220px;
+      min-height:200px;
       resize:vertical;
       border:0;
       outline:none;
       padding:12px;
       font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      font-size:13px;
-      line-height:1.55;
-      font-weight:650;
-      color:#0f172a;
-      background:#fff;
-    }
-
-    .tplActions{
-      margin-top:12px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-
-    /* Help box */
-    .help{
-      margin-top:18px;
-      background:var(--info-bg);
-      border:1px solid var(--info-line);
-      border-radius:12px;
-      padding:18px 18px;
-      display:flex;
-      gap:14px;
-      align-items:flex-start;
-    }
-    .helpIcon{
-      width:28px;height:28px;
-      border-radius:999px;
-      display:grid;
-      place-items:center;
-      color:#2563eb;
-      flex:0 0 auto;
-      margin-top:2px;
-    }
-    .help h5{
-      margin:0 0 10px;
-      font-size:14px;
-      font-weight:1000;
-      color:#0f172a;
-    }
-    .help ul{
-      margin:0;
-      padding-left:0;
-      list-style:none;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      color:#0f172a;
-      font-weight:650;
       font-size:13.5px;
       line-height:1.55;
-    }
-    .help li{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      color:#0f172a;
-    }
-    .tick{
-      color:#0ea5e9;
-      font-weight:1000;
-      margin-top:1px;
-    }
-
-    /* Modal */
-    .modalOverlay{
-      position:fixed;
-      inset:0;
-      background:rgba(15,23,42,.55);
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:18px;
-      z-index:99999;
-    }
-    .modal{
-      width:min(560px, 100%);
-      background:#fff;
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,.2);
-      box-shadow: 0 30px 70px rgba(0,0,0,.25);
-      overflow:hidden;
-    }
-    .modalHead{
-      padding:16px 16px;
-      border-bottom:1px solid #e5e7eb;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      background:#f8fafc;
-    }
-    .modalHead h3{
-      margin:0;
-      font-size:14px;
-      font-weight:1000;
-    }
-    .xBtn{
-      width:38px;height:38px;
-      border-radius:12px;
-      border:1px solid #e5e7eb;
-      background:#fff;
-      cursor:pointer;
-      font-weight:1000;
-    }
-    .xBtn:hover{ background:#eef2f7; }
-
-    .modalBody{ padding:16px 16px 18px; }
-    .grid2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-    .mLabel{
-      display:block;
-      font-size:12px;
-      font-weight:1000;
-      color:#0f172a;
-      margin-bottom:6px;
-    }
-    .modalBody input, .modalBody select{
-      width:100%;
-      height:42px;
-      border-radius:12px;
-      border:1px solid #e5e7eb;
-      padding:0 12px;
-      font-weight:800;
-      outline:none;
-      background:#fff;
-    }
-    .modalBody input:focus, .modalBody select:focus{
-      border-color:#93c5fd;
-      box-shadow:0 0 0 4px rgba(37,99,235,.12);
-    }
-    .hint{
-      margin-top:6px;
-      color:#64748b;
       font-weight:650;
-      font-size:12.5px;
-      line-height:1.45;
-    }
-    .row{ margin-top:12px; }
-    .toggleRow{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-top:8px;
-    }
-    .toggle{
-      border:1px solid #e5e7eb;
-      background:#f8fafc;
-      border-radius:999px;
-      padding:8px 10px;
-      font-size:12px;
-      font-weight:1000;
-      cursor:pointer;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-    }
-    .toggle.active{
-      background:#0f172a;
-      border-color:#0f172a;
-      color:#fff;
+      color:#0f172a;
+      background:#fff;
     }
 
-    .modalFoot{
-      padding:14px 16px;
-      border-top:1px solid #e5e7eb;
-      display:flex;
-      gap:10px;
-      justify-content:flex-end;
-      background:#fff;
-      flex-wrap:wrap;
-    }
-    .btnLite{
-      height:38px;
-      padding:0 14px;
-      border-radius:10px;
-      border:1px solid #e5e7eb;
-      background:#fff;
-      font-weight:1000;
-      cursor:pointer;
-    }
-    .btnLite:hover{ background:#eef2f7; }
-    .btnPrimary{
-      height:38px;
-      padding:0 14px;
-      border-radius:10px;
-      border:1px solid rgba(0,0,0,.08);
-      background:var(--btn);
-      color:#fff;
-      font-weight:1000;
-      cursor:pointer;
-    }
-    .btnPrimary:hover{ background:var(--btn-hover); }
-
-    /* Responsive */
     @media (max-width: 980px){
-      .featureRow{ grid-template-columns:1fr; }
-      .layout{ grid-template-columns:1fr; }
       .container{ width:min(980px, calc(100% - 28px)); }
-      .btnRow{ justify-content:center; }
-    }
-    @media (max-width: 520px){
-      .grid2{ grid-template-columns:1fr; }
     }
   </style>
 </head>
@@ -914,7 +556,7 @@
       <span class="mini-pill">Guardian AI</span>
       <select id="pageSelect" aria-label="Choose a page">
         <option value="index.html">Home</option>
-        <option value="scamanalyzer.html">Scam Analyzer</option>
+        <option value="deepfake.html">Deepfake Detector</option>
         <option value="courses.html">Courses</option>
         <option value="trustedContacts.html">Trusted Contacts</option>
         <option value="alerts.html">Alerts</option>
@@ -943,9 +585,9 @@
 
       <nav class="nav-links" aria-label="Primary">
         <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
-        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Scam Analyzer</a>
+        <a href="javascript:void(0)" onclick="switchPage('deepfake.html')" data-page="deepfake.html">Deepfake Detector</a>
         <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
-        <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedContacts.html">Trusted Contacts</a>
+        <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedcontacts.html" class="active">Trusted Contacts</a>
         <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
         <a href="javascript:void(0)" onclick="switchPage('simulator.html')" data-page="simulator.html">Simulator</a>
         <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
@@ -953,7 +595,7 @@
 
       <div class="nav-actions">
         <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
-        <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Scam</button>
+        <button class="nav-btn primary" type="button" onclick="switchPage('deepfake.html')">Check Media</button>
       </div>
 
       <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" id="navToggle">
@@ -964,15 +606,15 @@
     <div class="nav-mobile" id="navMobile" hidden>
       <div class="nav-mobile-inner">
         <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
-        <a href="javascript:void(0)" onclick="switchPage('scamanalyzer.html')" data-page="scamanalyzer.html">Scam Analyzer</a>
+        <a href="javascript:void(0)" onclick="switchPage('deepfake.html')" data-page="deepfake.html">Deepfake Detector</a>
         <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
-        <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedContacts.html">Trusted Contacts</a>
+        <a href="javascript:void(0)" onclick="switchPage('trustedContacts.html')" data-page="trustedcontacts.html" class="active">Trusted Contacts</a>
         <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
         <a href="javascript:void(0)" onclick="switchPage('simulator.html')" data-page="simulator.html">Simulator</a>
         <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
         <div class="row">
           <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
-          <button class="nav-btn primary" type="button" onclick="switchPage('scamanalyzer.html')">Analyze a Scam</button>
+          <button class="nav-btn primary" type="button" onclick="switchPage('deepfake.html')">Check Media</button>
         </div>
       </div>
     </div>
@@ -984,212 +626,83 @@
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
           <path d="M16 11a3.2 3.2 0 1 0-6.4 0A3.2 3.2 0 0 0 16 11Z" stroke="currentColor" stroke-width="2"/>
           <path d="M20 20c0-3.2-3.1-5-6.8-5S6.4 16.8 6.4 20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M7.2 10.6a2.7 2.7 0 1 1 0-5.4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".6"/>
-          <path d="M4 19.6c.2-2 1.3-3.3 3.3-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".6"/>
         </svg>
       </div>
 
       <h1>Trusted Contacts</h1>
       <p class="sub">
-        Add 2–3 people you trust. When something feels urgent, use the templates to copy a message and contact them yourself.
-        Everything saves locally in your browser (no account needed).
+        Describe what happened. The AI generates a clear verification message you can copy and send to someone you trust.
+        This page does not send messages or place calls.
       </p>
     </div>
 
-    <div class="featureRow">
-      <div class="feature green">
-        <div class="dot">1</div>
+    <div class="card">
+      <div class="cardHead">
         <div>
-          <h3>Add 2–3 trusted people</h3>
-          <p>Pick one Primary, one Verifier, and (optional) one Emergency contact.</p>
+          <h2>Generate a Verification Message</h2>
+          <p>
+            Keep it simple. You can paste the suspicious text/email or summarize the call.
+            The output is “copy-only” so you stay in control.
+          </p>
         </div>
+        <span class="pill copyonly">Copy-only</span>
       </div>
-      <div class="feature blue">
-        <div class="dot">2</div>
-        <div>
-          <h3>Copy a message template</h3>
-          <p>Select a scenario → copy → paste into text/email/notes. Nothing is sent automatically.</p>
-        </div>
-      </div>
-      <div class="feature amber">
-        <div class="dot">3</div>
-        <div>
-          <h3>Follow the verification plan</h3>
-          <p>Call back using official numbers. Never use links or numbers from the message.</p>
-        </div>
-      </div>
-    </div>
 
-    <div class="layout">
-      <!-- CONTACTS -->
-      <div class="card">
-        <div class="cardHead">
+      <div class="wrap">
+        <div class="banner">
+          <div class="bannerIcon">🤝</div>
           <div>
-            <h2>Your Trusted Contacts</h2>
-            <p>
-              Tip: Primary = first person you reach out to. Verifier = helps check official numbers. Emergency = if money/info was shared.
-            </p>
-          </div>
-
-          <div class="btnRow">
-            <button class="btn secondary" type="button" id="copyPlanBtn" title="Copy a verification plan">
-              Copy Verification Plan
-            </button>
-
-            <button class="btn" type="button" id="addBtn">Add Contact</button>
+            <h3>Goal: pause + verify</h3>
+            <p>We generate a calm message asking for a second opinion and stating safe next steps.</p>
           </div>
         </div>
 
-        <div class="contactsWrap">
-          <div id="emptyState" class="empty">
-            <div class="emptyTitle">No contacts yet</div>
-            <div class="emptyHint">Add someone you trust. Then you can copy a ready-to-send verification message in one click.</div>
-            <div class="emptyActions">
-              <button class="btn" type="button" id="emptyAddBtn">Add your first contact</button>
-              <button class="btn ghost" type="button" id="demoContactBtn">Add example contact</button>
-            </div>
+        <div class="controls">
+          <div class="ctrl">
+            <label for="recipient">Who are you sending this to? (optional)</label>
+            <input id="recipient" placeholder="Example: Mom / Dad / Neighbor" maxlength="28" />
+            <div class="hint">Optional. Used only in the greeting.</div>
           </div>
 
-          <div id="list" class="list" style="display:none;"></div>
-        </div>
-      </div>
-
-      <!-- TEMPLATES (NO AI) -->
-      <div class="card">
-        <div class="cardHead">
-          <div>
-            <h2>Message Templates</h2>
-            <p>
-              Choose a contact and scenario. You’ll see a preview, then copy and send it yourself.
-            </p>
-          </div>
-          <span class="pill live">Copy-only</span>
-        </div>
-
-        <div class="tplWrap">
-          <div class="banner">
-            <div class="bannerIcon">✉</div>
-            <div>
-              <h3>One-click, ready-to-send messages</h3>
-              <p>These templates stay on your device. No calling, texting, or emailing happens from this page.</p>
-            </div>
-          </div>
-
-          <div class="controls">
-            <div class="ctrl">
-              <label for="tplContactSelect">Send to (optional)</label>
-              <select id="tplContactSelect">
-                <option value="">No specific contact</option>
-              </select>
-            </div>
-
-            <div class="ctrl">
-              <label for="tplScenarioSelect">Scenario</label>
-              <select id="tplScenarioSelect">
-                <option value="verify">Verify before I respond</option>
-                <option value="bank">Possible bank / payment scam</option>
-                <option value="family">Family emergency / impersonation</option>
-                <option value="tech">Tech support / remote access</option>
-                <option value="money">I already shared money/info</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="preview">
-            <div class="previewHead">
-              <span class="pill" id="previewLabel">Template Preview</span>
-              <button class="smallBtn" type="button" id="copyTemplateBtn">Copy This Template</button>
-            </div>
-            <textarea id="tplPreview" readonly></textarea>
-          </div>
-
-          <div class="tplActions">
-            <button class="smallBtn" type="button" id="copyShortBtn">Copy Short Version</button>
-            <button class="smallBtn" type="button" id="resetTemplateBtn">Reset</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="help">
-      <div class="helpIcon" aria-hidden="true">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-          <path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z" stroke="currentColor" stroke-width="2"/>
-          <path d="M12 10v7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-          <path d="M12 7.2h.01" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-        </svg>
-      </div>
-
-      <div>
-        <h5>Fast checklist</h5>
-        <ul>
-          <li><span class="tick">✓</span><span>Pause. Don’t act while you feel rushed.</span></li>
-          <li><span class="tick">✓</span><span>Verify using official numbers (website, card, saved contact).</span></li>
-          <li><span class="tick">✓</span><span>Never share passwords, 2FA codes, gift card numbers, or remote access.</span></li>
-          <li><span class="tick">✓</span><span>If money/info was shared: contact the bank/provider immediately and tell a trusted contact.</span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- MODAL: ADD/EDIT CONTACT -->
-  <div class="modalOverlay" id="modalOverlay" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <div class="modalHead">
-        <h3 id="modalTitle">Add Trusted Contact</h3>
-        <button class="xBtn" type="button" id="closeModalBtn" aria-label="Close">✕</button>
-      </div>
-
-      <div class="modalBody">
-        <div class="grid2">
-          <div>
-            <label class="mLabel" for="nameInput">Name (required)</label>
-            <input id="nameInput" placeholder="Example: Maria Chen" autocomplete="name" />
-          </div>
-          <div>
-            <label class="mLabel" for="relationInput">Relationship</label>
-            <input id="relationInput" placeholder="Example: Daughter, Friend, Neighbor" />
-          </div>
-        </div>
-
-        <div class="grid2" style="margin-top:12px;">
-          <div>
-            <label class="mLabel" for="methodSelect">Preferred method (label only)</label>
-            <select id="methodSelect">
-              <option value="Phone">Phone</option>
-              <option value="Text">Text</option>
-              <option value="Email">Email</option>
+          <div class="ctrl">
+            <label for="channel">How were you contacted?</label>
+            <select id="channel">
+              <option value="phone call">Phone call</option>
+              <option value="text message">Text message</option>
+              <option value="email">Email</option>
+              <option value="social media">Social media</option>
+              <option value="other">Other</option>
             </select>
-            <div class="hint">This is just a reminder. This page won’t call/text/email anyone.</div>
+            <div class="hint">Helps the message sound specific.</div>
           </div>
-          <div>
-            <label class="mLabel" for="contactInfoInput">Contact info (optional)</label>
-            <input id="contactInfoInput" placeholder="Example: (555) 123-4567 or maria@email.com" autocomplete="off" />
-            <div class="hint">Stored for your reference.</div>
+
+          <div class="ctrl">
+            <label for="situation">What happened? (paste or summarize)</label>
+            <textarea id="situation" placeholder="Example: I got a text saying my bank account was locked and I need to click a link to verify. They want me to act within 30 minutes." maxlength="1200"></textarea>
+            <div class="hint">Tip: You don’t need every detail. 2–4 sentences is enough.</div>
           </div>
         </div>
 
-        <div class="row">
-          <label class="mLabel">Roles (choose any)</label>
-          <div class="toggleRow">
-            <button class="toggle" type="button" data-role="Primary">Primary Contact</button>
-            <button class="toggle" type="button" data-role="Verifier">Verifier</button>
-            <button class="toggle" type="button" data-role="Emergency">Emergency</button>
+        <div class="rowActions">
+          <button class="btn" id="genBtn" type="button">
+            Generate Message
+          </button>
+          <button class="btn ghost" id="resetBtn" type="button">Reset</button>
+        </div>
+
+        <div id="status" class="status"></div>
+
+        <div class="preview">
+          <div class="previewHead">
+            <span class="pill">Generated message</span>
+            <button class="smallBtn" id="copyBtn" type="button">Copy</button>
           </div>
-          <div class="hint">If you’re not sure: set one person as <strong>Primary</strong> and another as <strong>Verifier</strong>.</div>
+          <textarea id="output" readonly></textarea>
         </div>
 
-        <div class="row">
-          <label class="mLabel" for="notesInput">Notes (optional)</label>
-          <input id="notesInput" placeholder="Example: ‘Knows my bank; can help call them back’" />
+        <div class="rowActions" style="justify-content:flex-start;">
+          <button class="smallBtn" id="copyPlanBtn" type="button">Copy Verification Plan</button>
         </div>
-
-        <input type="hidden" id="editId" value="" />
-      </div>
-
-      <div class="modalFoot">
-        <button class="btnLite" type="button" id="cancelBtn">Cancel</button>
-        <button class="btnPrimary" type="button" id="saveBtn">Save Contact</button>
       </div>
     </div>
   </div>
@@ -1210,12 +723,9 @@
       window.location.href = getBaseDir() + page;
     }
 
-    /* Active nav highlight */
-    (function highlightActiveNav(){
+    /* Mini-bar page select */
+    (function initMiniBar(){
       const file = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
-      document.querySelectorAll('[data-page]').forEach(a => {
-        a.classList.toggle('active', (a.getAttribute('data-page') || '').toLowerCase() === file);
-      });
       const pageSelect = document.getElementById("pageSelect");
       if (pageSelect){
         [...pageSelect.options].forEach(opt => {
@@ -1225,7 +735,7 @@
       }
     })();
 
-    /* Nav toggle (tablet) */
+    /* Nav toggle */
     (function navToggle(){
       const btn = document.getElementById("navToggle");
       const panel = document.getElementById("navMobile");
@@ -1259,150 +769,130 @@
       });
     })();
 
-    /* ---------------- TRUSTED CONTACTS (LOCAL ONLY) ---------------- */
-    const STORAGE_KEY = "guardian_trusted_contacts_v4";
+    /* ---------------- AI GENERATION ----------------
+       IMPORTANT:
+       - This page calls a backend endpoint to generate the message.
+       - You must implement /api/generate-verification on your server.
+       - The endpoint should return JSON: { "message": "..." }
+    -------------------------------------------------- */
 
-    const addBtn = document.getElementById("addBtn");
-    const emptyAddBtn = document.getElementById("emptyAddBtn");
-    const demoContactBtn = document.getElementById("demoContactBtn");
+    const recipientEl = document.getElementById("recipient");
+    const channelEl   = document.getElementById("channel");
+    const situationEl = document.getElementById("situation");
+    const outEl       = document.getElementById("output");
+    const statusEl    = document.getElementById("status");
+
+    const genBtn      = document.getElementById("genBtn");
+    const copyBtn     = document.getElementById("copyBtn");
+    const resetBtn    = document.getElementById("resetBtn");
     const copyPlanBtn = document.getElementById("copyPlanBtn");
-    const listEl = document.getElementById("list");
-    const emptyState = document.getElementById("emptyState");
 
-    // modal elements
-    const modalOverlay = document.getElementById("modalOverlay");
-    const closeModalBtn = document.getElementById("closeModalBtn");
-    const cancelBtn = document.getElementById("cancelBtn");
-    const saveBtn = document.getElementById("saveBtn");
-
-    const nameInput = document.getElementById("nameInput");
-    const relationInput = document.getElementById("relationInput");
-    const methodSelect = document.getElementById("methodSelect");
-    const contactInfoInput = document.getElementById("contactInfoInput");
-    const notesInput = document.getElementById("notesInput");
-    const editId = document.getElementById("editId");
-    const roleBtns = Array.from(document.querySelectorAll(".toggle[data-role]"));
-
-    // templates UI
-    const tplContactSelect = document.getElementById("tplContactSelect");
-    const tplScenarioSelect = document.getElementById("tplScenarioSelect");
-    const tplPreview = document.getElementById("tplPreview");
-    const copyTemplateBtn = document.getElementById("copyTemplateBtn");
-    const copyShortBtn = document.getElementById("copyShortBtn");
-    const resetTemplateBtn = document.getElementById("resetTemplateBtn");
-
-    function loadContacts(){
-      try{
-        const raw = localStorage.getItem(STORAGE_KEY);
-        return raw ? JSON.parse(raw) : [];
-      }catch(e){ return []; }
-    }
-    function saveContacts(contacts){
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(contacts));
+    function setStatus(kind, text){
+      statusEl.className = "status " + (kind || "info");
+      statusEl.textContent = text || "";
+      statusEl.style.display = text ? "block" : "none";
     }
 
-    function initials(name){
-      const parts = String(name || "").trim().split(/\s+/).filter(Boolean);
-      if(!parts.length) return "TC";
-      const a = parts[0][0] || "";
-      const b = parts.length > 1 ? (parts[parts.length - 1][0] || "") : "";
-      return (a + b).toUpperCase();
+    // A safe fallback if the server is unavailable (still "AI-like" but deterministic).
+    function fallbackGenerate({recipient, channel, situation}){
+      const who = recipient ? `Hi ${recipient} — ` : "Hi — ";
+      const ch = (channel || "message").toLowerCase();
+      const summary = situation ? situation.trim().replace(/\s+/g, " ") : "I received something suspicious.";
+      const clipped = summary.length > 360 ? summary.slice(0, 360) + "…" : summary;
+
+      return `${who}quick check before I respond.
+
+I received a suspicious ${ch} and I want a second opinion before doing anything.
+What happened: ${clipped}
+
+Can you help me verify:
+1) Who this is really from (using official numbers / trusted sources)?
+2) Whether I should ignore, block, or report it?
+
+I will not click links, share verification codes, send money, or give remote access until it’s verified.`;
     }
 
-    function openModal(mode, contact){
-      document.getElementById("modalTitle").textContent = mode === "edit" ? "Edit Trusted Contact" : "Add Trusted Contact";
-      modalOverlay.style.display = "flex";
-      modalOverlay.setAttribute("aria-hidden", "false");
+    async function generateWithServer(payload){
+      // Change this if your backend route is different.
+      const endpoint = "/api/generate-verification";
 
-      roleBtns.forEach(b => b.classList.remove("active"));
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
 
-      if(mode === "edit" && contact){
-        editId.value = contact.id;
-        nameInput.value = contact.name || "";
-        relationInput.value = contact.relationship || "";
-        methodSelect.value = contact.method || "Phone";
-        contactInfoInput.value = contact.contactInfo || "";
-        notesInput.value = contact.notes || "";
-        (contact.roles || []).forEach(r => {
-          const btn = roleBtns.find(x => x.dataset.role === r);
-          if(btn) btn.classList.add("active");
-        });
-      }else{
-        editId.value = "";
-        nameInput.value = "";
-        relationInput.value = "";
-        methodSelect.value = "Phone";
-        contactInfoInput.value = "";
-        notesInput.value = "";
+      if (!res.ok){
+        const txt = await res.text().catch(() => "");
+        throw new Error(`Server error ${res.status}${txt ? ": " + txt : ""}`);
       }
 
-      setTimeout(() => nameInput.focus(), 50);
+      const data = await res.json();
+      if (!data || typeof data.message !== "string" || !data.message.trim()){
+        throw new Error("Bad response from server (expected { message: string }).");
+      }
+      return data.message.trim();
     }
 
-    function closeModal(){
-      modalOverlay.style.display = "none";
-      modalOverlay.setAttribute("aria-hidden", "true");
-    }
-
-    roleBtns.forEach(btn => {
-      btn.addEventListener("click", () => btn.classList.toggle("active"));
-    });
-
-    addBtn.addEventListener("click", () => openModal("add"));
-    emptyAddBtn.addEventListener("click", () => openModal("add"));
-
-    demoContactBtn.addEventListener("click", () => {
-      const contacts = loadContacts();
-      contacts.unshift({
-        id: String(Date.now()) + "_demo",
-        name: "Maria Chen",
-        relationship: "Daughter",
-        method: "Phone",
-        contactInfo: "(555) 123-4567",
-        roles: ["Primary", "Verifier"],
-        notes: "Can help call bank using official number"
-      });
-      saveContacts(contacts);
-      render();
-      toast("Added example contact.");
-    });
-
-    closeModalBtn.addEventListener("click", closeModal);
-    cancelBtn.addEventListener("click", closeModal);
-    modalOverlay.addEventListener("click", (e) => { if(e.target === modalOverlay) closeModal(); });
-    document.addEventListener("keydown", (e) => { if(e.key === "Escape" && modalOverlay.style.display === "flex") closeModal(); });
-
-    function collectRolesFromUI(){
-      return roleBtns.filter(b => b.classList.contains("active")).map(b => b.dataset.role);
-    }
-
-    saveBtn.addEventListener("click", () => {
-      const name = nameInput.value.trim();
-      if(!name){
-        toast("Please enter a name.");
-        nameInput.focus();
+    genBtn.addEventListener("click", async () => {
+      const situation = situationEl.value.trim();
+      if (!situation){
+        setStatus("warn", "Please describe what happened (2–4 sentences is enough).");
+        situationEl.focus();
         return;
       }
 
-      const contact = {
-        id: editId.value || String(Date.now()) + "_" + Math.random().toString(16).slice(2),
-        name,
-        relationship: relationInput.value.trim(),
-        method: methodSelect.value,
-        contactInfo: contactInfoInput.value.trim(),
-        roles: collectRolesFromUI(),
-        notes: notesInput.value.trim()
+      const payload = {
+        recipient: recipientEl.value.trim(),
+        channel: channelEl.value,
+        situation: situation,
+        // Safety + style constraints you can enforce on the server prompt:
+        constraints: {
+          tone: "calm, clear, non-accusatory",
+          length: "short",
+          include_steps: true,
+          no_sending: true
+        }
       };
 
-      const contacts = loadContacts();
-      const idx = contacts.findIndex(x => x.id === contact.id);
-      if(idx >= 0) contacts[idx] = contact;
-      else contacts.unshift(contact);
+      genBtn.disabled = true;
+      genBtn.textContent = "Generating…";
+      setStatus("info", "Generating a verification message…");
 
-      saveContacts(contacts);
-      closeModal();
-      render();
-      toast(idx >= 0 ? "Contact updated." : "Contact added.");
+      try{
+        const msg = await generateWithServer(payload);
+        outEl.value = msg;
+        setStatus("info", "Done. Review it, then copy and send it yourself.");
+      }catch(err){
+        // Fallback: still provide something useful
+        outEl.value = fallbackGenerate(payload);
+        setStatus("warn", "Couldn’t reach the AI server. A safe fallback message was generated instead.");
+        // (Optional) console log for debugging
+        console.warn(err);
+      }finally{
+        genBtn.disabled = false;
+        genBtn.textContent = "Generate Message";
+      }
+    });
+
+    copyBtn.addEventListener("click", () => {
+      const text = outEl.value.trim();
+      if (!text){
+        toast("Nothing to copy yet.");
+        return;
+      }
+      copyText(text);
+      toast("Copied.");
+    });
+
+    resetBtn.addEventListener("click", () => {
+      recipientEl.value = "";
+      channelEl.value = "phone call";
+      situationEl.value = "";
+      outEl.value = "";
+      setStatus("", "");
+      situationEl.focus();
+      toast("Reset.");
     });
 
     copyPlanBtn.addEventListener("click", () => {
@@ -1416,308 +906,10 @@
 3) Never share:
    - passwords, 2FA codes, gift card numbers, bank login, remote access.
 4) If money/info was shared:
-   - Contact bank/provider immediately and tell a trusted contact.
-5) If it feels urgent or secret: treat it as suspicious.
-
-Tip: Set a family code word for emergencies.`;
-
+   - Contact bank/provider immediately and document what happened.
+5) If it feels urgent or secret: treat it as suspicious.`;
       copyText(text);
       toast("Copied verification plan.");
-    });
-
-    function buildVerifyMessage(contact){
-      const name = contact.name || "there";
-      const method = contact.method || "Phone";
-      const roles = (contact.roles || []).join(", ");
-      const info = contact.contactInfo ? `\nContact info saved: ${contact.contactInfo}` : "";
-
-      return (
-`Hi ${name} — quick check: I just got something suspicious.
-Can you help me verify it before I respond?
-
-What happened:
-• Type: (call/text/email)
-• Who they claimed to be:
-• What they asked for:
-• Why it felt urgent:
-
-My plan:
-1) I will NOT click links or share codes.
-2) I will call back using an official number (not the one provided).
-3) If it involves money/info, I’ll pause and verify with you.
-
-Your role: ${roles || "Trusted Contact"} • Preferred method: ${method}${info}`
-      );
-    }
-
-    function render(){
-      const contacts = loadContacts();
-
-      // contacts list
-      if(!contacts.length){
-        emptyState.style.display = "block";
-        listEl.style.display = "none";
-        listEl.innerHTML = "";
-      } else {
-        emptyState.style.display = "none";
-        listEl.style.display = "flex";
-        listEl.innerHTML = "";
-
-        contacts.forEach(c => {
-          const card = document.createElement("div");
-          card.className = "contact";
-
-          const left = document.createElement("div");
-          left.className = "left";
-
-          const av = document.createElement("div");
-          av.className = "avatar";
-          av.textContent = initials(c.name);
-
-          const info = document.createElement("div");
-          info.className = "info";
-
-          const title = document.createElement("p");
-          title.className = "cname";
-          title.textContent = c.name || "Unnamed Contact";
-
-          const meta = document.createElement("p");
-          meta.className = "cmeta";
-          const parts = [];
-          parts.push(c.method || "Phone");
-          if (c.relationship) parts.push(c.relationship);
-          if (c.contactInfo) parts.push(c.contactInfo);
-          meta.textContent = parts.join(" • ");
-
-          const tags = document.createElement("div");
-          tags.className = "tags";
-
-          const roles = Array.isArray(c.roles) ? c.roles : [];
-          if(roles.includes("Primary")){
-            const t = document.createElement("span");
-            t.className = "tag primary";
-            t.textContent = "Primary";
-            tags.appendChild(t);
-          }
-          if(roles.includes("Verifier")){
-            const t = document.createElement("span");
-            t.className = "tag verify";
-            t.textContent = "Verifier";
-            tags.appendChild(t);
-          }
-          if(roles.includes("Emergency")){
-            const t = document.createElement("span");
-            t.className = "tag emergency";
-            t.textContent = "Emergency";
-            tags.appendChild(t);
-          }
-
-          const methodTag = document.createElement("span");
-          methodTag.className = "tag " + ((c.method || "").toLowerCase() === "email" ? "email" : "method");
-          methodTag.textContent = c.method || "Phone";
-          tags.appendChild(methodTag);
-
-          if(c.notes){
-            const noteTag = document.createElement("span");
-            noteTag.className = "tag";
-            noteTag.textContent = "Notes";
-            noteTag.title = c.notes;
-            tags.appendChild(noteTag);
-          }
-
-          info.appendChild(title);
-          info.appendChild(meta);
-          info.appendChild(tags);
-
-          left.appendChild(av);
-          left.appendChild(info);
-
-          const actions = document.createElement("div");
-          actions.className = "actions";
-
-          const verifyBtn = document.createElement("button");
-          verifyBtn.className = "smallBtn";
-          verifyBtn.type = "button";
-          verifyBtn.textContent = "Copy Verify Message";
-          verifyBtn.addEventListener("click", () => {
-            copyText(buildVerifyMessage(c));
-            toast("Copied verification message.");
-          });
-
-          const editBtn = document.createElement("button");
-          editBtn.className = "smallBtn";
-          editBtn.type = "button";
-          editBtn.textContent = "Edit";
-          editBtn.addEventListener("click", () => openModal("edit", c));
-
-          const delBtn = document.createElement("button");
-          delBtn.className = "smallBtn danger";
-          delBtn.type = "button";
-          delBtn.textContent = "Remove";
-          delBtn.addEventListener("click", () => {
-            const ok = confirm(`Remove ${c.name || "this contact"}?`);
-            if(!ok) return;
-            const contactsNow = loadContacts().filter(x => x.id !== c.id);
-            saveContacts(contactsNow);
-            render();
-            toast("Contact removed.");
-          });
-
-          actions.appendChild(verifyBtn);
-          actions.appendChild(editBtn);
-          actions.appendChild(delBtn);
-
-          card.appendChild(left);
-          card.appendChild(actions);
-          listEl.appendChild(card);
-        });
-      }
-
-      // templates contact dropdown (keep selection if possible)
-      const prev = tplContactSelect.value || "";
-      tplContactSelect.innerHTML = `<option value="">No specific contact</option>`;
-      contacts.forEach(c => {
-        const opt = document.createElement("option");
-        opt.value = c.id;
-        opt.textContent = c.name || "Unnamed Contact";
-        tplContactSelect.appendChild(opt);
-      });
-      // restore previous selection if still exists
-      if ([...tplContactSelect.options].some(o => o.value === prev)) tplContactSelect.value = prev;
-
-      updateTemplatePreview();
-    }
-
-    /* ---------------- TEMPLATES ---------------- */
-    const templates = {
-      verify: {
-        title: "Verify before I respond",
-        long: (who) =>
-`Hi${who ? " " + who : ""} — quick check: I received something suspicious and I want a second opinion before I respond.
-
-What happened:
-• Type: (call/text/email)
-• Who they claimed to be:
-• What they asked for:
-• Why it felt urgent:
-
-Can you help me verify:
-1) Who it’s really from (call back using official numbers)?
-2) Whether I should ignore/report it?
-
-I will NOT share passwords or verification codes, and I won’t click any links.`,
-        short: (who) =>
-`Hi${who ? " " + who : ""} — I got something suspicious. Can you help me verify it before I respond? I won’t click links or share codes.`
-      },
-
-      bank: {
-        title: "Possible bank / payment scam",
-        long: (who) =>
-`Hi${who ? " " + who : ""} — I might be dealing with a bank/payment scam. Can you help me verify before I do anything?
-
-Details to confirm:
-• Who they claimed to be:
-• What account/payment they mentioned:
-• What they asked me to do:
-• Any “urgent” deadline:
-
-My plan:
-1) I will NOT share codes, passwords, or account logins.
-2) I will call the bank/payment service using the number on my card/website (not the message).
-3) I’ll send you the official number I find before I call, if you can double-check it.`,
-        short: (who) =>
-`Hi${who ? " " + who : ""} — I think this could be a bank/payment scam. Can you help me verify an official callback number?`
-      },
-
-      family: {
-        title: "Family emergency / impersonation",
-        long: (who) =>
-`Hi${who ? " " + who : ""} — I received an “emergency” message/call that might be impersonation. Can you help me verify?
-
-Before I do anything:
-1) I’m going to contact the person using a saved number (not the message).
-2) I won’t send money/gift cards or share any codes.
-3) If we have a family code word, I’ll use it to confirm identity.
-
-Can you stay on the line / help me think through the safest next step?`,
-        short: (who) =>
-`Hi${who ? " " + who : ""} — I got a possible impersonation “emergency” message. Can you help me verify before I act?`
-      },
-
-      tech: {
-        title: "Tech support / remote access",
-        long: (who) =>
-`Hi${who ? " " + who : ""} — I got a tech support message/call that seems suspicious. Can you help me verify?
-
-Red flags I’m watching for:
-• Asking me to install software or give remote access
-• Asking for gift cards or payment to “fix” something
-• Pressure to act immediately
-
-My plan:
-1) I will NOT install anything or grant remote access.
-2) I will close the message/call.
-3) If needed, I’ll contact the company using the official website/app.`,
-        short: (who) =>
-`Hi${who ? " " + who : ""} — possible tech support scam. Can you help me verify what to do? I won’t install anything or give remote access.`
-      },
-
-      money: {
-        title: "I already shared money/info",
-        long: (who) =>
-`Hi${who ? " " + who : ""} — I think I may have already shared money or personal info with a scam. I need help with next steps.
-
-What I shared (if any):
-• Money / gift card / transfer:
-• Account info / personal details:
-• Codes / passwords:
-
-What I’m doing now:
-1) Contacting the bank/provider immediately using official numbers.
-2) Changing passwords + enabling 2FA (from my account settings).
-3) Saving screenshots/details for a report.
-
-If you can, please help me double-check the steps and stay with me while I contact the bank/provider.`,
-        short: (who) =>
-`Hi${who ? " " + who : ""} — I may have shared money/info with a scam. Can you help me with next steps while I contact my bank/provider?`
-      }
-    };
-
-    function getSelectedContactName(){
-      const id = tplContactSelect.value;
-      if (!id) return "";
-      const c = loadContacts().find(x => x.id === id);
-      return c && c.name ? c.name.split(" ")[0] : "";
-    }
-
-    function updateTemplatePreview(){
-      const key = tplScenarioSelect.value || "verify";
-      const who = getSelectedContactName();
-      const t = templates[key] || templates.verify;
-      tplPreview.value = t.long(who);
-    }
-
-    tplContactSelect.addEventListener("change", updateTemplatePreview);
-    tplScenarioSelect.addEventListener("change", updateTemplatePreview);
-
-    copyTemplateBtn.addEventListener("click", () => {
-      copyText(tplPreview.value);
-      toast("Copied template.");
-    });
-
-    copyShortBtn.addEventListener("click", () => {
-      const key = tplScenarioSelect.value || "verify";
-      const who = getSelectedContactName();
-      const t = templates[key] || templates.verify;
-      copyText(t.short(who));
-      toast("Copied short version.");
-    });
-
-    resetTemplateBtn.addEventListener("click", () => {
-      tplContactSelect.value = "";
-      tplScenarioSelect.value = "verify";
-      updateTemplatePreview();
-      toast("Reset.");
     });
 
     /* ---------------- UTILITIES ---------------- */
@@ -1768,9 +960,6 @@ If you can, please help me double-check the steps and stay with me while I conta
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => { el.style.opacity = "0"; }, 1400);
     }
-
-    // initial render
-    render();
   </script>
 </body>
 </html>
