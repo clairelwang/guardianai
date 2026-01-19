@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Message Drafter – Guardian AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --ink:#0f172a;
+      --muted:#64748b;
+      --line:#e5e7eb;
+      --bg:#f8fafc;
+      --card:#ffffff;
+      --shadow:0 14px 30px rgba(15,23,42,.06);
+
+      --green:#16a34a;
+      --green-bg:#ecfdf5;
+      --green-line:#bbf7d0;
+
+      --blue:#2563eb;
+      --blue-bg:#eff6ff;
+      --blue-line:#bfdbfe;
+
+      --btn:#0f8f5a;
+      --btn-hover:#0b7a4c;
+
+      --danger:#ef4444;
+      --danger-bg:#fef2f2;
+      --danger-line:#fecaca;
+    }
+
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg);
+      color:var(--ink);
+    }
+
+    /* ===================== TOP NAV (STICKY) ===================== */
+    .top-nav{
+      position: sticky;
+      top: 0;
+      z-index: 9998;
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(226,232,240,.9);
+    }
+    .top-nav .nav-inner{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .nav-brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:900;
+      letter-spacing:-.01em;
+      color:#0b1220;
+      min-width: 180px;
+      text-decoration:none;
+    }
+    .nav-logo{
+      width:42px;height:42px;
+      border-radius:14px;
+      background: rgba(110,231,184,.14);
+      border:1px solid rgba(110,231,184,.34);
+      display:grid;place-items:center;
+      color:#065f46;
+    }
+    .nav-title{
+      display:flex;
+      flex-direction:column;
+      line-height:1.05;
+    }
+    .nav-title strong{ font-size:15px; }
+    .nav-title span{
+      font-size:12px;
+      color:#64748b;
+      font-weight:800;
+      margin-top:2px;
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap: 6px;
+      flex: 1;
+      justify-content: center;
+    }
+    .nav-links a{
+      font-weight:900;
+      font-size:13px;
+      color:#0b1220;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid transparent;
+      transition: .15s ease;
+      white-space: nowrap;
+      text-decoration:none;
+    }
+    .nav-links a:hover{
+      background: rgba(15,23,42,.06);
+      border-color: rgba(15,23,42,.06);
+    }
+    .nav-links a.active{
+      background: rgba(52,211,153,.18);
+      border-color: rgba(52,211,153,.40);
+      color:#065f46;
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      justify-content:flex-end;
+      min-width: 230px;
+    }
+    .nav-btn{
+      height:42px;
+      padding: 0 14px;
+      border-radius: 12px;
+      font-weight:900;
+      font-size:13px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      border: 1px solid rgba(15,23,42,.10);
+      background: #fff;
+      color:#0b1220;
+      cursor:pointer;
+      transition: .15s ease;
+      white-space: nowrap;
+    }
+    .nav-btn:hover{ background: rgba(15,23,42,.04); }
+    .nav-btn.primary{
+      background: #0b1220;
+      border-color: #0b1220;
+      color:#fff;
+    }
+    .nav-btn.primary:hover{ filter: brightness(1.05); }
+
+    .nav-toggle{
+      display:none;
+      width:44px;height:44px;
+      border-radius: 14px;
+      border: 1px solid rgba(15,23,42,.10);
+      background: #fff;
+      cursor:pointer;
+    }
+    .nav-toggle span{
+      display:block;
+      width:18px;height:2px;
+      background:#0b1220;
+      margin: 4px auto;
+      border-radius:99px;
+    }
+
+    .nav-mobile{
+      display:none;
+      border-top:1px solid rgba(226,232,240,.9);
+      background: rgba(255,255,255,.92);
+    }
+    .nav-mobile .nav-mobile-inner{
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 10px 18px 14px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .nav-mobile a{
+      font-weight:900;
+      font-size:14px;
+      padding:12px 12px;
+      border-radius: 14px;
+      background: rgba(15,23,42,.04);
+      border: 1px solid rgba(15,23,42,.06);
+      text-decoration:none;
+      color:#0b1220;
+    }
+    .nav-mobile a.active{
+      background: rgba(52,211,153,.18);
+      border-color: rgba(52,211,153,.40);
+      color:#065f46;
+    }
+    .nav-mobile .row{
+      display:flex;
+      gap:10px;
+      margin-top:6px;
+    }
+    .nav-mobile .row .nav-btn{
+      flex:1;
+      height:46px;
+      border-radius: 14px;
+    }
+
+    @media (max-width: 980px){
+      .nav-links{ display:none; }
+      .nav-actions{ display:none; }
+      .nav-toggle{ display:block; margin-left:auto; }
+      .nav-brand{ min-width: unset; }
+      .top-nav .nav-inner{ padding: 12px 16px; }
+      .nav-mobile{ display:block; }
+      .nav-mobile[hidden]{ display:none; }
+    }
+    @media (max-width: 560px){
+      .top-nav{ display:none; }
+    }
+    /* ===================== END TOP NAV ===================== */
+
+    /* ===== MINI BAR (only on very small screens) ===== */
+    .mini-bar {
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      right: 14px;
+      z-index: 9999;
+      display: none;
+      gap: 8px;
+      background: #ffffff;
+      padding: 10px 10px;
+      border-radius: 14px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      border: 1px solid rgba(226,232,240,.9);
+      align-items:center;
+    }
+    .mini-bar .mini-left{
+      display:flex;
+      gap:8px;
+      align-items:center;
+      flex:1;
+      min-width:0;
+    }
+    .mini-pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:12px;
+      background: rgba(52,211,153,.12);
+      border:1px solid rgba(52,211,153,.30);
+      color:#065f46;
+      font-weight:900;
+      font-size:13px;
+      white-space:nowrap;
+      flex:0 0 auto;
+    }
+    .mini-bar select {
+      width:100%;
+      min-width:0;
+      height:40px;
+      padding: 0 10px;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      font-size: 14px;
+      cursor: pointer;
+      background:#fff;
+      outline:none;
+      font-weight:800;
+    }
+    .mini-bar button {
+      height:40px;
+      border: 1px solid rgba(15,23,42,.10);
+      background: #f8fafc;
+      padding: 0 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight:900;
+      font-size:13px;
+      white-space:nowrap;
+    }
+    .mini-bar button:hover { background: #eef2f7; }
+
+    @media (max-width: 560px){
+      .mini-bar{ display:flex; }
+      .container{ padding-top: 96px; }
+    }
+
+    .container{
+      width:min(1180px, calc(100% - 64px));
+      margin:0 auto;
+      padding:80px 0 110px;
+    }
+
+    /* Header */
+    .head{
+      text-align:center;
+      margin-bottom:30px;
+    }
+    .headIcon{
+      width:56px;
+      height:56px;
+      margin:0 auto 18px;
+      border-radius:16px;
+      background:#dcfce7;
+      display:grid;
+      place-items:center;
+      color:var(--green);
+    }
+    h1{
+      margin:0 0 10px;
+      font-size:36px;
+      font-weight:900;
+      letter-spacing:-.03em;
+    }
+    .sub{
+      max-width:920px;
+      margin:0 auto;
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.65;
+      font-weight:600;
+    }
+
+    /* Cards */
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:16px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .cardHead{
+      padding:18px 18px;
+      border-bottom:1px solid var(--line);
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+    .cardHead h2{
+      margin:0;
+      font-size:15px;
+      font-weight:1000;
+      letter-spacing:-.01em;
+    }
+    .cardHead p{
+      margin:6px 0 0;
+      color:var(--muted);
+      font-weight:650;
+      font-size:13px;
+      line-height:1.55;
+      max-width:900px;
+    }
+
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:12px;
+      font-weight:1000;
+      border:1px solid rgba(15,23,42,.08);
+      background:#f1f5f9;
+      color:#0f172a;
+      white-space:nowrap;
+    }
+    .pill.copyonly{
+      background:var(--green-bg);
+      border-color:rgba(22,101,52,.15);
+      color:#166534;
+    }
+
+    .wrap{ padding:16px 16px 18px; }
+
+    .banner{
+      border:1px solid #dbeafe;
+      background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
+      border-radius:14px;
+      padding:14px 14px;
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+    }
+    .bannerIcon{
+      width:42px;height:42px;
+      border-radius:14px;
+      display:grid;
+      place-items:center;
+      background:#dbeafe;
+      border:1px solid #bfdbfe;
+      color:#1d4ed8;
+      font-weight:1000;
+      flex:0 0 auto;
+    }
+    .banner h3{
+      margin:0;
+      font-size:14px;
+      font-weight:1000;
+      color:#0f172a;
+    }
+    .banner p{
+      margin:6px 0 0;
+      color:#475569;
+      font-weight:650;
+      font-size:12.8px;
+      line-height:1.55;
+    }
+
+    .controls{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+    }
+    .ctrl label{
+      display:block;
+      font-size:12px;
+      font-weight:1000;
+      color:#0f172a;
+      margin-bottom:6px;
+    }
+    .ctrl input, .ctrl select, .ctrl textarea{
+      width:100%;
+      border-radius:12px;
+      border:1px solid #e5e7eb;
+      padding:12px 12px;
+      font-weight:700;
+      outline:none;
+      background:#fff;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      font-size:13.5px;
+      line-height:1.55;
+    }
+    .ctrl input, .ctrl select{ height:44px; padding:0 12px; font-weight:800; }
+    .ctrl textarea{ min-height:140px; resize:vertical; }
+    .ctrl input:focus, .ctrl select:focus, .ctrl textarea:focus{
+      border-color:#93c5fd;
+      box-shadow:0 0 0 4px rgba(37,99,235,.12);
+    }
+    .hint{
+      margin-top:6px;
+      color:#64748b;
+      font-weight:650;
+      font-size:12.5px;
+      line-height:1.45;
+    }
+
+    .rowActions{
+      margin-top:12px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    .btn{
+      height:42px;
+      padding:0 16px;
+      border-radius:12px;
+      border:1px solid rgba(0,0,0,.08);
+      background:var(--btn);
+      color:#fff;
+      font-weight:1000;
+      cursor:pointer;
+      white-space:nowrap;
+      box-shadow:0 12px 22px rgba(15,23,42,.08);
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .btn:hover{ background:var(--btn-hover); }
+    .btn.ghost{
+      background:#f1f5f9;
+      color:#0f172a;
+      box-shadow:none;
+      border-color:#e5e7eb;
+    }
+    .btn.ghost:hover{ background:#e5e7eb; }
+
+    .status{
+      margin-top:10px;
+      display:none;
+      border-radius:12px;
+      padding:12px 12px;
+      font-weight:800;
+      font-size:13px;
+      line-height:1.5;
+      border:1px solid transparent;
+    }
+    .status.info{ display:block; background:var(--blue-bg); border-color:var(--blue-line); color:#1d4ed8; }
+    .status.warn{ display:block; background:var(--danger-bg); border-color:var(--danger-line); color:#991b1b; }
+
+    .preview{
+      margin-top:12px;
+      border:1px solid #e5e7eb;
+      border-radius:14px;
+      overflow:hidden;
+      background:#fff;
+    }
+    .previewHead{
+      padding:10px 12px;
+      border-bottom:1px solid #e5e7eb;
+      background:#f8fafc;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .smallBtn{
+      height:38px;
+      padding:0 14px;
+      border-radius:12px;
+      border:1px solid #e5e7eb;
+      background:#f8fafc;
+      color:#0f172a;
+      font-weight:1000;
+      font-size:12.8px;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      white-space:nowrap;
+    }
+    .smallBtn:hover{ background:#eef2f7; }
+
+    .outGrid{
+      padding:12px;
+      display:grid;
+      gap:10px;
+    }
+
+    .outRow{
+      display:grid;
+      gap:6px;
+    }
+    .outRow label{
+      font-weight:1000;
+      font-size:12px;
+      color:#0f172a;
+    }
+    .outRow input{
+      width:100%;
+      height:42px;
+      border-radius:12px;
+      border:1px solid #e5e7eb;
+      padding:0 12px;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      font-size:13.5px;
+      font-weight:800;
+      outline:none;
+      background:#fff;
+    }
+
+    textarea#output{
+      width:100%;
+      min-height:220px;
+      resize:vertical;
+      border:1px solid #e5e7eb;
+      border-radius:12px;
+      outline:none;
+      padding:12px;
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      font-size:13.5px;
+      line-height:1.55;
+      font-weight:650;
+      color:#0f172a;
+      background:#fff;
+    }
+
+    .hidden{ display:none !important; }
+
+    @media (max-width: 980px){
+      .container{ width:min(980px, calc(100% - 28px)); }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- MINI BAR (small screens) -->
+  <div class="mini-bar" role="navigation" aria-label="Quick navigation">
+    <div class="mini-left">
+      <span class="mini-pill">Guardian AI</span>
+      <select id="pageSelect" aria-label="Choose a page">
+        <option value="index.html">Home</option>
+        <option value="deepfake-analyzer.html">Deepfake Analyzer</option>
+        <option value="courses.html">Courses</option>
+        <option value="message-drafter.html">Message Drafter</option>
+        <option value="alerts.html">Alerts</option>
+        <option value="simulator.html">Simulator</option>
+        <option value="report.html">Report</option>
+      </select>
+    </div>
+    <button type="button" id="miniViewBtn" title="Toggle mobile preview width">Mobile</button>
+  </div>
+
+  <!-- TOP NAV -->
+  <header class="top-nav">
+    <div class="nav-inner">
+      <a class="nav-brand" href="javascript:void(0)" onclick="switchPage('index.html')">
+        <div class="nav-logo" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2l7 4v7c0 5-3.5 9-7 9s-7-4-7-9V6l7-4z" stroke="currentColor" stroke-width="2"/>
+            <path d="M9 12l2 2 4-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="nav-title">
+          <strong>Guardian AI</strong>
+          <span>Scam Protection</span>
+        </div>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
+        <a href="javascript:void(0)" onclick="switchPage('deepfake-analyzer.html')" data-page="deepfake-analyzer.html">Deepfake Analyzer</a>
+        <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
+        <a href="javascript:void(0)" onclick="switchPage('message-drafter.html')" data-page="message-drafter.html" class="active">Message Drafter</a>
+        <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
+        <a href="javascript:void(0)" onclick="switchPage('simulator.html')" data-page="simulator.html">Simulator</a>
+        <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
+        <button class="nav-btn primary" type="button" onclick="switchPage('deepfake-analyzer.html')">Check Media</button>
+      </div>
+
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="nav-mobile" id="navMobile" hidden>
+      <div class="nav-mobile-inner">
+        <a href="javascript:void(0)" onclick="switchPage('index.html')" data-page="index.html">Home</a>
+        <a href="javascript:void(0)" onclick="switchPage('deepfake-analyzer.html')" data-page="deepfake-analyzer.html">Deepfake Analyzer</a>
+        <a href="javascript:void(0)" onclick="switchPage('courses.html')" data-page="courses.html">Courses</a>
+        <a href="javascript:void(0)" onclick="switchPage('message-drafter.html')" data-page="message-drafter.html" class="active">Message Drafter</a>
+        <a href="javascript:void(0)" onclick="switchPage('alerts.html')" data-page="alerts.html">Alerts</a>
+        <a href="javascript:void(0)" onclick="switchPage('simulator.html')" data-page="simulator.html">Simulator</a>
+        <a href="javascript:void(0)" onclick="switchPage('report.html')" data-page="report.html">Report</a>
+        <div class="row">
+          <button class="nav-btn" type="button" onclick="switchPage('courses.html')">Start Learning</button>
+          <button class="nav-btn primary" type="button" onclick="switchPage('deepfake-analyzer.html')">Check Media</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="head">
+      <div class="headIcon" aria-hidden="true">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <path d="M4 20h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M7 17l10-10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <path d="M14 7l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <h1>Message Drafter</h1>
+      <p class="sub">
+        Paste what you received and your goal. We generate a calm, safe reply you can copy.
+        This page does not send messages.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="cardHead">
+        <div>
+          <h2>Draft a Safe Reply</h2>
+          <p>
+            Use this to refuse pressure, ask for verification, or request an official contact method.
+            The output is copy-only so you stay in control.
+          </p>
+        </div>
+        <span class="pill copyonly">Copy-only</span>
+      </div>
+
+      <div class="wrap">
+        <div class="banner">
+          <div class="bannerIcon">📝</div>
+          <div>
+            <h3>Goal: respond without risk</h3>
+            <p>We avoid threats, accusations, and sensitive information. We keep it short and clear.</p>
+          </div>
+        </div>
+
+        <div class="controls">
+          <div class="ctrl">
+            <label for="channel">Message type</label>
+            <select id="channel">
+              <option value="text message">Text message</option>
+              <option value="email">Email</option>
+              <option value="social dm">Social DM</option>
+              <option value="other">Other</option>
+            </select>
+            <div class="hint">We’ll format the draft for that channel.</div>
+          </div>
+
+          <div class="ctrl">
+            <label for="recipient">Who are you replying to? (optional)</label>
+            <input id="recipient" placeholder="Example: Bank support / Unknown number / Seller" maxlength="60" />
+            <div class="hint">Optional. Used only to make the draft sound specific.</div>
+          </div>
+
+          <div class="ctrl">
+            <label for="goal">Your goal</label>
+            <select id="goal">
+              <option value="ask for verification">Ask for verification</option>
+              <option value="refuse and stop contact">Refuse and stop contact</option>
+              <option value="request official channel">Request official channel</option>
+              <option value="report and document">Report and document</option>
+              <option value="notify family or caregiver">Notify family or caregiver</option>
+              <option value="other">Other</option>
+            </select>
+            <div class="hint">Pick the safest intent. You can edit the output after.</div>
+          </div>
+
+          <div class="ctrl">
+            <label for="tone">Tone</label>
+            <select id="tone">
+              <option value="calm and polite">Calm and polite</option>
+              <option value="firm and direct">Firm and direct</option>
+              <option value="very short">Very short</option>
+              <option value="polite professional">Polite professional</option>
+            </select>
+            <div class="hint">We keep it non-accusatory and low-risk.</div>
+          </div>
+
+          <div class="ctrl">
+            <label for="received">Paste what you received</label>
+            <textarea id="received" placeholder="Paste the suspicious text/email/DM here." maxlength="12000"></textarea>
+            <div class="hint">Tip: include the parts that feel urgent, secret, or ask for money/codes.</div>
+          </div>
+
+          <div class="ctrl">
+            <label for="context">What do you want to say? (optional)</label>
+            <textarea id="context" placeholder="Example: I did not request this. I will only verify using the official website/number." maxlength="4000"></textarea>
+            <div class="hint">Optional. Keep it short. Never paste passwords or verification codes.</div>
+          </div>
+        </div>
+
+        <div class="rowActions">
+          <button class="btn" id="genBtn" type="button">Generate Draft</button>
+          <button class="btn ghost" id="shortBtn" type="button">Make Shorter</button>
+          <button class="btn ghost" id="firmBtn" type="button">Make Firmer</button>
+          <button class="btn ghost" id="resetBtn" type="button">Reset</button>
+        </div>
+
+        <div id="status" class="status"></div>
+
+        <div class="preview">
+          <div class="previewHead">
+            <span class="pill">Draft</span>
+            <button class="smallBtn" id="copyBtn" type="button">Copy</button>
+          </div>
+
+          <div class="outGrid">
+            <div class="outRow hidden" id="subjectRow">
+              <label for="subjectOut">Subject (email)</label>
+              <input id="subjectOut" readonly />
+            </div>
+
+            <div class="outRow">
+              <label for="output">Message</label>
+              <textarea id="output" readonly></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="rowActions" style="justify-content:flex-start;">
+          <button class="smallBtn" id="copyPlanBtn" type="button">Copy Safety Reminder</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ---------------- BASE-PATH SAFE NAV ---------------- */
+    function getBaseDir() {
+      const path = window.location.pathname;
+      const parts = path.split("/");
+      const last = parts[parts.length - 1];
+      if (!last || last.includes(".html")) parts.pop();
+      const base = parts.join("/") + (parts.length > 1 ? "/" : "/");
+      return base;
+    }
+    function switchPage(page) {
+      if (!page) return;
+      if (/^https?:\/\//i.test(page)) { window.location.href = page; return; }
+      window.location.href = getBaseDir() + page;
+    }
+
+    /* Mini-bar page select */
+    (function initMiniBar(){
+      const file = (window.location.pathname.split("/").pop() || "index.html").toLowerCase();
+      const pageSelect = document.getElementById("pageSelect");
+      if (pageSelect){
+        [...pageSelect.options].forEach(opt => {
+          opt.selected = (opt.value || "").toLowerCase() === file;
+        });
+        pageSelect.addEventListener("change", () => switchPage(pageSelect.value));
+      }
+    })();
+
+    /* Nav toggle */
+    (function navToggle(){
+      const btn = document.getElementById("navToggle");
+      const panel = document.getElementById("navMobile");
+      if (!btn || !panel) return;
+      btn.addEventListener("click", () => {
+        const open = !panel.hasAttribute("hidden");
+        if (open) {
+          panel.setAttribute("hidden", "");
+          btn.setAttribute("aria-expanded", "false");
+        } else {
+          panel.removeAttribute("hidden");
+          btn.setAttribute("aria-expanded", "true");
+        }
+      });
+    })();
+
+    /* Mini-bar mobile preview toggle */
+    (function miniPreview(){
+      const btn = document.getElementById("miniViewBtn");
+      if (!btn) return;
+      btn.addEventListener("click", () => {
+        const meta = document.querySelector('meta[name="viewport"]');
+        if (!meta) return;
+        if (meta.content.includes("width=375")) {
+          meta.content = "width=device-width, initial-scale=1";
+          toast("Preview: responsive");
+        } else {
+          meta.content = "width=375, initial-scale=1";
+          toast("Preview: 375px");
+        }
+      });
+    })();
+
+    /* ---------------- MESSAGE DRAFTER ----------------
+       This page calls your backend endpoint:
+       POST /api/draft-message
+       Response JSON:
+         - For email: { "subject": "...", "body": "..." }
+         - Otherwise: { "message": "..." }
+    -------------------------------------------------- */
+
+    const channelEl   = document.getElementById("channel");
+    const recipientEl = document.getElementById("recipient");
+    const goalEl      = document.getElementById("goal");
+    const toneEl      = document.getElementById("tone");
+    const receivedEl  = document.getElementById("received");
+    const contextEl   = document.getElementById("context");
+
+    const genBtn      = document.getElementById("genBtn");
+    const shortBtn    = document.getElementById("shortBtn");
+    const firmBtn     = document.getElementById("firmBtn");
+    const resetBtn    = document.getElementById("resetBtn");
+    const copyBtn     = document.getElementById("copyBtn");
+    const copyPlanBtn = document.getElementById("copyPlanBtn");
+
+    const subjectRow  = document.getElementById("subjectRow");
+    const subjectOut  = document.getElementById("subjectOut");
+    const outEl       = document.getElementById("output");
+    const statusEl    = document.getElementById("status");
+
+    let lastDraft = { subject: "", body: "", message: "" };
+
+    function setStatus(kind, text){
+      statusEl.className = "status " + (kind || "info");
+      statusEl.textContent = text || "";
+      statusEl.style.display = text ? "block" : "none";
+    }
+
+    function setEmailMode(isEmail){
+      if (isEmail){
+        subjectRow.classList.remove("hidden");
+      } else {
+        subjectRow.classList.add("hidden");
+        subjectOut.value = "";
+      }
+    }
+
+    channelEl.addEventListener("change", () => {
+      setEmailMode(channelEl.value === "email");
+      toast("Channel updated.");
+    });
+
+    setEmailMode(channelEl.value === "email");
+
+    function fallbackDraft(payload){
+      const ch = (payload.channel || "message").toLowerCase();
+      const who = payload.recipient ? payload.recipient.trim() : "there";
+      const goal = payload.goal || "ask for verification";
+      const tone = payload.tone || "calm and polite";
+
+      const received = (payload.received_text || "").trim().replace(/\s+/g, " ");
+      const snippet = received.length > 320 ? received.slice(0, 320) + "…" : received;
+
+      if (payload.channel === "email"){
+        const subject = "Verification request";
+        const body =
+`Hello,
+
+I received a message that I want to verify before taking any action.
+
+Summary: ${snippet}
+
+I will only proceed after verifying this through an official phone number or website. Please confirm the correct, official way to contact you and handle this request.
+
+Thank you.`;
+        return { subject, body };
+      }
+
+      const message =
+`Hi ${who} — quick check.
+
+I received a suspicious ${ch}. My goal is to ${goal}.
+Summary: ${snippet}
+
+I’m not clicking links or sharing codes. If this is real, please tell me the official way to verify (official website or published phone number).`;
+      return { message };
+    }
+
+    async function draftWithServer(payload){
+      const endpoint = "/api/draft-message";
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok){
+        const txt = await res.text().catch(() => "");
+        throw new Error(`Server error ${res.status}${txt ? ": " + txt : ""}`);
+      }
+      const data = await res.json();
+      return data;
+    }
+
+    async function runDraft(revision){
+      const received = receivedEl.value.trim();
+      if (!received){
+        setStatus("warn", "Please paste what you received.");
+        receivedEl.focus();
+        return;
+      }
+
+      const payload = {
+        channel: channelEl.value,
+        recipient: recipientEl.value.trim(),
+        goal: goalEl.value,
+        tone: toneEl.value,
+        received_text: received,
+        my_context: contextEl.value.trim(),
+        constraints: {
+          plain_text_only: true,
+          avoid_sensitive_info: true,
+          non_accusatory: true
+        },
+        revision: revision || ""
+      };
+
+      genBtn.disabled = true;
+      shortBtn.disabled = true;
+      firmBtn.disabled = true;
+
+      const label = revision ? "Rewriting…" : "Generating…";
+      genBtn.textContent = label;
+      setStatus("info", "Generating a draft…");
+
+      try{
+        const data = await draftWithServer(payload);
+
+        if (payload.channel === "email"){
+          const subj = (data.subject || "").trim();
+          const body = (data.body || data.message || "").trim();
+          subjectOut.value = subj;
+          outEl.value = body;
+          lastDraft = { subject: subj, body: body, message: "" };
+        } else {
+          const msg = (data.message || data.body || "").trim();
+          subjectOut.value = "";
+          outEl.value = msg;
+          lastDraft = { subject: "", body: "", message: msg };
+        }
+
+        setStatus("info", "Done. Review it, then copy and send it yourself.");
+      }catch(err){
+        const fb = fallbackDraft(payload);
+        if (payload.channel === "email"){
+          subjectOut.value = fb.subject;
+          outEl.value = fb.body;
+          lastDraft = { subject: fb.subject, body: fb.body, message: "" };
+        } else {
+          subjectOut.value = "";
+          outEl.value = fb.message;
+          lastDraft = { subject: "", body: "", message: fb.message };
+        }
+        setStatus("warn", "Couldn’t reach the AI server. A safe fallback draft was generated instead.");
+        console.warn(err);
+      }finally{
+        genBtn.disabled = false;
+        shortBtn.disabled = false;
+        firmBtn.disabled = false;
+        genBtn.textContent = "Generate Draft";
+      }
+    }
+
+    genBtn.addEventListener("click", () => runDraft(""));
+    shortBtn.addEventListener("click", () => runDraft("Make it shorter while staying safe and polite."));
+    firmBtn.addEventListener("click", () => runDraft("Make it firmer and more direct while staying safe and non-accusatory."));
+
+    copyBtn.addEventListener("click", () => {
+      const isEmail = channelEl.value === "email";
+      if (isEmail){
+        const subj = (subjectOut.value || "").trim();
+        const body = (outEl.value || "").trim();
+        if (!subj && !body){ toast("Nothing to copy yet."); return; }
+        const text = (subj ? `Subject: ${subj}\n\n` : "") + body;
+        copyText(text);
+        toast("Copied.");
+        return;
+      }
+
+      const msg = (outEl.value || "").trim();
+      if (!msg){ toast("Nothing to copy yet."); return; }
+      copyText(msg);
+      toast("Copied.");
+    });
+
+    resetBtn.addEventListener("click", () => {
+      channelEl.value = "text message";
+      recipientEl.value = "";
+      goalEl.value = "ask for verification";
+      toneEl.value = "calm and polite";
+      receivedEl.value = "";
+      contextEl.value = "";
+      subjectOut.value = "";
+      outEl.value = "";
+      lastDraft = { subject: "", body: "", message: "" };
+      setEmailMode(false);
+      setStatus("", "");
+      receivedEl.focus();
+      toast("Reset.");
+    });
+
+    copyPlanBtn.addEventListener("click", () => {
+      const text =
+`Guardian AI Safety Reminder
+
+1) Pause: do not act immediately.
+2) Verify independently using a saved or official number/website.
+3) Never share passwords, 2FA codes, bank login, gift card numbers, or allow remote access.
+4) If money or info was shared, contact your bank/provider immediately and document what happened.
+5) If it feels urgent or secret, treat it as suspicious.`;
+      copyText(text);
+      toast("Copied safety reminder.");
+    });
+
+    /* ---------------- UTILITIES ---------------- */
+    function copyText(text){
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+      }else{
+        fallbackCopy(text);
+      }
+    }
+    function fallbackCopy(text){
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      try{ document.execCommand("copy"); }catch(e){}
+      document.body.removeChild(ta);
+    }
+
+    let toastTimer = null;
+    function toast(message){
+      let el = document.getElementById("toast");
+      if(!el){
+        el = document.createElement("div");
+        el.id = "toast";
+        el.style.position = "fixed";
+        el.style.bottom = "18px";
+        el.style.left = "50%";
+        el.style.transform = "translateX(-50%)";
+        el.style.background = "#0f172a";
+        el.style.color = "#fff";
+        el.style.padding = "10px 12px";
+        el.style.borderRadius = "12px";
+        el.style.fontWeight = "900";
+        el.style.fontSize = "13px";
+        el.style.boxShadow = "0 14px 30px rgba(0,0,0,.20)";
+        el.style.zIndex = "999999";
+        el.style.maxWidth = "92vw";
+        el.style.textAlign = "center";
+        el.style.opacity = "0";
+        el.style.transition = "opacity .15s ease";
+        document.body.appendChild(el);
+      }
+      el.textContent = message;
+      el.style.opacity = "1";
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => { el.style.opacity = "0"; }, 1400);
+    }
+  </script>
+</body>
+</html>
