@@ -698,7 +698,7 @@
               <option value="social dm">Social DM</option>
               <option value="other">Other</option>
             </select>
-            <div class="hint">We’ll format the draft for that channel.</div>
+            <div class="hint">We'll format the draft for that channel.</div>
           </div>
 
           <div class="ctrl">
@@ -927,7 +927,7 @@ I’m not clicking links or sharing codes. If this is real, please tell me the o
     }
 
     async function draftWithServer(payload){
-      const endpoint = "/api/draft-message";
+      const endpoint = "https://anshvkapadia-guardianai-backend.hf.space/api/draft-message";
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
